@@ -1,0 +1,22 @@
+[
+  {
+    "sys_name": "sys1",
+    "bn": "fio",
+    "value1": 70
+  },
+  {
+    "sys_name": "sys1\n",
+    "bn": "diskread",
+    "value1": 50
+  },
+  {
+    "sys_name": "sys2",
+    "bn": "fio",
+    "value1": 80
+  },
+  {
+    "sys_name": "sys2",
+    "bn": "diskread",
+    "value1": 30
+  }
+]
