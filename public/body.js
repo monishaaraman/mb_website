@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    initializeSwiper() ;
     // Your script code here
     window.particlesJS("particleCanvas-Blue", {
         particles: {
@@ -223,3 +225,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+function initializeSwiper() {
+    var swiper = new Swiper(".blog-card", {
+      spaceBetween: 30,
+      effect: "fade",
+      loop: true,
+      mousewheel: {
+        invert: false
+      },
+      pagination: {
+        el: ".blog-slider__pagination",
+        clickable: true
+      }
+    });
+  }

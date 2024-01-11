@@ -7,30 +7,235 @@
     <link rel="stylesheet" href="animo.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://use.fontawesome.com/b5bf1bd49e.js"></script> 
-    <script src="body.js"></script>
-    <title>Your Stylish Web Page</title>
+    
+
+
+
+  <script src="body.js"></script>
+  <style>
+    .blog-card {
+    position: absolute;
+    height: 370px;
+    width: 95%;
+    max-width: 850px;
+    margin: auto;
+    border-radius: 25px;
+    background: white;
+    box-shadow: 0px 10px 50px rgba(252, 56, 56, .3);
+}
+
+.inner-part {
+    position: absolute;
+    display: flex;
+    height: 360px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 25px;
+}
+
+#imgTap:checked~.inner-part {
+    padding: 0;
+    transition: .1s ease-in;
+}
+
+.inner-part .img {
+    height: 260px;
+    width: 260px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 2px 3px 15px rgba(252, 56, 56, .1);
+}
+
+#imgTap:checked~.inner-part .img {
+    height: 370px;
+    width: 850px;
+    z-index: 99;
+    margin-top: 10px;
+    transition: .3s .2s ease-in;
+}
+
+.img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0;
+    transition: .6s;
+}
+
+#tap-1:checked~.inner-part .img-1,
+#tap-2:checked~.inner-part .img-2,
+#tap-3:checked~.inner-part .img-3 {
+    opacity: 1;
+    transition-delay: .2s;
+}
+
+.content {
+    padding: 0 20px 0 35px;
+    width: 530px;
+    margin-left: 50px;
+    opacity: 0;
+    transition: .6s;
+}
+
+#imgTap:checked~.inner-part .content {
+    display: none;
+}
+
+#tap-1:checked~.inner-part .content-1,
+#tap-2:checked~.inner-part .content-2,
+#tap-3:checked~.inner-part .content-3 {
+    opacity: 1;
+    margin-left: 0px;
+    z-index: 100;
+    transition-delay: .3s;
+}
+
+.content span {
+    display: block;
+    color: #7b7992;
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: 500
+}
+
+.content .title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #0d0925;
+    margin-bottom: 20px;
+}
+
+.content .text {
+    color: #4e4a67;
+    font-size: 19px;
+    margin-bottom: 30px;
+    line-height: 1.5em;
+    text-align: justify;
+}
+
+.content button {
+    display: inline-flex;
+    padding: 15px 20px;
+    border: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff0e6;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #fd3535;
+    background: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
+}
+
+.content button:hover {
+    background: linear-gradient(147deg, #fe791b 0%, #fd1c1c 74%);
+}
+
+.sliders {
+    position: absolute;
+    bottom: 25px;
+    left: 65%;
+    transform: translateX(-50%);
+    z-index: 12;
+}
+
+#imgTap:checked~.sliders {
+    display: none;
+}
+
+.sliders .tap {
+    position: relative;
+    height: 10px;
+    width: 50px;
+    background: #d9d9d9;
+    border-radius: 5px;
+    display: inline-flex;
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.sliders .tap:hover {
+    background: #cccccc;
+}
+
+.sliders .tap:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: -100%;
+    background: linear-gradient(147deg, #f6b323 0%, #f23b26 74%);
+    border-radius: 10px;
+    transform: scaleX(0);
+    transition: transform .6s;
+    transform-origin: left;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    display: none;
+}
+
+#tap-1:checked~.sliders .tap-1:before,
+#tap-2:checked~.sliders .tap-2:before,
+#tap-3:checked~.sliders .tap-3:before {
+    transform: scaleX(1);
+    width: 100%;
+}
+  </style>
+  
+
+    <title>Benchmark</title>
    
 </head>
 <body>
+
+ 
+
     <header>
         <h1>Welcome to Our Benchmark</h1>
     </header>
 
   <div class="main_body">
-    <button class="build-button" id="buildButton">Build</button>
-    <p class="p1" id="message"></p>
     <div id="particleCanvas-Blue"></div>
       
     <div id="particleCanvas-White"></div>
+    <button class="build-button" id="buildButton">Build</button>
+    <div id="loadingIcon_b" style="display: none;">
+      <section>
+    <div class="loading loading02">
+    <span data-text="L">L</span>
+    <span data-text="O">O</span>
+    <span data-text="A">A</span>
+    <span data-text="D">D</span>
+    <span data-text="I">I</span>
+    <span data-text="N">N</span>
+    <span data-text="G">G</span>
+    </div>
+    </section>
+<p>Please wait...</p>
+</div>
+    <p class="p1" id="message"></p>
+ 
   
+
     
     <div class="container mt-5">
+      
+       
         <!-- <div class="card" id="card_style">
           <div class="card-header" id="collapseHeading1" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px;">
             <h5 class="mb-0">
@@ -127,10 +332,68 @@ return color;
             </h5>
             
           </div>
+          
       
-          <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2">
+          <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+            <!-- <div class="slider_body" >
+              <div class="blog-card">
+                <input type="radio" name="select" id="tap-1" checked>
+                <input type="radio" name="select" id="tap-2">
+                <input type="radio" name="select" id="tap-3">
+                <input type="checkbox" id="imgTap">
+                <div class="sliders">
+                    <label for="tap-1" class="tap tap-1"></label>
+                    <label for="tap-2" class="tap tap-2"></label>
+                    <label for="tap-3" class="tap tap-3"></label>
+                </div>
+                <div class="inner-part">
+                    <label for="imgTap" class="img">
+                        <img class="img-1" src="https://gosnippets.com/blog/wp-content/uploads/2020/11/Bootstrap-5-Pricing-Table-2-1536x812.jpg">
+                    </label>
+                    <div class="content content-1">
+                        <span>26 December 2020</span>
+                        <div class="title">
+                            Lorem Ipsum Dolor</div>
+                        <div class="text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo animi atque aliquid pariatur voluptatem numquam, quisquam. Neque est voluptates doloribus!</div>
+                        <button>Read more</button>
+                    </div>
+                </div>
+                <div class="inner-part">
+                    <label for="imgTap" class="img">
+                        <img class="img-2" src="https://gosnippets.com/blog/wp-content/uploads/2020/10/Bootstrap-Animation-1536x1024.jpg">
+                    </label>
+                    <div class="content content-2">
+                        <span>28 December 2020</span>
+                        <div class="title">
+                            Lorem Ipsum Dolor</div>
+                        <div class="text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eos ut consectetur numquam ullam fuga animi laudantium nobis rem molestias.</div>
+                        <button>Read more</button>
+                    </div>
+                </div>
+                <div class="inner-part">
+                    <label for="imgTap" class="img">
+                        <img class="img-3" src="https://gosnippets.com/blog/wp-content/uploads/2021/01/Screenshot-from-2021-01-10-20-52-16.png">
+                    </label>
+                    <div class="content content-3">
+                        <span>29 December 2020</span>
+                        <div class="title">
+                            Lorem Ipsum Dolor</div>
+                        <div class="text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod excepturi nemo commodi sint eum ipsam odit atque aliquam officia impedit.</div>
+                        <button>Read more</button>
+                    </div>
+                </div>
+
+                <div class="blog-slider__pagination"></div>
+            </div>
+              
+            </div> -->
             <div class="card-body">
               <!-- Content goes here -->
+              
+
               <div class='runbtn_container' id="runbtn">
                 <a href='#'class='playBut' id= "disk_button">
                   
@@ -149,7 +412,7 @@ return color;
               
                   
                 </a>
-                <p style="font-size: 25px; color: aliceblue;">Run Test</p>
+                <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
               </div>
               <div id="loadingIcon" style="display: none;">
                       <section>
@@ -171,17 +434,17 @@ return color;
               </div>
               
               <div id="successMessage" style="display: none;">
-                <p>Disk benchmark completed successfully.</p>
-                 <div class="graph-container">
+                <p class="p1">Disk benchmark completed successfully.</p>
+                 <!-- <div class="graph-container">
                 <canvas id="myChart" width="800" height="500"></canvas>
-                </div> 
+                </div>  -->
                 <table id="benchmarkTable" class="table">
                 <thead>
                     <tr>
                         <th>System Model Name</th>
                         <th>Benchmark</th>
-                        <th>Time</th>
-                        <th>CPU</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
                         <th>Iterations</th>
                         <th>Average Read (in MiB/s)</th>
                         <th>Average Write (in MiB/s)</th>
@@ -279,75 +542,7 @@ return color;
               
               <div id="successMessage" style="display: none;">
                 <p>Disk benchmark completed successfully.</p>
-                 <div class="graph-container">
-                <canvas id="myChart" width="800" height="500"></canvas>
-                </div> 
-                <table id="benchmarkTable" class="table">
-                <thead>
-                    <tr>
-                        <th>System Model Name</th>
-                        <th>Benchmark</th>
-                        <th>Time</th>
-                        <th>CPU</th>
-                        <th>Iterations</th>
-                        <th>Average Read (in MiB/s)</th>
-                        <th>Average Write (in MiB/s)</th>
-                    </tr>
-                </thead>
-                <tbody id="benchmarkTableBody"></tbody>
-            </table>
-            <script>
-               function createChart(data) {
-                                    // Check if the data array is empty or null
-                      if (!data || data.length === 0) {
-                          console.error("Data is empty or null.");
-                          return;
-                      }
-                                      // Extract unique categories (bn values)
-                      var categories = [...new Set(data.map(item => item.bn))];
-
-                    // Create datasets based on sys_name
-                     var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
-                      return {
-                          label: sysName,
-                          backgroundColor: getRandomColor(),
-                          borderColor: "rgba(75, 192, 192, 1)",
-                          borderWidth: 1,
-                          data: categories.map(category => {
-                              var item = data.find(d => d.sys_name === sysName && d.bn === category);
-                              return item ? item.value1 : 0; // Use 0 if data is missing
-                          }),
-                      };
-                    });
-
-                                // Create the chart
-                                var ctx = document.getElementById("myChart").getContext("2d");
-                                var myChart = new Chart(ctx, {
-                                  type: "bar",
-                                  data: {
-                                      labels: categories,
-                                      datasets: datasets,
-                                  },
-                                  options: {
-                                      indexAxis: "y",
-                                      scales: {
-                                          x: {
-                                              beginAtZero: true,
-                                          },
-                                      },
-                                  },
-                                });
-                                }
-
-                                function getRandomColor() {
-                                var letters = "0123456789ABCDEF";
-                                var color = "#";
-                                for (var i = 0; i < 6; i++) {
-                                  color += letters[Math.floor(Math.random() * 16)];
-                                }
-                                return color;
-                                }
-            </script>
+                
               </div>
             </div>
           </div>
@@ -386,75 +581,7 @@ return color;
               
               <div id="successMessage" style="display: none;">
                 <p>Disk benchmark completed successfully.</p>
-                 <div class="graph-container">
-                <canvas id="myChart" width="800" height="500"></canvas>
-                </div> 
-                <table id="benchmarkTable" class="table">
-                <thead>
-                    <tr>
-                        <th>System Model Name</th>
-                        <th>Benchmark</th>
-                        <th>Time</th>
-                        <th>CPU</th>
-                        <th>Iterations</th>
-                        <th>Average Read (in MiB/s)</th>
-                        <th>Average Write (in MiB/s)</th>
-                    </tr>
-                </thead>
-                <tbody id="benchmarkTableBody"></tbody>
-            </table>
-            <script>
-               function createChart(data) {
-                                    // Check if the data array is empty or null
-                      if (!data || data.length === 0) {
-                          console.error("Data is empty or null.");
-                          return;
-                      }
-                                      // Extract unique categories (bn values)
-                      var categories = [...new Set(data.map(item => item.bn))];
-
-                    // Create datasets based on sys_name
-                     var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
-                      return {
-                          label: sysName,
-                          backgroundColor: getRandomColor(),
-                          borderColor: "rgba(75, 192, 192, 1)",
-                          borderWidth: 1,
-                          data: categories.map(category => {
-                              var item = data.find(d => d.sys_name === sysName && d.bn === category);
-                              return item ? item.value1 : 0; // Use 0 if data is missing
-                          }),
-                      };
-                    });
-
-                                // Create the chart
-                                var ctx = document.getElementById("myChart").getContext("2d");
-                                var myChart = new Chart(ctx, {
-                                  type: "bar",
-                                  data: {
-                                      labels: categories,
-                                      datasets: datasets,
-                                  },
-                                  options: {
-                                      indexAxis: "y",
-                                      scales: {
-                                          x: {
-                                              beginAtZero: true,
-                                          },
-                                      },
-                                  },
-                                });
-                                }
-
-                                function getRandomColor() {
-                                var letters = "0123456789ABCDEF";
-                                var color = "#";
-                                for (var i = 0; i < 6; i++) {
-                                  color += letters[Math.floor(Math.random() * 16)];
-                                }
-                                return color;
-                                }
-            </script>
+                 
               </div>
             </div>
           </div>
@@ -572,6 +699,8 @@ return color;
 
   <script>
 
+
+
 function toggleArrow() {
         var arrowIcon = document.getElementById('toggleIcon');
 
@@ -614,6 +743,8 @@ function toggleArrow() {
 
   document.getElementById("buildButton").addEventListener("click", function () {
       // Check if the "microbenchmark" folder exists
+      document.getElementById('loadingIcon_b').style.display = 'block';
+      document.getElementById("buildButton").style.display = "none";
     fetch("/check_microbenchmark")
         .then(response => {
             if (response.status === 200) {
@@ -626,9 +757,10 @@ function toggleArrow() {
                         if (data.success) {
                           //  alert("Repository cloned  cloned and built  successfully.");
                             document.getElementById("message").innerText = "You've built successfully";
-                            document.getElementById("buildButton").style.display = "none";
+                            document.getElementById('loadingIcon_b').style.display = 'none';
                         } else {
                             alert("Failed to clone repository.");
+                            document.getElementById('loadingIcon_b').style.display = 'none';
                             document.getElementById("message").innerText = "build error";
                         }
                     })
@@ -705,14 +837,24 @@ function parseBenchmarkResults1(results) {
         var row = tableBody.insertRow();
         Object.values(result).forEach(value => {
             var cell = row.insertCell();
+            console.log('cell:', cell);
             cell.textContent = value;
+            console.log('value:', value);
         });
     });
 }
  
 });
+
+  //   document.addEventListener('DOMContentLoaded', function() {
+  //   initializeSwiper();
+  // });
+
+ 
+  
 </script>
 
-
+  <!-- Swiper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
 </body>
 </html>
