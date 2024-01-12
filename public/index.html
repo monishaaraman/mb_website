@@ -452,58 +452,10 @@ return color;
                 </thead>
                 <tbody id="benchmarkTableBody"></tbody>
             </table>
-            <script>
-               function createChart(data) {
-                                    // Check if the data array is empty or null
-                      if (!data || data.length === 0) {
-                          console.error("Data is empty or null.");
-                          return;
-                      }
-                                      // Extract unique categories (bn values)
-                      var categories = [...new Set(data.map(item => item.bn))];
-
-                    // Create datasets based on sys_name
-                     var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
-                      return {
-                          label: sysName,
-                          backgroundColor: getRandomColor(),
-                          borderColor: "rgba(75, 192, 192, 1)",
-                          borderWidth: 1,
-                          data: categories.map(category => {
-                              var item = data.find(d => d.sys_name === sysName && d.bn === category);
-                              return item ? item.value1 : 0; // Use 0 if data is missing
-                          }),
-                      };
-                    });
-
-                                // Create the chart
-                                var ctx = document.getElementById("myChart").getContext("2d");
-                                var myChart = new Chart(ctx, {
-                                  type: "bar",
-                                  data: {
-                                      labels: categories,
-                                      datasets: datasets,
-                                  },
-                                  options: {
-                                      indexAxis: "y",
-                                      scales: {
-                                          x: {
-                                              beginAtZero: true,
-                                          },
-                                      },
-                                  },
-                                });
-                                }
-
-                                function getRandomColor() {
-                                var letters = "0123456789ABCDEF";
-                                var color = "#";
-                                for (var i = 0; i < 6; i++) {
-                                  color += letters[Math.floor(Math.random() * 16)];
-                                }
-                                return color;
-                                }
-            </script>
+            <button class="button_save" id="saveButton" onclick="saveData()">
+              <span class="button_save__text">Save</span>
+           </button>
+            
               </div>
             </div>
           </div>
@@ -699,7 +651,62 @@ return color;
 
   <script>
 
+// Declare a global variable to store data.results
+let diskResults;
 
+
+
+               function createChart(data) {
+                                    // Check if the data array is empty or null
+                      if (!data || data.length === 0) {
+                          console.error("Data is empty or null.");
+                          return;
+                      }
+                                      // Extract unique categories (bn values)
+                      var categories = [...new Set(data.map(item => item.bn))];
+
+                    // Create datasets based on sys_name
+                     var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
+                      return {
+                          label: sysName,
+                          backgroundColor: getRandomColor(),
+                          borderColor: "rgba(75, 192, 192, 1)",
+                          borderWidth: 1,
+                          data: categories.map(category => {
+                              var item = data.find(d => d.sys_name === sysName && d.bn === category);
+                              return item ? item.value1 : 0; // Use 0 if data is missing
+                          }),
+                      };
+                    });
+
+                                // Create the chart
+                                var ctx = document.getElementById("myChart").getContext("2d");
+                                var myChart = new Chart(ctx, {
+                                  type: "bar",
+                                  data: {
+                                      labels: categories,
+                                      datasets: datasets,
+                                  },
+                                  options: {
+                                      indexAxis: "y",
+                                      scales: {
+                                          x: {
+                                              beginAtZero: true,
+                                          },
+                                      },
+                                  },
+                                });
+                                }
+
+                                function getRandomColor() {
+                                var letters = "0123456789ABCDEF";
+                                var color = "#";
+                                for (var i = 0; i < 6; i++) {
+                                  color += letters[Math.floor(Math.random() * 16)];
+                                }
+                                return color;
+                                }
+            
 
 function toggleArrow() {
         var arrowIcon = document.getElementById('toggleIcon');
@@ -771,7 +778,18 @@ function toggleArrow() {
         
       } );
 
+
+
+
+
+
+
       document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
+
     // Your existing code here
     document.getElementById('disk_button').addEventListener('click', function() {
         // Display loading icon
@@ -804,7 +822,9 @@ function toggleArrow() {
                 // Check if the "data" property is defined
                 if (data && data.results) {
                     // Call the parsing function
-                    console.log(data.results);
+                   
+                    diskResults = data.results;
+                    console.log(diskResults);
                     parseBenchmarkResults1(data.results);
                     alert('Disk benchmark completed successfully');
                 } else {
@@ -819,6 +839,10 @@ function toggleArrow() {
                 alert('Error occurred during disk benchmark');
             });
     });
+
+
+
+
 
    // Assuming "data.results" is an array of objects with key-value pairs
 function parseBenchmarkResults1(results) {
@@ -844,8 +868,73 @@ function parseBenchmarkResults1(results) {
     });
 }
  
+
+
+// document.getElementById("saveButton").addEventListener("click", function () {
+//   console.log("save btn clicked...");
+//   if (diskResults) {
+//         fetch('/saveResults', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({ results: diskResults }),
+//             })
+//             .then(response => {
+//                 if (!response.ok) {
+//                     console.error('Error saving results to the server');
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error saving results:', error);
+//             });
+//     } else {
+//         console.error('No results to save. Run the disk benchmark first.');
+//         // You might want to provide user feedback here, e.g., display a message.
+//     }
+
+//                     });
 });
 
+
+function saveData() {
+  console.log("save btn clicked...");
+  const button = document.getElementById('saveButton');
+  if (diskResults) {
+        fetch('/saveResults', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ results: diskResults }),
+            })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Success:', data);
+            button.innerHTML = 'Saved &#10004;'; // HTML code for the tick mark
+            button.disabled = true;
+        } else {
+            // Handle the case where success is false
+            console.error('Save unsuccessful');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+else {
+        console.error('No results to save. Run the disk benchmark first.');
+        // You might want to provide user feedback here, e.g., display a message.
+    }
+
+  }
   //   document.addEventListener('DOMContentLoaded', function() {
   //   initializeSwiper();
   // });

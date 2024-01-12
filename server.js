@@ -2,46 +2,40 @@ const { Pool } = require('pg'); // PostgreSQL library
 const fs = require('fs'); // File system module
 const express = require('express');
 const { exec } = require('child_process');
+const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const port = 8000;
 
-//-------------------  DB -----------------//
-// PostgreSQL database configuration
-const pool = new Pool({
-    user: 'postgres',
-    host: '10.16.58.229',
-    database: 'benchmark_db',
-    password: '1234',
-    port: 5432,
-});
+
+
 
 // SQL query to retrieve data
-const query = 'SELECT sys_name, bn, value1 FROM dummy.fio '; // Replace with your SQL query
+// const query = 'SELECT sys_name, bn, value1 FROM dummy.fio '; // Replace with your SQL query
 
-pool.query(query, (err, result) => {
-    if (err) {
-        console.error('Error executing SQL query:', err);
-        pool.end(); // Close the database connection
-        return;
-    }
+// pool.query(query, (err, result) => {
+//     if (err) {
+//         console.error('Error executing SQL query:', err);
+//         pool.end(); // Close the database connection
+//         return;
+//     }
 
-    const data = result.rows; // Retrieve the data from the query result
-    const jsonData = JSON.stringify(data, null, 2); // Convert data to JSON format with 2-space indentation
+//     const data = result.rows; // Retrieve the data from the query result
+//     const jsonData = JSON.stringify(data, null, 2); // Convert data to JSON format with 2-space indentation
 
-    // Write JSON data to a file named data.json
-    fs.writeFile('data.json', jsonData, 'utf8', (err) => {
-        if (err) {
-            console.error('Error writing JSON to file:', err);
-        } else {
-            console.log('JSON data saved to data.json');
-        }
-        pool.end(); // Close the database connection
-    });
-});
+//     // Write JSON data to a file named data.json
+//     fs.writeFile('data.json', jsonData, 'utf8', (err) => {
+//         if (err) {
+//             console.error('Error writing JSON to file:', err);
+//         } else {
+//             console.log('JSON data saved to data.json');
+//         }
+//         pool.end(); // Close the database connection
+//     });
+// });
 
 
-//------------------- DB -----------------//
+//-------------------  -----------------//
 
 // Endpoint to check if the "BENCH" executable file exists
 app.get('/check_bench_executable', (req, res) => {
@@ -61,8 +55,99 @@ app.get('/check_bench_executable', (req, res) => {
 // Serve static files from the public directory
 app.use(express.static('public'));
 
+//-------------------  DB -----------------//
+// PostgreSQL database configuration
+
+const pool = new Pool({
+   user: 'postgres',
+   host: '10.15.217.211',
+   database: 'benchmark_db',
+   password: '1234',
+   port: 5432,
+});
 
 
+// Function to insert JSON data
+function insertJsonData(jsonData) {
+    try {
+        // Check if jsonData is a string and parse it, otherwise use it directly
+        const results = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+        console.log('Results:', results); // Log the results array
+
+        if (!Array.isArray(results)) {
+            console.error('Invalid or missing results data');
+            return;
+        }
+
+        const query = 'INSERT INTO disk.disk_table (sys_name, benchmark, time_ms, cpu_ms, iterations, averageread_mib_s, averagewrite_mib_s) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+        
+        const queryPromises = results.map(result => {
+            const updatedResult = {};
+            Object.keys(result).forEach(key => {
+                updatedResult[key.trim()] = result[key].trim();
+            });
+
+            const values = [
+                updatedResult['System Model Name'],
+                updatedResult['Benchmark'],
+                parseFloat(updatedResult['Time  (ms)']),
+                parseFloat(updatedResult['CPU   (ms)']),
+                parseInt(updatedResult['Iterations']),
+                parseFloat(updatedResult['Average Read (in MiB/s)']),
+                parseFloat(updatedResult['Average Write (in MiB/s)']),
+            ];
+
+            return pool.query(query, values);
+        });
+
+        Promise.all(queryPromises)
+            .then(() => {
+                console.log('JSON data successfully inserted');
+                 const btn = document.querySelector("button_save");
+
+// btn.classList.add("button--loading");
+               btn.classList.remove("button_save--loading");
+            })
+            .catch(err => {
+                console.error('Error executing query', err);
+            });
+
+    } catch (error) {
+        console.error('Error inserting JSON data', error);
+    }
+}
+
+// Assuming you're calling this function with the JSON data
+// insertJsonData(yourJsonData);
+
+  
+
+
+app.use(bodyParser.json());
+
+app.post('/saveResults', (req, res) => {
+   
+    const results = req.body.results;
+console.log("saved results:"+results);
+    if (!results || !Array.isArray(results)) {
+        return res.status(400).json({ error: 'Invalid or missing results data' });
+    }
+
+  // Call the function with your JSON data
+  insertJsonData(results);
+
+    res.status(200).json({ success: true });
+
+
+});
+
+// // Properly close the pool when your application is shutting down
+// process.on('SIGINT', () => {
+//     pool.end().then(() => {
+//         console.log('Pool has been closed gracefully');
+//         process.exit(0);
+//     });
+// });
 // Endpoint to check if the "microbenchmark" folder exists
 app.get('/check_microbenchmark', (req, res) => {
     const folderPath = '/usr/share/microbenchmark'; // Modify this path accordingly
