@@ -8,33 +8,6 @@ const app = express();
 const port = 8000;
 
 
-
-
-// SQL query to retrieve data
-// const query = 'SELECT sys_name, bn, value1 FROM dummy.fio '; // Replace with your SQL query
-
-// pool.query(query, (err, result) => {
-//     if (err) {
-//         console.error('Error executing SQL query:', err);
-//         pool.end(); // Close the database connection
-//         return;
-//     }
-
-//     const data = result.rows; // Retrieve the data from the query result
-//     const jsonData = JSON.stringify(data, null, 2); // Convert data to JSON format with 2-space indentation
-
-//     // Write JSON data to a file named data.json
-//     fs.writeFile('data.json', jsonData, 'utf8', (err) => {
-//         if (err) {
-//             console.error('Error writing JSON to file:', err);
-//         } else {
-//             console.log('JSON data saved to data.json');
-//         }
-//         pool.end(); // Close the database connection
-//     });
-// });
-
-
 //-------------------  -----------------//
 
 // Endpoint to check if the "BENCH" executable file exists
@@ -52,6 +25,8 @@ app.get('/check_bench_executable', (req, res) => {
     });
 });
 
+
+
 // Serve static files from the public directory
 app.use(express.static('public'));
 
@@ -67,8 +42,9 @@ const pool = new Pool({
 });
 
 
-// Function to insert JSON data
-function insertJsonData(jsonData) {
+
+//-----------------Disk result insert function--------------------//
+function insertJsonData_disk(jsonData) {
     try {
         // Check if jsonData is a string and parse it, otherwise use it directly
         const results = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
@@ -120,25 +96,22 @@ function insertJsonData(jsonData) {
 // Assuming you're calling this function with the JSON data
 // insertJsonData(yourJsonData);
 
-  
-
-
 app.use(bodyParser.json());
 
-app.post('/saveResults', (req, res) => {
+
+
+
+//-----------------Disk save button api--------------------//
+app.post('/saveResults-disk', (req, res) => {
    
     const results = req.body.results;
-console.log("saved results:"+results);
-    if (!results || !Array.isArray(results)) {
-        return res.status(400).json({ error: 'Invalid or missing results data' });
-    }
-
-  // Call the function with your JSON data
-  insertJsonData(results);
-
-    res.status(200).json({ success: true });
-
-
+    console.log("saved results:"+results);
+        if (!results || !Array.isArray(results)) {
+            return res.status(400).json({ error: 'Invalid or missing results data' });
+        }
+        // Call the function with your JSON data
+        insertJsonData_disk(results);
+        res.status(200).json({ success: true });
 });
 
 // // Properly close the pool when your application is shutting down
@@ -148,6 +121,11 @@ console.log("saved results:"+results);
 //         process.exit(0);
 //     });
 // });
+
+
+
+
+//-----------------microbenchmark folder exists checking api--------------------//
 // Endpoint to check if the "microbenchmark" folder exists
 app.get('/check_microbenchmark', (req, res) => {
     const folderPath = '/usr/share/microbenchmark'; // Modify this path accordingly
@@ -163,7 +141,7 @@ app.get('/check_microbenchmark', (req, res) => {
     });
 });
 
-
+//-----------------Clone and build microbenchmark folder api--------------------//
 // Endpoint to clone the repository and build it
 app.get('/clone_and_build_microbenchmark', (req, res) => {
     const cloneCommand = 'sudo git clone https://github.com/monishaaraman/microbenchmark.git /usr/share/microbenchmark'; // Modify the clone command and path accordingly
@@ -195,15 +173,13 @@ app.get('/clone_and_build_microbenchmark', (req, res) => {
 });
 
 
-// execute disk benchmark
+// --------------------------execute disk benchmark------------------------------------//
 app.get('/rundiskbenchmark', (req, res) => {
    
-
-    const runCommands = [
+ const runCommands = [
         'cd /usr/share/microbenchmark',
         'sudo ./BENCH disk'
     ];
-  
   
     exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
         console.error(`running disk...`);
@@ -228,7 +204,6 @@ res.json({ success: true, results: parsedResults });
     });
   });
   
-
   function parseBenchmarkResults(runStdout) {
     const parsedResults = [];
     let currentResult = {};
@@ -270,6 +245,56 @@ res.json({ success: true, results: parsedResults });
     return parsedResults;
 }
   }
+
+
+
+
+
+  // Add a new endpoint to fetch data for comparison
+  app.get('/getComparisonData-disk', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, averageread_mib_s, averagewrite_mib_s FROM disk.disk_table';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+// script.js
+
+
+
+
+
+
+// Add a new endpoint to fetch data for chart generation
+app.post('/getChartData', (req, res) => {
+    const selectedSerialNo = req.body.selectedSerialNo; // Assuming you send the selected serial number in the request body
+    console.log("selectedSerialNo= "+selectedSerialNo);
+    const query = 'SELECT averageread_mib_s, averagewrite_mib_s FROM disk.disk_table WHERE id= $1';
+
+    pool.query(query, [selectedSerialNo], (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const chartData = {
+            averageread_mib_s: result.rows[0].averageread_mib_s,
+            averagewrite_mib_s: result.rows[0].averagewrite_mib_s,
+        };
+
+        res.json({ success: true, data: chartData });
+    });
+});
+
 
 
 // ... (existing code)

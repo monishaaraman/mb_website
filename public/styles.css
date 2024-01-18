@@ -19,6 +19,9 @@ h1 {
     font-size: 2em;
 }
 
+
+
+/* -----------Build button--------------- */
 .build-button {
   display: block;
   border: none;
@@ -40,6 +43,9 @@ h1 {
   top: 5px;
 }
 
+
+
+/* -----------Paragraph--------------- */
 
  .p1{
     height: 30px;
@@ -75,6 +81,8 @@ h1 {
 }
 
 
+
+/* -----------Collapsible panel--------------- */
 .collapsible-panel {
     background-color: #001827; 
     margin: 20px;
@@ -89,6 +97,11 @@ h1 {
     cursor: pointer;
 }
 
+
+
+
+
+/* -----------not in use--------------- */
 .loader {
     position: absolute;
     top: 50%;
@@ -109,12 +122,16 @@ h1 {
 
   
  
+/* -----------not in use--------------- */
   .graph-container {
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
   }
 
+
+
+  /* -----------Main body panel--------------- */
   .main_body{
     display: flex;
     justify-content: start;
@@ -125,6 +142,9 @@ h1 {
     height: 100vh;
   }
 
+
+
+/* -----------not in use--------------- */
 #card_style{
     background-color: rgba(222, 184, 135, 0); 
     border-radius: 15px;
@@ -132,6 +152,10 @@ h1 {
         box-shadow: -5px -5px 5px rgba(77, 77, 77, 0.2),
                     5px 5px 5px rgba(0, 0, 0, 0.1);
   }
+
+
+  
+/* -----------not in use--------------- */
   #popup-button {
     text-align: center;
     text-decoration: none;
@@ -155,8 +179,8 @@ h1 {
     background-position: right center;
   }
 
- 
-  /* Styles for the arrow icon */
+
+/* -----------not in use--------------- */
   .arrow-icon {
     width: 20px;
     height: 20px;
@@ -164,7 +188,8 @@ h1 {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Style for the container (optional) */
+
+/* -----------not in use--------------- */
 .toggle-container {
     display: flex;
     align-items: center;
@@ -176,6 +201,7 @@ h1 {
 }
 
 
+/* -----------Tests button animation--------------- */
 #glow-on-hover {
   width: 220px;
   height: 50px;
@@ -236,6 +262,13 @@ h1 {
   100% { background-position: 0 0; }
 }
 
+
+
+
+
+
+
+/* -----------Tests result table--------------- */
 table {
 	width: 800px;
 	border-collapse: collapse;
@@ -283,6 +316,10 @@ tbody {
 	}
 }
 
+
+
+/* -----------not in use--------------- */
+
 .slider_body{
   display: flex;
   justify-content: start;
@@ -294,7 +331,7 @@ tbody {
 }
 
 
-
+/* -----------Save to DB button--------------- */
 .button_save {
   position: relative;
   padding: 8px 16px;
@@ -344,4 +381,102 @@ tbody {
   to {
     transform: rotate(1turn);
   }
+}
+
+
+/* -----------Comparison button--------------- */
+
+.comparison-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+select {
+  appearance: none;
+  
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+
+/* -----------Comparison popup--------------- */
+.popup {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #f0f0f0fc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1;
+  margin: auto;
+  text-align: center;
+}
+
+/* -----------Popup close button--------------- */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+/* -----------Comparison table --not used--------------- */
+#selectedItemsTable {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Style table header and cells */
+#selectedItemsTable th, #selectedItemsTable td {
+  border: 1px solid #80808052;
+  padding: 8px;
+  text-align: left;
+  color: #001827;
+}
+
+#selectedItemsTable th {
+  background-color: #8f8f8f;
+}
+#selectedItemsTable tr {
+ color: #141414;
+ 
+}
+/* Apply styles to the checkboxes */
+
+/* Style for checked checkboxes */
+
+/* Hover effect on table rows */
+#selectedItemsTable tr:hover {
+  background-color: #141414;
+}
+
+
+.chart-container{
+  display: block;
+  height: 70%;
+  width: 70%;
+  margin: auto;
+
 }

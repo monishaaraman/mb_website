@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -16,9 +17,6 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://use.fontawesome.com/b5bf1bd49e.js"></script> 
     
-
-
-
   <script src="body.js"></script>
   <style>
     .blog-card {
@@ -197,476 +195,248 @@ input[type="checkbox"] {
 }
   </style>
   
-
-    <title>Benchmark</title>
+    <title>Micro-Benchmark</title>
    
 </head>
 <body>
 
- 
 
     <header>
-        <h1>Welcome to Our Benchmark</h1>
+        <h1>Micro-Benchmark</h1>
     </header>
 
-  <div class="main_body">
-    <div id="particleCanvas-Blue"></div>
-      
-    <div id="particleCanvas-White"></div>
-    <button class="build-button" id="buildButton">Build</button>
-    <div id="loadingIcon_b" style="display: none;">
-      <section>
-    <div class="loading loading02">
-    <span data-text="L">L</span>
-    <span data-text="O">O</span>
-    <span data-text="A">A</span>
-    <span data-text="D">D</span>
-    <span data-text="I">I</span>
-    <span data-text="N">N</span>
-    <span data-text="G">G</span>
-    </div>
-    </section>
-<p>Please wait...</p>
-</div>
-    <p class="p1" id="message"></p>
- 
-  
+    <div class="main_body">
 
-    
+          <div id="particleCanvas-Blue"></div>
+          <div id="particleCanvas-White"></div>
+
+          <!-- Build button -->
+          <button class="build-button" id="buildButton">Build</button>
+
+          <!-- LOADING animation -->
+          <div id="loadingIcon_b" style="display: none;">
+                  <section>
+                          <div class="loading loading02">
+                          <span data-text="L">L</span>
+                          <span data-text="O">O</span>
+                          <span data-text="A">A</span>
+                          <span data-text="D">D</span>
+                          <span data-text="I">I</span>
+                          <span data-text="N">N</span>
+                          <span data-text="G">G</span>
+                          </div>
+                </section>
+        <p>Please wait...</p>
+          </div>
+          <p class="p1" id="build-message"></p>
+      
+          <!-- Compare button -->
+          <div class="comparison-btn" onclick="showComparisonPopup()">Compare</div>
+
+         <!-- Popup for comparison -->
+          <div class="popup" id="comparisonPopup">
+              <div class="close-btn" onclick="closeComparisonPopup()">X</div>
+              <h2>Select results for Comparison</h2>
+              <select id="selectComparisonItems" multiple></select>
+              <!-- Chart container -->
+              <div class="chart-container">
+                  <canvas id="comparisonChart"></canvas>
+              </div>
+           </div>
+
+      <!-- Container for collapsible panel -->
     <div class="container mt-5">
-      
-       
-        <!-- <div class="card" id="card_style">
-          <div class="card-header" id="collapseHeading1" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px;">
-            <h5 class="mb-0">
-              <button  class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">
-                Disk
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseContent1" class="collapse show" aria-labelledby="collapseHeading1">
-            <div class="card-body" >
-          
-            Content goes here 
-             <div class="graph-container">
-                <canvas id="myChart" width="800" height="500"></canvas>
-              </div> 
-              
-               <script>
-                // Sample data (you can replace this with your API endpoint)
-                const apiUrl = "./data.json"; // Replace with your API endpoint or JSON file path
-
-                // Fetch data from the API
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        createChart(data);
-                    })
-                    .catch(error => {
-                        console.error("Error fetching data:", error);
-                    });
-
-                function createChart(data) {
-                  // Check if the data array is empty or null
-    if (!data || data.length === 0) {
-        console.error("Data is empty or null.");
-        return;
-    }
-                    // Extract unique categories (bn values)
-    var categories = [...new Set(data.map(item => item.bn))];
-
-// Create datasets based on sys_name
-var datasets = [...new Set(data.map(item => item.sys_name))].map(sysName => {
-    return {
-        label: sysName,
-        backgroundColor: getRandomColor(),
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-        data: categories.map(category => {
-            var item = data.find(d => d.sys_name === sysName && d.bn === category);
-            return item ? item.value1 : 0; // Use 0 if data is missing
-        }),
-    };
-});
-
-// Create the chart
-var ctx = document.getElementById("myChart").getContext("2d");
-var myChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-        labels: categories,
-        datasets: datasets,
-    },
-    options: {
-        indexAxis: "y",
-        scales: {
-            x: {
-                beginAtZero: true,
-            },
-        },
-    },
-});
-}
-
-function getRandomColor() {
-var letters = "0123456789ABCDEF";
-var color = "#";
-for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-}
-return color;
-}
-              </script> 
+        
+          <!-------------------------------------------------------------------------Disk panel -------------------------------------------------------------------------------------->
+          <div class="card mt-3" id="card_style">
+            <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+              <h5 class="mb-0">
+                <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover">
+                  Disk
+                </button>
+              </h5>
             </div>
-          </div>
-        </div> -->
-      
-        <div class="card mt-3" id="card_style">
-          <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-            <h5 class="mb-0">
-              <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover">
-                Disk
-              </button>
-      
-            </h5>
             
-          </div>
-          
-      
+            <!-- Disk panel content -->
           <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
-            <!-- <div class="slider_body" >
-              <div class="blog-card">
-                <input type="radio" name="select" id="tap-1" checked>
-                <input type="radio" name="select" id="tap-2">
-                <input type="radio" name="select" id="tap-3">
-                <input type="checkbox" id="imgTap">
-                <div class="sliders">
-                    <label for="tap-1" class="tap tap-1"></label>
-                    <label for="tap-2" class="tap tap-2"></label>
-                    <label for="tap-3" class="tap tap-3"></label>
-                </div>
-                <div class="inner-part">
-                    <label for="imgTap" class="img">
-                        <img class="img-1" src="https://gosnippets.com/blog/wp-content/uploads/2020/11/Bootstrap-5-Pricing-Table-2-1536x812.jpg">
-                    </label>
-                    <div class="content content-1">
-                        <span>26 December 2020</span>
-                        <div class="title">
-                            Lorem Ipsum Dolor</div>
-                        <div class="text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo animi atque aliquid pariatur voluptatem numquam, quisquam. Neque est voluptates doloribus!</div>
-                        <button>Read more</button>
-                    </div>
-                </div>
-                <div class="inner-part">
-                    <label for="imgTap" class="img">
-                        <img class="img-2" src="https://gosnippets.com/blog/wp-content/uploads/2020/10/Bootstrap-Animation-1536x1024.jpg">
-                    </label>
-                    <div class="content content-2">
-                        <span>28 December 2020</span>
-                        <div class="title">
-                            Lorem Ipsum Dolor</div>
-                        <div class="text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum eos ut consectetur numquam ullam fuga animi laudantium nobis rem molestias.</div>
-                        <button>Read more</button>
-                    </div>
-                </div>
-                <div class="inner-part">
-                    <label for="imgTap" class="img">
-                        <img class="img-3" src="https://gosnippets.com/blog/wp-content/uploads/2021/01/Screenshot-from-2021-01-10-20-52-16.png">
-                    </label>
-                    <div class="content content-3">
-                        <span>29 December 2020</span>
-                        <div class="title">
-                            Lorem Ipsum Dolor</div>
-                        <div class="text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod excepturi nemo commodi sint eum ipsam odit atque aliquam officia impedit.</div>
-                        <button>Read more</button>
-                    </div>
+              <div class="card-body">
+                <!-- Content goes here -->
+
+                 <!-- RUN button -->
+              <div class='runbtn_container' id="run-btn">
+                      <a href='#'class='playBut' id= "disk_button">
+                        
+                        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                        <svg version="1.1"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                          x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                          xml:space="preserve">
+                        
+                        <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                          73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                          
+                        <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                        </svg>
+                     </a>
+                  <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
                 </div>
 
-                <div class="blog-slider__pagination"></div>
-            </div>
-              
-            </div> -->
-            <div class="card-body">
-              <!-- Content goes here -->
-              
 
-              <div class='runbtn_container' id="runbtn">
-                <a href='#'class='playBut' id= "disk_button">
-                  
-              <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-              <svg version="1.1"
-                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                 x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-                 xml:space="preserve">
-              
-              <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-                73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                <!-- LOADING animation-->
+                <div id="loadingIcon" style="display: none;">
+                        <section>
+                      <div class="loading loading07">
+                      <span data-text="R">R</span>
+                      <span data-text="U">U</span>
+                      <span data-text="N">N</span>
+                      <span data-text="N">N</span>
+                      <span data-text="I">I</span>
+                      <span data-text="N">N</span>
+                      <span data-text="G">G</span>
+                      </div>
+                      </section>
+                  <p>Please wait...</p>
+                </div>
                 
-              <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-              </svg>
+                <!-- Error mesaage-->
+                <div id="errorMessage" style="display: none;">
+                  <p class="p1">Error occurred during disk benchmark.</p>
+                </div>
+                
+                <!-- Success mesaage-->
+                <div id="successMessage" style="display: none;">
+                       <p class="p1">Disk benchmark completed successfully.</p>
+                      <table id="benchmarkTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>System Model Name</th>
+                                <th>Benchmark</th>
+                                <th>Time (ms)</th>
+                                <th>CPU (ms)</th>
+                                <th>Iterations</th>
+                                <th>Average Read (in MiB/s)</th>
+                                <th>Average Write (in MiB/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarkTableBody"></tbody>
+                    </table>
+
+                    <!-- Save to DB button-->
+                    <button class="button_save" id="disk-save-btn" onclick="Disk_saveData()">
+                          <span class="button_save__text">Save</span>
+                    </button>
               
-              
-                  
-                </a>
-                <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+                </div>
               </div>
-              <div id="loadingIcon" style="display: none;">
-                      <section>
-                    <div class="loading loading07">
-                    <span data-text="L">L</span>
-                    <span data-text="O">O</span>
-                    <span data-text="A">A</span>
-                    <span data-text="D">D</span>
-                    <span data-text="I">I</span>
-                    <span data-text="N">N</span>
-                    <span data-text="G">G</span>
-                    </div>
-                    </section>
-                <p>Please wait...</p>
-              </div>
-              
-              <div id="errorMessage" style="display: none;">
-                <p class="p1">Error occurred during disk benchmark.</p>
-              </div>
-              
-              <div id="successMessage" style="display: none;">
-                <p class="p1">Disk benchmark completed successfully.</p>
-                 <!-- <div class="graph-container">
-                <canvas id="myChart" width="800" height="500"></canvas>
-                </div>  -->
-                <table id="benchmarkTable" class="table">
-                <thead>
-                    <tr>
-                        <th>System Model Name</th>
-                        <th>Benchmark</th>
-                        <th>Time (ms)</th>
-                        <th>CPU (ms)</th>
-                        <th>Iterations</th>
-                        <th>Average Read (in MiB/s)</th>
-                        <th>Average Write (in MiB/s)</th>
-                    </tr>
-                </thead>
-                <tbody id="benchmarkTableBody"></tbody>
-            </table>
-            <button class="button_save" id="saveButton" onclick="saveData()">
-              <span class="button_save__text">Save</span>
-           </button>
+            </div>
+          </div>
+       
+           <!-------------------------------------------------------------------------Memory panel -------------------------------------------------------------------------------------->
+           <div class="card mt-3" id="card_style">
+            <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+              <h5 class="mb-0">
+                <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3" id="glow-on-hover">
+                  Memory
+                </button>
+              </h5>
+            </div>
             
-              </div>
-            </div>
-          </div>
-        </div>
+            <!-- Disk panel content -->
+          <div id="collapseContent3" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+              <div class="card-body">
+                <!-- Content goes here -->
 
-        <div class="card mt-3" id="card_style">
-          <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-            <h5 class="mb-0">
-              <button  id="glow-on-hover" class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">
-                Memory
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2">
-            <div class="card-body">
-              <!-- Content goes here -->
-              <div id="loadingIcon" style="display: none;">
-                      <section>
-                    <div class="loading loading07">
-                    <span data-text="L">L</span>
-                    <span data-text="O">O</span>
-                    <span data-text="A">A</span>
-                    <span data-text="D">D</span>
-                    <span data-text="I">I</span>
-                    <span data-text="N">N</span>
-                    <span data-text="G">G</span>
-                    </div>
-                    </section>
-                <p>Please wait...</p>
-              </div>
-              
-              <div id="errorMessage" style="display: none;">
-                <p>Error occurred during disk benchmark.</p>
-              </div>
-              
-              <div id="successMessage" style="display: none;">
-                <p>Disk benchmark completed successfully.</p>
+                 <!-- RUN button -->
+              <div class='runbtn_container' id="run-btn">
+                      <a href='#'class='playBut' id= "disk_button">
+                        
+                        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                        <svg version="1.1"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                          x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                          xml:space="preserve">
+                        
+                        <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                          73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                          
+                        <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                        </svg>
+                     </a>
+                  <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+                </div>
+
+
+                <!-- LOADING animation-->
+                <div id="loadingIcon" style="display: none;">
+                        <section>
+                      <div class="loading loading07">
+                      <span data-text="R">R</span>
+                      <span data-text="U">U</span>
+                      <span data-text="N">N</span>
+                      <span data-text="N">N</span>
+                      <span data-text="I">I</span>
+                      <span data-text="N">N</span>
+                      <span data-text="G">G</span>
+                      </div>
+                      </section>
+                  <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
+                </div>
                 
+                <!-- Error mesaage-->
+                <div id="errorMessage" style="display: none;">
+                  <p class="p1">Error occurred during disk benchmark.</p>
+                </div>
+                
+                <!-- Success mesaage-->
+                <div id="successMessage" style="display: none;">
+                       <p class="p1">Disk benchmark completed successfully.</p>
+                      <table id="benchmarkTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>System Model Name</th>
+                                <th>Benchmark</th>
+                                <th>Time (ms)</th>
+                                <th>CPU (ms)</th>
+                                <th>Iterations</th>
+                                <th>Average Read (in MiB/s)</th>
+                                <th>Average Write (in MiB/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarkTableBody"></tbody>
+                    </table>
+
+                    <!-- Save to DB button-->
+                    <button class="button_save" id="disk-save-btn" onclick="Disk_saveData()">
+                          <span class="button_save__text">Save</span>
+                    </button>
+              
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="card mt-3" id="card_style">
-          <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-            <h5 class="mb-0">
-              <button   id="glow-on-hover" class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">
-                Network
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2">
-            <div class="card-body">
-              <!-- Content goes here -->
-              <div id="loadingIcon" style="display: none;">
-                      <section>
-                    <div class="loading loading07">
-                    <span data-text="L">L</span>
-                    <span data-text="O">O</span>
-                    <span data-text="A">A</span>
-                    <span data-text="D">D</span>
-                    <span data-text="I">I</span>
-                    <span data-text="N">N</span>
-                    <span data-text="G">G</span>
-                    </div>
-                    </section>
-                <p>Please wait...</p>
-              </div>
-              
-              <div id="errorMessage" style="display: none;">
-                <p>Error occurred during disk benchmark.</p>
-              </div>
-              
-              <div id="successMessage" style="display: none;">
-                <p>Disk benchmark completed successfully.</p>
-                 
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-3" id="card_style">
-          <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-            <h5 class="mb-0">
-              <button   id="glow-on-hover" class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">
-                GPU
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2">
-            <div class="card-body">
-              <!-- Content goes here -->
-              <div id="loadingIcon" style="display: none;">
-                      <section>
-                    <div class="loading loading07">
-                    <span data-text="L">L</span>
-                    <span data-text="O">O</span>
-                    <span data-text="A">A</span>
-                    <span data-text="D">D</span>
-                    <span data-text="I">I</span>
-                    <span data-text="N">N</span>
-                    <span data-text="G">G</span>
-                    </div>
-                    </section>
-                <p>Please wait...</p>
-              </div>
-              
-              <div id="errorMessage" style="display: none;">
-                <p>Error occurred during disk benchmark.</p>
-              </div>
-              
-              <div id="successMessage" style="display: none;">
-                <p>Disk benchmark completed successfully.</p>
-                 <div class="graph-container">
-                <canvas id="myChart" width="800" height="500"></canvas>
-                </div> 
-                <table id="benchmarkTable" class="table">
-                <thead>
-                    <tr>
-                        <th>System Model Name</th>
-                        <th>Benchmark</th>
-                        <th>Time</th>
-                        <th>CPU</th>
-                        <th>Iterations</th>
-                        <th>Average Read (in MiB/s)</th>
-                        <th>Average Write (in MiB/s)</th>
-                    </tr>
-                </thead>
-                <tbody id="benchmarkTableBody"></tbody>
-            </table>
-            <script>
-               function createChart(data) {
-                                    // Check if the data array is empty or null
-                      if (!data || data.length === 0) {
-                          console.error("Data is empty or null.");
-                          return;
-                      }
-                                      // Extract unique categories (bn values)
-                      var categories = [...new Set(data.map(item => item.bn))];
-
-                    // Create datasets based on sys_name
-                     var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
-                      return {
-                          label: sysName,
-                          backgroundColor: getRandomColor(),
-                          borderColor: "rgba(75, 192, 192, 1)",
-                          borderWidth: 1,
-                          data: categories.map(category => {
-                              var item = data.find(d => d.sys_name === sysName && d.bn === category);
-                              return item ? item.value1 : 0; // Use 0 if data is missing
-                          }),
-                      };
-                    });
-
-                                // Create the chart
-                                var ctx = document.getElementById("myChart").getContext("2d");
-                                var myChart = new Chart(ctx, {
-                                  type: "bar",
-                                  data: {
-                                      labels: categories,
-                                      datasets: datasets,
-                                  },
-                                  options: {
-                                      indexAxis: "y",
-                                      scales: {
-                                          x: {
-                                              beginAtZero: true,
-                                          },
-                                      },
-                                  },
-                                });
-                                }
-
-                                function getRandomColor() {
-                                var letters = "0123456789ABCDEF";
-                                var color = "#";
-                                for (var i = 0; i < 6; i++) {
-                                  color += letters[Math.floor(Math.random() * 16)];
-                                }
-                                return color;
-                                }
-            </script>
-              </div>
-            </div>
-          </div>
-        </div>
-   </div>
-  </div>
+       
+          
+    </div>
+    </div>
 
 
-  <script>
+<script>
 
 // Declare a global variable to store data.results
 let diskResults;
 
+//-----------create chart function for DISK----------------------//
+function createChart(data) {
+                 // Check if the data array is empty or null
+                if (!data || data.length === 0) {
+                       console.error("Data is empty or null.");
+                       return;
+                 }
+                   // Extract unique categories (bn values)
+                var categories = [...new Set(data.map(item => item.bn))];
 
-
-               function createChart(data) {
-                                    // Check if the data array is empty or null
-                      if (!data || data.length === 0) {
-                          console.error("Data is empty or null.");
-                          return;
-                      }
-                                      // Extract unique categories (bn values)
-                      var categories = [...new Set(data.map(item => item.bn))];
-
-                    // Create datasets based on sys_name
-                     var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
+                // Create datasets based on sys_name
+                var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
                       return {
                           label: sysName,
                           backgroundColor: getRandomColor(),
@@ -677,11 +447,12 @@ let diskResults;
                               return item ? item.value1 : 0; // Use 0 if data is missing
                           }),
                       };
-                    });
+                });
 
-                                // Create the chart
-                                var ctx = document.getElementById("myChart").getContext("2d");
-                                var myChart = new Chart(ctx, {
+                    // Create the chart
+                  var ctx = document.getElementById("myChart").getContext("2d");
+                  
+                  var myChart = new Chart(ctx, {
                                   type: "bar",
                                   data: {
                                       labels: categories,
@@ -696,29 +467,25 @@ let diskResults;
                                       },
                                   },
                                 });
-                                }
+}
 
-                                function getRandomColor() {
+
+//---------------------get Random Color function----------------------//
+function getRandomColor() {
                                 var letters = "0123456789ABCDEF";
                                 var color = "#";
                                 for (var i = 0; i < 6; i++) {
                                   color += letters[Math.floor(Math.random() * 16)];
                                 }
                                 return color;
-                                }
+ }
             
 
-function toggleArrow() {
-        var arrowIcon = document.getElementById('toggleIcon');
 
-       // Toggle the arrow icon by changing its direction
-       arrowIcon.classList.toggle('fa-chevron-down');
-        arrowIcon.classList.toggle('fa-angle-up');
-    }
-
+//----------------Microbenchmark folder checking function----------------------//
     // Function to check if the "microbenchmark" folder exists
-    function checkMicrobenchmarkFolder() {
-        fetch("/check_microbenchmark")
+ function checkMicrobenchmarkFolder() {
+            fetch("/check_microbenchmark")
             .then(response => {
                 if (response.status === 200) {
                     // Folder exists, check if "BENCH" executable exists
@@ -727,32 +494,34 @@ function toggleArrow() {
                             if (execResponse.status === 200) {
                                 // "BENCH" executable exists, hide the build button
                                 document.getElementById("buildButton").style.display = "none";
-                                document.getElementById("message").innerText = "You've already built.";
+                                document.getElementById("build-message").innerText = "You've already built.";
                             } else {
                                 // "BENCH" executable doesn't exist, show the build button
                                 document.getElementById("buildButton").style.display = "block";
-                                document.getElementById("message").innerText = "You should build first.";
+                                document.getElementById("build-message").innerText = "You should build first.";
                             }
                         })
                         .catch(execError => console.error("Error checking 'BENCH' executable: " + execError));
                 } else {
                     // Folder doesn't exist, show the build button
                     document.getElementById("buildButton").style.display = "block";
-                    document.getElementById("message").innerText = "You should build first.";
+                    document.getElementById("build-message").innerText = "You should build first.";
                 }
             })
             .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
     }
+
+
     // Check on page load
     checkMicrobenchmarkFolder();
 
 
-
-  document.getElementById("buildButton").addEventListener("click", function () {
+//----------------Build button clicking function----------------------//
+document.getElementById("buildButton").addEventListener("click", function () {
       // Check if the "microbenchmark" folder exists
       document.getElementById('loadingIcon_b').style.display = 'block';
       document.getElementById("buildButton").style.display = "none";
-    fetch("/check_microbenchmark")
+      fetch("/check_microbenchmark")
         .then(response => {
             if (response.status === 200) {
                 alert("The 'microbenchmark' folder already exists.");
@@ -763,12 +532,12 @@ function toggleArrow() {
                     .then(data => {
                         if (data.success) {
                           //  alert("Repository cloned  cloned and built  successfully.");
-                            document.getElementById("message").innerText = "You've built successfully";
+                            document.getElementById("build-message").innerText = "You've built successfully";
                             document.getElementById('loadingIcon_b').style.display = 'none';
                         } else {
                             alert("Failed to clone repository.");
                             document.getElementById('loadingIcon_b').style.display = 'none';
-                            document.getElementById("message").innerText = "build error";
+                            document.getElementById("build-message").innerText = "build error";
                         }
                     })
                     .catch(error => console.error("Error cloning repository: " + error));
@@ -780,27 +549,19 @@ function toggleArrow() {
 
 
 
+ document.addEventListener('DOMContentLoaded', function() {
 
-
-
-
-      document.addEventListener('DOMContentLoaded', function() {
-
-
-
-
-
-    // Your existing code here
+  //----------------Disk button clicking function----------------------//
+  // Your existing code here
     document.getElementById('disk_button').addEventListener('click', function() {
-        // Display loading icon
+  // Display loading icon
 
-      document.getElementById("runbtn").style.display = "none";
+       document.getElementById("run-btn").style.display = "none";
         document.getElementById('loadingIcon').style.display = 'block';
         document.getElementById('errorMessage').style.display = 'none';
         document.getElementById('successMessage').style.display = 'none';
 
         // Assuming your server is running on localhost:3000
-        
         fetch("/rundiskbenchmark")
             .then(response => {
                 // Hide loading icon
@@ -841,15 +602,11 @@ function toggleArrow() {
     });
 
 
-
-
-
+//----------------Disk result parsing function----------------------//
    // Assuming "data.results" is an array of objects with key-value pairs
 function parseBenchmarkResults1(results) {
-// Check if the "results" property is defined
-
+    // Check if the "results" property is defined
     console.log('Received results from server:', results);
-
     // Clear existing table rows
     var tableBody = document.getElementById('benchmarkTableBody');
     tableBody.innerHTML = '';
@@ -867,41 +624,14 @@ function parseBenchmarkResults1(results) {
         });
     });
 }
- 
-
-
-// document.getElementById("saveButton").addEventListener("click", function () {
-//   console.log("save btn clicked...");
-//   if (diskResults) {
-//         fetch('/saveResults', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify({ results: diskResults }),
-//             })
-//             .then(response => {
-//                 if (!response.ok) {
-//                     console.error('Error saving results to the server');
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Error saving results:', error);
-//             });
-//     } else {
-//         console.error('No results to save. Run the disk benchmark first.');
-//         // You might want to provide user feedback here, e.g., display a message.
-//     }
-
-//                     });
 });
 
-
-function saveData() {
-  console.log("save btn clicked...");
-  const button = document.getElementById('saveButton');
+//----------------Disk result saving to DB function----------------------//
+function Disk_saveData() {
+  console.log("disk save btn clicked...");
+  const button = document.getElementById('disk-save-btn');
   if (diskResults) {
-        fetch('/saveResults', {
+        fetch('/saveResults-disk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -928,22 +658,149 @@ function saveData() {
         console.error('Error:', error);
     });
 }
-
 else {
         console.error('No results to save. Run the disk benchmark first.');
         // You might want to provide user feedback here, e.g., display a message.
     }
 
   }
-  //   document.addEventListener('DOMContentLoaded', function() {
-  //   initializeSwiper();
-  // });
-
  
-  
+
+//----------------Comparison popup function----------------------//
+// Function to show the comparison popup
+function showComparisonPopup() {
+    // Fetch data from the server
+    fetch('/getComparisonData-disk')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+              console.log('Fetched Data:', data);
+                // Populate the select box with fetched data
+                const selectComparisonItems = document.getElementById('selectComparisonItems');
+            selectComparisonItems.innerHTML = ''; // Clear previous options
+               index=0;
+            data.data.forEach(item => {
+                const option = document.createElement('option');
+                
+                option.value = index++; // Use the unique identifier as the value
+                console.log('index:', index);
+                option.innerHTML = `${index} - ${item.sys_name} - ${item.benchmark}`;
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = item.id;
+                option.prepend(checkbox);
+
+                selectComparisonItems.appendChild(option);
+            });
+
+            // Log the selected items on change
+            selectComparisonItems.addEventListener('change', () => {
+              const selectedData = Array.from(document.getElementById('selectComparisonItems').selectedOptions).map(option => option.value);
+                    generateBarChart_DISK(selectedData);
+              
+            });
+           // Show the popup
+           document.getElementById('comparisonPopup').style.display = 'block';    
+            } else {
+                console.error('Failed to fetch data for comparison');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data for comparison', error);
+        });
+}
+
+//----------------Comparison popup Close function----------------------//
+// Function to close the comparison popup
+function closeComparisonPopup() {
+    document.getElementById('comparisonPopup').style.display = 'none';
+}
+
+
+// -----------------------prepare dataser fof chart - DISK--------------------//
+function prepareDataset_DISK (selectedData) {
+      const labels = ['Average read', 'Average write'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name} - Average Read`,
+        data: [item.averageread_mib_s, item.averagewrite_mib_s],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+
+// -----------------------generate Bar Chart - DISK--------------------//
+let relevantArray = [];
+let comparisonChart= null; // Declare a variable to store the chart instance
+let  dataset;
+function generateBarChart_DISK(selectedData) {
+     // Log the selected items in the chart function
+      console.log('Selected Items in generateBarChart_DISK:', selectedData);
+
+      // Fetch data based on the selected row's properties
+      fetch('/getComparisonData-disk') // Modify the endpoint if needed
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // Log the fetched data
+                  console.log('Fetched Data:', data);
+
+                  const relevantArray = selectedData.map(index => {
+                      const selectedIndex = Number(index);
+                      return data.data[selectedIndex];
+                  });
+
+                  // Log the relevant array
+                  console.log('Relevant Array:', relevantArray);
+
+                  // Destroy the existing chart if it exists
+                  if (comparisonChart) {
+                      comparisonChart.destroy();
+                  }
+
+                  // Now you can use the relevantArray to generate the bar chart
+                  const dataset = prepareDataset_DISK(relevantArray);
+
+                  // Generate the bar chart using Chart.js
+                  const ctx = document.getElementById('comparisonChart').getContext('2d');
+                  comparisonChart = new Chart(ctx, {
+                      type: 'bar',
+                      data: dataset,
+                      options: {
+                          scales: {
+                              y: {
+                                  beginAtZero: true,
+                              },
+                          },
+                      },
+                  });
+              } else {
+                  console.error('Failed to fetch data:', data);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+
+}
+
 </script>
+
+
 
   <!-- Swiper JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
+
+
 </body>
 </html>
