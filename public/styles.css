@@ -98,6 +98,22 @@ h1 {
 }
 
 
+/* for description */
+
+.testcase-label {
+  font-style: italic;
+  text-decoration: underline;
+  font-weight: bold;
+
+
+}
+
+.intro-description {
+  font-weight: bold;
+  color: #ffffff; /* This sets the text color to black */
+  font-size: 16px; /* This sets the text size to 16 pixels */
+}
+
 
 
 
@@ -153,6 +169,8 @@ h1 {
                     5px 5px 5px rgba(0, 0, 0, 0.1);
   }
 
+
+  
 
   
 /* -----------not in use--------------- */
@@ -526,6 +544,8 @@ select {
 }
 .modalbg .dialog {
   width: 50%;
+  height: 50%;
+  overflow: auto;
   position: relative;
   top: -1000px;
   margin: 10% auto;
@@ -570,9 +590,9 @@ select {
   color: #FFFFFF;
   line-height: 25px;
   position: absolute;
-  right: -12px;
+  right: 0px;
   text-align: center;
-  top: -10px;
+  top: -0px;
   width: 24px;
   text-decoration: none;
   font-weight: bold;

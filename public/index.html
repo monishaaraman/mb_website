@@ -34,6 +34,11 @@
           <div id="particleCanvas-Blue"></div>
           <div id="particleCanvas-White"></div>
 
+          <!-- Description before Build button -->
+    <div class="intro-description">
+        <p>Welcome to Micro-benchmark, your one-stop solution for precise system benchmarking. Dive into a seamless evaluation of your system's performance across disk, memory, CPU, and more with just a click. Utilizing top-tier open-source benchmarks like Blake2, iperf, RAMspeed, and Google Benchmark, our platform offers detailed insights that run quietly in the background. Perfect for tech enthusiasts, professionals, and the curious, Micro-benchmark simplifies system diagnostics, empowering you with the knowledge to optimize and understand your device's full potential. Start your comprehensive performance analysis today.</p>
+    </div>
+
           <!-- Build button -->
           <button class="build-button" id="buildButton">Build</button>
 
@@ -69,7 +74,7 @@
            </div>
 
          <!-- Container for collapsible panel -->
-        <div class="container mt-5" style="overflow: auto;">
+        <div class="container mt-5" style="overflow: auto; height: 80%;">
             
             <!-------------------------------------------------------------------------Disk panel -------------------------------------------------------------------------------------->
             <div class="card mt-3" id="card_style">
@@ -86,20 +91,33 @@
                     <div id="openModal_info" class="modalbg">
                     <div class="dialog">
                         <a href="#close" title="Close" class="close">X</a>
-                        <h3>Disk Benchmark info</h3>
-                        <h4>Benchmark: FIO - Storage Speed Test</h4>
+                        <h3 style="text-align: center;"><strong>DISK BENCHMARK INFO</strong></h3>
+                        <h4><span class="testcase-label">Test Case 1:</span> </h4>
+                        <p>Benchmark: FIO - Storage Speed Test</p>
 
         <p>We'll report:</p>
 
         <ul>
-            <li><strong>Time (ms):</strong> Test duration (lower is better).</li>
-            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better).</li>
-            <li><strong>Iterations:</strong> Number of test repetitions.</li>
-            <li><strong>Avg. Read Speed (MiB/s):</strong> Reading speed (higher is better).</li>
-            <li><strong>Avg. Write Speed (MiB/s):</strong> Writing speed (higher is better).</li>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Avg. Read Speed (MiB/s):</strong> Reading speed (higher is better)</li>
+            <li><strong>Avg. Write Speed (MiB/s):</strong> Writing speed (higher is better)</li>
         </ul>
-                        <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
-                        <p class="fineprint">note:</p>
+                        
+        <h4><span class="testcase-label">Test Case 2:</span> </h4>
+        <p>Benchmark: COMPILEBENCH - Simulating compilation to test storage efficiency</p>
+
+                        <p>We'll report:</p>
+
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Average Compile Speed (MiB/s): </strong> Efficiency of simulated compilation (higher is better)</li>
+        </ul>
+        <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
+        <p class="fineprint">note:</p>
                     </div>
                     </div>
                 
@@ -224,14 +242,49 @@
         
             <!-------------------------------------------------------------------------Memory panel -------------------------------------------------------------------------------------->
             <div class="card mt-3" id="card_style">
-                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
                 <h5 class="mb-0">
                     <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3" id="glow-on-hover">
                     Memory
                     </button>
                 </h5>
-                </div>
+
+                <a href="#openModal_info1"><i class="fa fa-circle-info fa-lg style=color: #fff;"></i></a>
+<div id="openModal_info1" class="modalbg">
+    <div class="dialog">
+        <a href="#close" title="Close" class="close">X</a>
+        <h3 style="text-align: center;"><strong>MEMORY BENCHMARK INFO</strong></h3>
+        
+        <h4><span class="testcase-label">Test Case 1:</span> </h4>
+        <p>RAMspeed SMP - Memory Performance Analysis</p>
+        <p>We'll report:</p>
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Average Integer Memory (in MiB/s):</strong> Throughput of integer memory operations (higher is better)</li>
+            <li><strong>Average Float Memory (in MiB/s):</strong> Throughput of floating-point memory operations (higher is better)</li>
+        </ul>
+
+        <h4><span class="testcase-label">Test Case 2:</span></h4>
+        <p> CACHEBENCH - Memory and Cache Bandwidth Performance</p>
+        
+        <p>We'll report:</p>
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Average Cache (in MiB/s):</strong> Cache memory performance (higher is better)</li>
+        </ul>
+        
+        <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
+        <p class="fineprint">note:</p>
+    </div>
+</div>
+</div>
+
                 
+               
                 <!-- Memory panel content -->
             <div id="collapseContent3" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
                 <div class="card-body">
@@ -352,13 +405,59 @@
 
                  <!-------------------------------------------------------------------------Network panel -------------------------------------------------------------------------------------->
             <div class="card mt-3" id="card_style">
-                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
                 <h5 class="mb-0">
                     <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4" id="glow-on-hover">
                     Network
                     </button>
                 </h5>
-                </div>
+
+                <a href="#openModal_info3"><i class="fa fa-circle-info fa-lg style=color: #fff;"></i></a>
+<div id="openModal_info3" class="modalbg">
+    <div class="dialog">
+        <a href="#close" title="Close" class="close">X</a>
+        <h3 style="text-align: center;"><strong>NETWORK BENCHMARK INFO</strong></h3>
+        <h4><span class="testcase-label">Test Case 1:</span> </h4>
+        <p>ETHR - Average Bandwidth Analysis</p>
+        <p>We'll report:</p>
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Average Bandwidth (bits/sec) :</strong> Average data transfer rate over the network (higher is better)</li>
+        </ul>
+
+        <h4><span class="testcase-label">Test Case 2:</span></h4>
+        <p> SOCKPERF - Average Latency Analysis</p>
+        
+        <p>We'll report:</p>
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Average Latency (in usec):</strong> Average delay for data exchange (lower is better)</li>
+        </ul>
+
+        <h4><span class="testcase-label">Test Case 3:</span></h4>
+        <p> IPERF -Network Throughput Analysis</p>
+        
+        <p>We'll report:</p>
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+            <li><strong>Iterations:</strong> Number of test repetitions</li>
+            <li><strong>Average Receiver Bitrate (Mbits/sec)  :</strong> Average rate of data received (higher is better)</li>
+            <li><strong>Average Sender Bitrate (Mbits/sec)  :</strong>Average rate of data sent (higher is better)</li>
+        </ul>
+        
+        <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
+        <p class="fineprint">note:</p>
+    </div>
+</div>
+                
+                
+</div>
+                
                 
                 <!-- network panel content -->
             <div id="collapseContent4" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
@@ -480,15 +579,57 @@
 
 <!-------------------------------------------------------------------------CPU panel -------------------------------------------------------------------------------------->
 <div class="card mt-3" id="card_style">
-    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
     <h5 class="mb-0">
         <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent5" aria-expanded="false" aria-controls="collapseContent5" id="glow-on-hover">
         Cpu
         </button>
     </h5>
-    </div>
+    <a href="#openModal_info4"><i class="fa fa-circle-info fa-lg style=color: #fff;"></i></a>
+    <div id="openModal_info4" class="modalbg">
+        <div class="dialog">
+            <a href="#close" title="Close" class="close">X</a>
+            <h3 style="text-align: center;"><strong>CPU BENCHMARK INFO</strong></h3>
+            <h4><span class="testcase-label">Test Case 1:</span> </h4>
+            <p>C-RAY - 3D Rendering Speed Test</p>
+            <p>We'll report:</p>
+            <ul>
+                <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+                <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+                <li><strong>Iterations:</strong> Number of test repetitions</li>
+                <li><strong>Average Rendering time (seconds)  :</strong> Average time for completing a render (lower is better)</li>
+            </ul>
     
-    <!-- network panel content -->
+            <h4><span class="testcase-label">Test Case 2:</span></h4>
+            <p> BLAKE2 - Hashing Performance Test</p>
+            
+            <p>We'll report:</p>
+            <ul>
+                <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+                <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+                <li><strong>Iterations:</strong> Number of test repetitions</li>
+                <li><strong>Average Per Byte (Cycles Per Byte) :</strong> Computational efficiency (lower is better)</li>
+            </ul>
+    
+            <h4><span class="testcase-label">Test Case 3:</span></h4>
+            <p> SYSBENCH - System Performance Analysis</p>
+            
+            <p>We'll report:</p>
+            <ul>
+                <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+                <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+                <li><strong>Iterations:</strong> Number of test repetitions</li>
+                <li><strong>AverageEventsPerSecond :</strong> Rate of events processed (higher is better)</li>
+                
+            
+            <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
+            <p class="fineprint">note:</p>
+        </div>
+    </div>
+                    
+                    
+    </div>    
+    <!-- cpu panel content -->
 <div id="collapseContent5" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
     <div class="card-body">
         <!-- Content goes here -->
@@ -607,15 +748,59 @@
 
 <!-------------------------------------------------------------------------GPU panel -------------------------------------------------------------------------------------->
 <div class="card mt-3" id="card_style">
-    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+    <div class="card-header" id="collapseHeading2"style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
     <h5 class="mb-0">
         <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent6" aria-expanded="false" aria-controls="collapseContent6" id="glow-on-hover">
         Gpu
         </button>
     </h5>
+
+    <a href="#openModal_info5"><i class="fa fa-circle-info fa-lg style=color: #fff;"></i></a>
+    <div id="openModal_info5" class="modalbg">
+        <div class="dialog">
+            <a href="#close" title="Close" class="close">X</a>
+            <h3 style="text-align: center;"><strong>GPU BENCHMARK INFO</strong></h3>
+            <h4><span class="testcase-label">Test Case 1:</span> </h4>
+            <p>UNIGINE HEAVEN - Graphics Performance Test</p>
+            <p>We'll report:</p>
+            <ul>
+                <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+                <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+                <li><strong>Iterations:</strong> Number of test repetitions</li>
+                <li><strong>Average FPS (Frames Per Second)  :</strong> Average frames per second (higher is better)</li>
+            </ul>
+    
+            <h4><span class="testcase-label">Test Case 2:</span></h4>
+            <p> FURMARK - GPU Stress Test  </p>
+            
+            <p>We'll report:</p>
+            <ul>
+                <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+                <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+                <li><strong>Iterations:</strong> Number of test repetitions</li>
+                <li><strong>Average Furmark Score (Points)   :</strong> Test score reflecting GPU performance (higher is better)</li>
+            </ul>
+    
+            <h4><span class="testcase-label">Test Case 3:</span></h4>
+            <p> TESSMARK - GPU Stress Test</p>
+            
+            <p>We'll report:</p>
+            <ul>
+                <li><strong>Time (ms):</strong> Test duration (lower is better)</li>
+                <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better)</li>
+                <li><strong>Iterations:</strong> Number of test repetitions</li>
+                <li><strong>Average Tessmark Score (Points) :</strong> Overall performance score (higher is better)</li>
+                
+            
+            <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
+            <p class="fineprint">note:</p>
+        </div>
+    </div>
+                    
+                    
     </div>
     
-    <!-- network panel content -->
+    <!-- gpu panel content -->
 <div id="collapseContent6" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
     <div class="card-body">
         <!-- Content goes here -->
@@ -662,7 +847,7 @@
         </div>
         
         <!-- Success mesaage-->
-        <div id="successMessage4" style="display: none;">
+        <div id="successMessage4" style="display: none; overflow: scroll;">
             <p class="p1">Gpu benchmark completed successfully.</p>
             <table id="benchmarkgpuTable" class="table">
                 <caption>BENCHMARK NAME: BM_UnigineHeavenBenchmark</caption>

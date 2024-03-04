@@ -210,7 +210,7 @@ columns = [
                      parseFloat(updatedResult['Time_ms']), // Adjusted key
                      parseFloat(updatedResult['CPU_ms']), // Adjusted key
                      parseInt(updatedResult['Iterations']),
-                     parseFloat(updatedResult['Average Float Memory (in MiB/s']), // Adjusted key with extra space
+                     parseFloat(updatedResult['Average Float Memory (in MiB/s)']), // Adjusted key with extra space
                  ];
              
              
@@ -525,14 +525,14 @@ columns = [
                     parseFloat(updatedResult['Time_ms']), // Adjusted key
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
-                    parseFloat(updatedResult['Average Furmark Score (Points))']), // Adjusted key with extra space
+                    parseFloat(updatedResult['Average Furmark Score (Points)']), // Adjusted key with extra space
                 ];
             
             
 
             } else if (benchmarkName === 'BM_TessMarkBenchmark') {
             
-                query = 'INSERT INTO gpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO gpu.tessmark (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points) VALUES ($1, $2, $3, $4, $5, $6)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -1138,6 +1138,8 @@ app.get('/rungpubenchmark', (req, res) => {
             return;
         }
 
+
+        
         const data = result.rows;
         res.json({ success: true, data: data });
     });
