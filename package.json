@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "chart.js": "^4.4.1",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "pg": "^8.11.3",
+    "vue-chartjs": "^5.3.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "mb_website-main",
+  "version": "1.0.0",
+  "main": "fiveserver.config.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

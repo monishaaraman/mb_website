@@ -1,0 +1,454 @@
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+#wrapper{
+  width:100vw;
+  height:100vh;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.buildButton{
+  margin: 0;
+  height: 40px;
+  width: 200px;
+}
+
+#cpuDetailsTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#cpuDetailsTable td, #cpuDetailsTable th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#cpuDetailsTable th {
+  background-color: #f2f2f2;
+  color: cadetblue;
+}
+
+#hardwareMap {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f0f0;
+  position: relative;
+}
+
+.card {
+  width: 150px;                 /* Set width of cards */
+  display: flex;                /* Children use Flexbox */
+  flex-direction: column;       /* Rotate Axis */
+  border: 1px solid #EF9A9A;    /* Set up Border */
+  border-radius: 4px;           /* Slightly Curve edges */
+  overflow: hidden;             /* Fixes the corners */
+  margin: 5px;                  /* Add space between cards */
+}
+
+.card-header {
+  color: #D32F2F;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #EF9A9A;
+  background-color: #FFEBEE;
+  padding: 5px 10px;
+}
+
+.card-main {
+  display: flex;              /* Children use Flexbox */
+  flex-direction: column;     /* Rotate Axis to Vertical */
+  justify-content: center;    /* Group Children in Center */
+  align-items: center;        /* Group Children in Center (on cross axis) */
+  padding: 15px 0;            /* Add padding to the top/bottom */
+}
+
+.material-icons {
+  font-size: 36px;
+  color: #D32F2F;
+  margin-bottom: 5px;
+}
+
+.main-description {
+  color: #D32F2F;
+  font-size: 12px;
+  text-align: center;
+}
+
+.grid_panel{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* Kgrid-template-rows: 200px 200px; */
+  grid-gap: 1.5em;
+}
+
+.box p {
+  color: hsl(229, 6%, 66%);
+}
+
+.box {
+  border-radius: 5px;
+  box-shadow: 0px 30px 40px -20px hsl(0, 0%, 19%);
+  padding: 0px;
+  margin: 20px;  
+  background-color: #f0f0f074;
+  width: 300px;
+  height: 250px;
+}
+
+.box .boximage{
+  width: inherit;
+  height: inherit;
+  border-radius: 40px;
+}
+
+.box .boximage img {
+  width: inherit;
+  height: inherit;
+  border-radius: 40px;
+  object-fit: cover;
+}
+
+.box:hover{
+  box-shadow: 0px 30px 40px -20px hsl(229, 6%, 66%);
+}
+
+
+.red {
+  border-top: 3px solid rgb(253, 88, 88);
+}
+
+.bg-image {
+ 
+  /* Full height */
+  height: 100%;
+z-index: 0;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cpu_img{
+ /* The image used */
+ background-image: url("images/cpu.jpeg");
+/* Add the blur effect */
+filter: blur(3px);
+-webkit-filter: blur(3px);
+
+}
+
+.gpu_img{
+  /* The image used */
+  background-image: url("images/gpu.jpeg");
+ /* Add the blur effect */
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+
+ .ram_img{
+ 
+  background-image: url("images/ram.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .disk_img{
+ 
+  background-image: url("images/disk.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .display_img{
+ 
+  background-image: url("images/display.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .wifi_img{
+ 
+  background-image: url("images/wifi.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .ethernet_img{
+ 
+  background-image: url("images/ethernet.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .touchpad_img{
+ 
+  background-image: url("images/touchpad.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .keyboard_img{
+ 
+  background-image: url("images/keyboard.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .battery_img{
+ 
+  background-image: url("images/battery.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+
+ .audio_img{
+ 
+  background-image: url("images/audio.jpeg");
+ 
+ filter: blur(3px);
+ -webkit-filter: blur(3px);
+ 
+ }
+/* Position text in the middle of the page/image */
+.bg-text {
+  
+  color: white;
+  font-weight: bold;
+  
+  background-color: #fdfdfd4d;
+  z-index: 2;
+  margin-top: -160px;
+  position: relative;
+  top: 0%;
+  left: 0%;
+  text-align: center;
+
+  font-family: "Oxygen", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  
+}
+
+.bg-text p{
+  color: #303030;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  margin: 6.5px;
+
+}
+
+.bg-text h2{
+  background-color: #3030306d;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+
+}
+#overlay_fetching {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(155, 155, 155, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#loading-bar {
+  width: 300px;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+
+#loading-progress {
+  width: 100%;
+  height: 100%;
+  background-color: #3498db;
+  animation: loadingAnimation 1.5s infinite linear;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+
+ /* Styles for the modal */
+ .modal {
+  display: none;
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  color: #5b5b5b;
+  font-family: monospace;
+  overflow: scroll;
+  border-radius: 7px;
+}
+
+/* Close button styles */
+.close_si {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close_si:hover,
+.close_si:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.chart {
+  width: 600px;
+  height: 30px; /* Adjust the height of the bar */
+  border: 0px solid #ccc;
+  position: relative;
+  border-radius: 15px;
+  margin: 0;
+}
+.bar {
+  width: 100%;
+  height: 100%;
+  background-color: #3498db; /* Color for the total bar */
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  border-radius: 15px;
+  border: 3px solid #3380af;
+  margin: 0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 100;
+  font-family: 'Courier New', Courier, monospace;
+}
+.used, .free {
+  height: 100%;
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+align-items: center;
+}
+.used {
+  background-color: #e74d3c; /* Color for the used portion */
+  border-radius: 15px 0px 0px 15px;
+ 
+}
+.free {
+  border-radius: 0px 15px 15px 0px;
+  background-color: #2ecc70; /* Color for the free portion */
+}
+.tooltip {
+  position: absolute;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1;
+}
+.used:hover .tooltip, .free:hover .tooltip {
+  display: block;
+}
+
+.ramtotal, .swaptotal{
+  font-family: 'Courier New', Courier, monospace;
+  color: #dddddd;
+  margin-top: 3px;
+  font-size: 18px;
+}
+
+.ram-usage-div, .swap-usage-div{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #5b5b5b00;
+}
+
+.save_button_system_info {
+  margin-bottom: 20px;
+  display: inline-block;
+  font-size: 1.15em;
+  position: relative;
+  text-align: center;
+  padding: 0.5em 1em;
+  background: linear-gradient(45deg, #59adeb, #40c3af);
+  color: #fff;
+  box-shadow: 0 0.2em 0.2em rgba(0,0,0,0.25);
+  border-radius: 0.2em;
+  transition: box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+.save_button_system_info:active {
+  background-color: #ccc;
+  box-shadow: 0 0 6px rgba(0,121,238,0.6);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.save_button_system_info:active:after {
+  font-size: 1em;
+  opacity: 1;
+  transition: none;
+  top: 0.3em;
+}
+.save_button_system_info:hover {
+  box-shadow: 0 0.1em 0.25em rgba(0,0,0,0.25);
+}

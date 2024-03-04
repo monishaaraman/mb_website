@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animo.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://use.fontawesome.com/b5bf1bd49e.js"></script> 
+    
+  <script src="body.js"></script>
+ 
+    <title>Micro-Benchmark</title>
+
+   
+   
+</head>
+<body>
+
+
+          
+          <div id="particleCanvas-Blue"></div>
+          <div id="particleCanvas-White"></div>
+
+          <!-- Build button -->
+          <button class="build-button" id="buildButton">Build</button>
+
+          <!-- LOADING animation -->
+          <div id="loadingIcon_b" style="display: none;">
+                  <section>
+                          <div class="loading loading02">
+                          <span data-text="L">L</span>
+                          <span data-text="O">O</span>
+                          <span data-text="A">A</span>
+                          <span data-text="D">D</span>
+                          <span data-text="I">I</span>
+                          <span data-text="N">N</span>
+                          <span data-text="G">G</span>
+                          </div>
+                </section>
+        <p>Please wait...</p>
+          </div>
+          <p class="p1" id="build-message"></p>
+      
+          <!-- Compare button -->
+          <div class="comparison-btn" onclick="showComparisonPopup()">Compare</div>
+
+         <!-- Popup for comparison -->
+          <div class="popup" id="comparisonPopup">
+              <div class="close-btn" onclick="closeComparisonPopup()">X</div>
+              <h2>Select results for Comparison</h2>
+              <select id="selectComparisonItems" multiple></select>
+              <!-- Chart container -->
+              <div class="chart-container">
+                  <canvas id="comparisonChart"></canvas>
+              </div>
+           </div>
+
+         <!-- Container for collapsible panel -->
+        <div class="container mt-5" style="overflow: auto;">
+            
+            <!-------------------------------------------------------------------------Disk panel -------------------------------------------------------------------------------------->
+            <div class="card mt-3" id="card_style">
+                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
+                
+                <h5 class="mb-0" >
+                    <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover">
+                        Disk
+                    </button>
+                </h5>
+
+                
+                    <a  href="#openModal_info"><i class="fa fa-circle-info fa-lg style=color: #fff;"></i></a>
+                    <div id="openModal_info" class="modalbg">
+                    <div class="dialog">
+                        <a href="#close" title="Close" class="close">X</a>
+                        <h3>Disk Benchmark info</h3>
+                        <h4>Benchmark: FIO - Storage Speed Test</h4>
+
+        <p>We'll report:</p>
+
+        <ul>
+            <li><strong>Time (ms):</strong> Test duration (lower is better).</li>
+            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better).</li>
+            <li><strong>Iterations:</strong> Number of test repetitions.</li>
+            <li><strong>Avg. Read Speed (MiB/s):</strong> Reading speed (higher is better).</li>
+            <li><strong>Avg. Write Speed (MiB/s):</strong> Writing speed (higher is better).</li>
+        </ul>
+                        <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
+                        <p class="fineprint">note:</p>
+                    </div>
+                    </div>
+                
+                </div>
+                
+                <!-- Disk panel content -->
+            <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+                <div class="card-body">
+                    <!-- Content goes here -->
+
+                    <!-- RUN button -->
+                <div class='runbtn_container' id="run-btn">
+                        <a href='#'class='playBut' id= "disk_button">
+                            
+                            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                            <svg version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                            x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                            xml:space="preserve">
+                            
+                            <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                            73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                            
+                            <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                            </svg>
+                        </a>
+                    <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+                    </div>
+
+
+                    <!-- LOADING animation-->
+                    <div id="loadingIcon" style="display: none;">
+                            <section>
+                        <div class="loading loading07">
+                        <span data-text="R">R</span>
+                        <span data-text="U">U</span>
+                        <span data-text="N">N</span>
+                        <span data-text="N">N</span>
+                        <span data-text="I">I</span>
+                        <span data-text="N">N</span>
+                        <span data-text="G">G</span>
+                        </div>
+                        </section>
+                    <p>Please wait...</p>
+                    </div>
+                    
+                    <!-- Error mesaage-->
+                    <div id="errorMessage" style="display: none;">
+                    <p class="p1">Error occurred during disk benchmark.</p>
+                    </div>
+                    
+                    <!-- Success mesaage-->
+                    <div id="successMessage" style="display: none;">
+                        <p class="p1">Disk benchmark completed successfully.</p>
+
+                        
+
+                        <table id="benchmarkTable" class="table">
+                            <caption>BENCHMARK NAME:   Fio-Random</caption>
+                            <thead>         
+                                <tr>
+                                    <th>System Model Name</th>
+                                    <!-- <th>Benchmark</th> -->
+                                    <th>Time (ms)</th>
+                                    <th>CPU (ms)</th>
+                                    <th>Iterations</th>
+                                    <th>Average Read (in MiB/s)</th>
+                                    <th>Average Write (in MiB/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkTableBody"></tbody>
+                        </table>
+
+                        <!-- Additional testcase tables-->
+                       
+
+                        <table id="benchmarkTable2" class="table">
+                            <caption>BENCHMARK NAME:  Fio-sequential</caption>
+                            <thead>
+                                
+                                <tr>
+                                    <th>System Model Name</th>
+                                    <!-- <th>Benchmark</th> -->
+                                    <th>Time (ms)</th>
+                                    <th>CPU (ms)</th>
+                                    <th>Iterations</th>
+                                    <th>Average Read (in MiB/s)</th>
+                                    <th>Average Write (in MiB/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkTableBody2"></tbody>
+                        </table>
+
+                        
+                        <table id="benchmarkTable3" class="table">
+                            <caption>BENCHMARK NAME:   BM_Compilebench</caption>
+                            <thead>
+                                
+                                <tr>
+                                    <th>System Model Name</th>
+                                    <!-- <th>Benchmark</th> -->
+                                    <th>Time (ms)</th>
+                                    <th>CPU (ms)</th>
+                                    <th>Iterations</th>
+                                    <th>Average Compile (in MB/s)</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkTableBody3"></tbody>
+                        </table>
+
+
+                        <!-- Save to DB button-->
+                        <button class="button_save" id="disk-save-btn" onclick="Disk_saveData()">
+                            <span class="button_save__text">Save</span>
+                        </button>
+                
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            <!-------------------------------------------------------------------------Memory panel -------------------------------------------------------------------------------------->
+            <div class="card mt-3" id="card_style">
+                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+                <h5 class="mb-0">
+                    <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3" id="glow-on-hover">
+                    Memory
+                    </button>
+                </h5>
+                </div>
+                
+                <!-- Memory panel content -->
+            <div id="collapseContent3" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+                <div class="card-body">
+                    <!-- Content goes here -->
+
+                    <!-- RUN button -->
+                <div class='runbtn_container' id="run-btn1">
+                        <a href='#'class='playBut' id= "memory_button">
+                            
+                            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                            <svg version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                            x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                            xml:space="preserve">
+                            
+                            <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                            73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                            
+                            <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                            </svg>
+                        </a>
+                    <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+                    </div>
+
+
+                    <!-- LOADING animation-->
+                    <div id="loadingIcon1" style="display: none;">
+                            <section>
+                        <div class="loading loading07">
+                        <span data-text="R">R</span>
+                        <span data-text="U">U</span>
+                        <span data-text="N">N</span>
+                        <span data-text="N">N</span>
+                        <span data-text="I">I</span>
+                        <span data-text="N">N</span>
+                        <span data-text="G">G</span>
+                        </div>
+                        </section>
+                    <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
+                    </div>
+                    
+                    <!-- Error mesaage-->
+                    <div id="errorMessage1" style="display: none;">
+                    <p class="p1">Error occurred during memory benchmark.</p>
+                    </div>
+                    
+                    <!-- Success mesaage-->
+                    <div id="successMessage1" style="display: none;">
+                        <p class="p1">Memory benchmark completed successfully.</p>
+                        <table id="benchmarkmemTable" class="table">
+                            <caption>BENCHMARK NAME:  Benchmark_RAMSMP_INTmem</caption>
+                            <thead>
+                                <tr>
+                                    <th>System Model Name</th>
+                                    <!-- <th>Benchmark</th> -->
+                                    <th>Time (ms)</th>
+                                    <th>CPU (ms)</th>
+                                    <th>Iterations</th>
+                                    <th>Average Integer Memory (in MiB/s)</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkmemTableBody"></tbody>
+                        </table>
+
+                       <!-- Additional testcase tables-->
+                       
+
+                       <table id="benchmarkmemTable2" class="table">
+                        <caption>BENCHMARK NAME:  Benchmark_RAMSMP_FLOATmem</caption>
+                        <thead>
+                            
+                            <tr>
+                                <th>System Model Name</th>
+                                <!-- <th>Benchmark</th> -->
+                                <th>Time (ms)</th>
+                                <th>CPU (ms)</th>
+                                <th>Iterations</th>
+                                <th>Average Float Memory (in MiB/s) </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarkmemTableBody2"></tbody>
+                    </table>
+
+                    
+                    <table id="benchmarkmemTable3" class="table">
+                        <caption>BENCHMARK NAME:   BM_CacheBench</caption>
+                        <thead>
+                            
+                            <tr>
+                                <th>System Model Name</th>
+                                <!-- <th>Benchmark</th> -->
+                                <th>Time (ms)</th>
+                                <th>CPU (ms)</th>
+                                <th>Iterations</th>
+                                <th>Average Cache (in MiB/s)</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarkmemTableBody3"></tbody>
+                    </table>
+
+                        <!-- Save to DB button-->
+                        <button class="button_save" id="mem-save-btn" onclick="Memory_saveData()">   <!--need to check-->
+                            <span class="button_save__text">Save</span>                                                    <!--need to check-->
+                        </button>
+                
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            
+        
+<!------------------------------------------------------------memory panel completion--------------------------------------------------->
+
+
+                 <!-------------------------------------------------------------------------Network panel -------------------------------------------------------------------------------------->
+            <div class="card mt-3" id="card_style">
+                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+                <h5 class="mb-0">
+                    <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4" id="glow-on-hover">
+                    Network
+                    </button>
+                </h5>
+                </div>
+                
+                <!-- network panel content -->
+            <div id="collapseContent4" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+                <div class="card-body">
+                    <!-- Content goes here -->
+
+                    <!-- RUN button -->
+                <div class='runbtn_container' id="run-btn2">
+                        <a href='#'class='playBut' id= "network_button">
+                            
+                            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                            <svg version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                            x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                            xml:space="preserve">
+                            
+                            <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                            73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                            
+                            <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                            </svg>
+                        </a>
+                    <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+                    </div>
+
+
+                    <!-- LOADING animation-->
+                    <div id="loadingIcon2" style="display: none;">
+                            <section>
+                        <div class="loading loading07">
+                        <span data-text="R">R</span>
+                        <span data-text="U">U</span>
+                        <span data-text="N">N</span>
+                        <span data-text="N">N</span>
+                        <span data-text="I">I</span>
+                        <span data-text="N">N</span>
+                        <span data-text="G">G</span>
+                        </div>
+                        </section>
+                    <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
+                    </div>
+                    
+                    <!-- Error mesaage-->
+                    <div id="errorMessage2" style="display: none;">
+                    <p class="p1">Error occurred during network benchmark.</p>
+                    </div>
+                    
+                    <!-- Success mesaage-->
+                    <div id="successMessage2" style="display: none;">
+                        <p class="p1">Network benchmark completed successfully.</p>
+                        <table id="benchmarknetTable" class="table">
+                            <caption>BENCHMARK NAME: BM_EthrBenchmark</caption>
+                            <thead>
+                                <tr>
+                                    <th>System Model Name</th>
+                                    <!-- <th>Benchmark</th> -->
+                                    <th>Time (ms)</th>
+                                    <th>CPU (ms)</th>
+                                    <th>Iterations</th>
+                                    <th>Average Bandwidth (bits/sec)</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarknetTableBody"></tbody>
+                        </table>
+
+                       <!-- Additional testcase tables-->
+                       
+
+                       <table id="benchmarknetTable2" class="table">
+                        <caption>BENCHMARK NAME:  BM_SockperfLatencyUnderLoad</caption>
+                        <thead>
+                            
+                            <tr>
+                                <th>System Model Name</th>
+                                <!-- <th>Benchmark</th> -->
+                                <th>Time (ms)</th>
+                                <th>CPU (ms)</th>
+                                <th>Iterations</th>
+                                <th>Average Latency (in usec) </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarknetTableBody2"></tbody>
+                    </table>
+
+                    
+                    <table id="benchmarknetTable3" class="table">
+                        <caption>BENCHMARK NAME:   iperf</caption>
+                        <thead>
+                            
+                            <tr>
+                                <th>System Model Name</th>
+                                <!-- <th>Benchmark</th> -->
+                                <th>Time (ms)</th>
+                                <th>CPU (ms)</th>
+                                <th>Iterations</th>
+                                <th>Average Receiver Bitrate (Mbits/sec)</th>
+                                <th>Average Sender Bitrate (Mbits/sec)</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarknetTableBody3"></tbody>
+                    </table>
+
+                        <!-- Save to DB button-->
+                        <button class="button_save" id="net-save-btn" onclick="Network_saveData()">   <!--need to check-->
+                            <span class="button_save__text">Save</span>                                                    <!--need to check-->
+                        </button>
+                
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            
+        
+<!------------------------------------------------------------network panel completion--------------------------------------------------->
+
+<!-------------------------------------------------------------------------CPU panel -------------------------------------------------------------------------------------->
+<div class="card mt-3" id="card_style">
+    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+    <h5 class="mb-0">
+        <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent5" aria-expanded="false" aria-controls="collapseContent5" id="glow-on-hover">
+        Cpu
+        </button>
+    </h5>
+    </div>
+    
+    <!-- network panel content -->
+<div id="collapseContent5" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+    <div class="card-body">
+        <!-- Content goes here -->
+
+        <!-- RUN button -->
+    <div class='runbtn_container' id="run-btn3">
+            <a href='#'class='playBut' id= "cpu_button">
+                
+                <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                <svg version="1.1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                xml:space="preserve">
+                
+                <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                
+                <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                </svg>
+            </a>
+        <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+        </div>
+
+
+        <!-- LOADING animation-->
+        <div id="loadingIcon3" style="display: none;">
+                <section>
+            <div class="loading loading07">
+            <span data-text="R">R</span>
+            <span data-text="U">U</span>
+            <span data-text="N">N</span>
+            <span data-text="N">N</span>
+            <span data-text="I">I</span>
+            <span data-text="N">N</span>
+            <span data-text="G">G</span>
+            </div>
+            </section>
+        <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
+        </div>
+        
+        <!-- Error mesaage-->
+        <div id="errorMessage3" style="display: none;">
+        <p class="p1">Error occurred during cpu benchmark.</p>
+        </div>
+        
+        <!-- Success mesaage-->
+        <div id="successMessage3" style="display: none;">
+            <p class="p1">Cpu benchmark completed successfully.</p>
+            <table id="benchmarkcpuTable" class="table">
+                <caption>BENCHMARK NAME: BM_CRayBenchmark</caption>
+                <thead>
+                    <tr>
+                        <th>System Model Name</th>
+                        <!-- <th>Benchmark</th> -->
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Rendering time (seconds)</th>
+                        
+                    </tr>
+                </thead>
+                <tbody id="benchmarkcpuTableBody"></tbody>
+            </table>
+
+           <!-- Additional testcase tables-->
+           
+
+           <table id="benchmarkcpuTable2" class="table">
+            <caption>BENCHMARK NAME:  BM_Blake2_Benchmark</caption>
+            <thead>
+                
+                <tr>
+                    <th>System Model Name</th>
+                    <!-- <th>Benchmark</th> -->
+                    <th>Time (ms)</th>
+                    <th>CPU (ms)</th>
+                    <th>Iterations</th>
+                    <th>Average Per Byte (Cycles Per Byte) </th>
+                    
+                </tr>
+            </thead>
+            <tbody id="benchmarkcpuTableBody2"></tbody>
+        </table>
+
+        
+        <table id="benchmarkcpuTable3" class="table">
+            <caption>BENCHMARK NAME:   BM_SysbenchCPUBenchmark</caption>
+            <thead>
+                
+                <tr>
+                    <th>System Model Name</th>
+                    <!-- <th>Benchmark</th> -->
+                    <th>Time (ms)</th>
+                    <th>CPU (ms)</th>
+                    <th>Iterations</th>
+                    <th>Average Events/s (seconds) </th>
+                    
+                </tr>
+            </thead>
+            <tbody id="benchmarkcpuTableBody3"></tbody>
+        </table>
+
+            <!-- Save to DB button-->
+            <button class="button_save" id="cpu-save-btn" onclick="Cpu_saveData()">   
+                <span class="button_save__text">Save</span>                                                    
+            </button>
+    
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+<!------------------------------------------------------------cpu panel completion--------------------------------------------------->
+
+<!-------------------------------------------------------------------------GPU panel -------------------------------------------------------------------------------------->
+<div class="card mt-3" id="card_style">
+    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
+    <h5 class="mb-0">
+        <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent6" aria-expanded="false" aria-controls="collapseContent6" id="glow-on-hover">
+        Gpu
+        </button>
+    </h5>
+    </div>
+    
+    <!-- network panel content -->
+<div id="collapseContent6" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
+    <div class="card-body">
+        <!-- Content goes here -->
+
+        <!-- RUN button -->
+    <div class='runbtn_container' id="run-btn4">
+            <a href='#'class='playBut' id= "gpu_button">
+                
+                <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                <svg version="1.1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
+                xml:space="preserve">
+                
+                <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+                73.5,62.5 148.5,105.8 73.5,149.1 "/>
+                
+                <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
+                </svg>
+            </a>
+        <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
+        </div>
+
+
+        <!-- LOADING animation-->
+        <div id="loadingIcon4" style="display: none;">
+                <section>
+            <div class="loading loading07">
+            <span data-text="R">R</span>
+            <span data-text="U">U</span>
+            <span data-text="N">N</span>
+            <span data-text="N">N</span>
+            <span data-text="I">I</span>
+            <span data-text="N">N</span>
+            <span data-text="G">G</span>
+            </div>
+            </section>
+        <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
+        </div>
+        
+        <!-- Error mesaage-->
+        <div id="errorMessage4" style="display: none;">
+        <p class="p1">Error occurred during gpu benchmark.</p>
+        </div>
+        
+        <!-- Success mesaage-->
+        <div id="successMessage4" style="display: none;">
+            <p class="p1">Gpu benchmark completed successfully.</p>
+            <table id="benchmarkgpuTable" class="table">
+                <caption>BENCHMARK NAME: BM_UnigineHeavenBenchmark</caption>
+                <thead>
+                    <tr>
+                        <th>System Model Name</th>
+                        <!-- <th>Benchmark</th> -->
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average FPS (Frames Per Second)</th>
+                        
+                    </tr>
+                </thead>
+                <tbody id="benchmarkgpuTableBody"></tbody>
+            </table>
+
+           <!-- Additional testcase tables-->
+           
+
+           <table id="benchmarkgpuTable2" class="table">
+            <caption>BENCHMARK NAME:  BM_FurMarkBenchmark</caption>
+            <thead>
+                
+                <tr>
+                    <th>System Model Name</th>
+                    <!-- <th>Benchmark</th> -->
+                    <th>Time (ms)</th>
+                    <th>CPU (ms)</th>
+                    <th>Iterations</th>
+                    <th>Average Furmark Score (Points) </th>
+                    
+                </tr>
+            </thead>
+            <tbody id="benchmarkgpuTableBody2"></tbody>
+        </table>
+
+        
+        <table id="benchmarkgpuTable3" class="table">
+            <caption>BENCHMARK NAME:   BM_TessMarkBenchmark</caption>
+            <thead>
+                
+                <tr>
+                    <th>System Model Name</th>
+                    <!-- <th>Benchmark</th> -->
+                    <th>Time (ms)</th>
+                    <th>CPU (ms)</th>
+                    <th>Iterations</th>
+                    <th>Average Tessmark Score (Points) </th>
+                    
+                </tr>
+            </thead>
+            <tbody id="benchmarkgpuTableBody3"></tbody>
+        </table>
+
+            <!-- Save to DB button-->
+            <button class="button_save" id="gpu-save-btn" onclick="Gpu_saveData()">   
+                <span class="button_save__text">Save</span>                                                    
+            </button>
+    
+        </div>
+    </div>
+    </div>
+</div>
+
+
+</div>
+<!------------------------------------------------------------gpu panel completion--------------------------------------------------->
+       
+
+        
+
+   
+
+
+<script>
+
+// Declare a global variable to store data.results
+let diskResults;
+
+// Declare a global variable to store data.results for memory!!!!!!!!
+let memoryResults;
+
+// Declare a global variable to store data.results for network!!!!!!!!
+let networkResults;
+
+// Declare a global variable to store data.results for cpu!!!!!!!!
+let cpuResults;
+
+
+// Declare a global variable to store data.results for gpu!!!!!!!!
+let gpuResults;
+
+//-----------create chart function for DISK----------------------//
+function createChart(data) {
+                 // Check if the data array is empty or null
+                if (!data || data.length === 0) {
+                       console.error("Data is empty or null.");
+                       return;
+                 }
+                   // Extract unique categories (bn values)
+                var categories = [...new Set(data.map(item => item.bn))];
+
+                // Create datasets based on sys_name
+                var datasets = [...new Set(data.map(item => item.bn))].map(sysName => {
+                      return {
+                          label: sysName,
+                          backgroundColor: getRandomColor(),
+                          borderColor: "rgba(75, 192, 192, 1)",
+                          borderWidth: 1,
+                          data: categories.map(category => {
+                              var item = data.find(d => d.sys_name === sysName && d.bn === category);
+                              return item ? item.value1 : 0; // Use 0 if data is missing
+                          }),
+                      };
+                });
+
+                    // Create the chart
+                  var ctx = document.getElementById("myChart").getContext("2d");
+                  
+                  var myChart = new Chart(ctx, {
+                                  type: "bar",
+                                  data: {
+                                      labels: categories,
+                                      datasets: datasets,
+                                  },
+                                  options: {
+                                      indexAxis: "y",
+                                      scales: {
+                                          x: {
+                                              beginAtZero: true,
+                                          },
+                                      },
+                                  },
+                                });
+}
+
+
+//---------------------get Random Color function----------------------//
+function getRandomColor() {
+                                var letters = "0123456789ABCDEF";
+                                var color = "#";
+                                for (var i = 0; i < 6; i++) {
+                                  color += letters[Math.floor(Math.random() * 16)];
+                                }
+                                return color;
+ }
+            
+
+
+//----------------Microbenchmark folder checking function----------------------//
+    // Function to check if the "microbenchmark" folder exists
+ function checkMicrobenchmarkFolder() {
+            fetch("/check_microbenchmark")
+            .then(response => {
+                if (response.status === 200) {
+                    // Folder exists, check if "BENCH" executable exists
+                    fetch("/check_bench_executable")
+                        .then(execResponse => {
+                            if (execResponse.status === 200) {
+                                // "BENCH" executable exists, hide the build button
+                                document.getElementById("buildButton").style.display = "none";
+                                document.getElementById("build-message").innerText = "You've already built.";
+                            } else {
+                                // "BENCH" executable doesn't exist, show the build button
+                                document.getElementById("buildButton").style.display = "block";
+                                document.getElementById("build-message").innerText = "You should build first.";
+                            }
+                        })
+                        .catch(execError => console.error("Error checking 'BENCH' executable: " + execError));
+                } else {
+                    // Folder doesn't exist, show the build button
+                    document.getElementById("buildButton").style.display = "block";
+                    document.getElementById("build-message").innerText = "You should build first.";
+                }
+            })
+            .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
+    }
+
+
+    // Check on page load
+    checkMicrobenchmarkFolder();
+
+
+//----------------Build button clicking function----------------------//
+document.getElementById("buildButton").addEventListener("click", function () {
+      // Check if the "microbenchmark" folder exists
+      document.getElementById('loadingIcon_b').style.display = 'block';
+      document.getElementById("buildButton").style.display = "none";
+      fetch("/check_microbenchmark")
+        .then(response => {
+            if (response.status === 200) {
+                alert("The 'microbenchmark' folder already exists.");
+            } else {
+                // Clone the repository
+                fetch("/clone_and_build_microbenchmark")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                          //  alert("Repository cloned  cloned and built  successfully.");
+                            document.getElementById("build-message").innerText = "You've built successfully";
+                            document.getElementById('loadingIcon_b').style.display = 'none';
+                        } else {
+                            alert("Failed to clone repository.");
+                            document.getElementById('loadingIcon_b').style.display = 'none';
+                            document.getElementById("build-message").innerText = "build error";
+                        }
+                    })
+                    .catch(error => console.error("Error cloning repository: " + error));
+            }
+        })
+        .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
+        
+      } );
+
+
+
+ document.addEventListener('DOMContentLoaded', function() {
+
+  //----------------Disk button clicking function----------------------//
+  // Your existing code here
+    document.getElementById('disk_button').addEventListener('click', function() {
+  // Display loading icon
+
+       document.getElementById("run-btn").style.display = "none";
+        document.getElementById('loadingIcon').style.display = 'block';
+        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'none';
+
+        // Assuming your server is running on localhost:3000
+        fetch("/rundiskbenchmark")
+            .then(response => {
+                // Hide loading icon
+                document.getElementById('loadingIcon').style.display = 'none';
+                console.log('Step 1: Response received');
+                if (!response.ok) {
+                    // Show error message
+                    document.getElementById('errorMessage').style.display = 'block';
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Show success message and parse the data
+                document.getElementById('successMessage').style.display = 'block';
+                return response.json();
+            })
+            .then(data => {
+              console.log('Step 2: Data received from server', data);
+
+                // Check if the "data" property is defined
+                if (data && data.results) {
+                    // Call the parsing function
+                   
+                    diskResults = data.results;
+                    console.log(diskResults);
+                    parseBenchmarkResults1(data.results);
+                    alert('Disk benchmark completed successfully');
+                } else {
+                    console.error('Invalid or missing "results" property in the response:', data);
+                    alert('Error occurred during disk benchmark');
+                }
+
+                //alert('Disk benchmark completed successfully');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error occurred during disk benchmark');
+            });
+    });
+
+
+
+//----------------Disk result parsing function----------------------//
+   // Assuming "data.results" is an array of objects with key-value pairs
+function parseBenchmarkResults1(results) {
+    // Check if the "results" property is defined
+    console.log('Received results from server:', results);
+    // Clear existing table rows
+    var tableBody = document.getElementById('benchmarkTableBody');
+    var tableBody2 = document.getElementById('benchmarkTableBody2');
+    var tableBody3 = document.getElementById('benchmarkTableBody3');
+
+    tableBody.innerHTML = '';
+    tableBody2.innerHTML = '';
+    tableBody3.innerHTML = '';
+
+    // Iterate through results and update the table
+    results.forEach(result => {
+        console.log('Processing result:', result);
+        var row;
+        Object.values(result).forEach(value1 => {
+            // console.log('enter in ', value1);
+            if(value1 == "Fio-Random"){
+                 row = tableBody.insertRow();
+                 Object.entries(result).forEach(([key, value]) => {
+            if (key !== "Benchmark") { // Skip the "Benchmark" key
+                var cell = row.insertCell();
+                console.log('cell:', cell);
+                cell.textContent = value;
+                console.log('value:', value);
+
+                 }
+        });
+            }else if(value1 == "Fio-sequential"){
+                 row = tableBody2.insertRow();
+                 Object.entries(result).forEach(([key, value]) => {
+            if (key !== "Benchmark") { // Skip the "Benchmark" key
+                var cell = row.insertCell();
+                console.log('cell:', cell);
+                cell.textContent = value;
+                console.log('value:', value);
+
+                 }
+        });
+            }else if(value1 == "BM_Compilebench"){
+                 row = tableBody3.insertRow();
+                 Object.entries(result).forEach(([key, value]) => {
+            if (key !== "Benchmark") { // Skip the "Benchmark" key
+                var cell = row.insertCell();
+                console.log('cell:', cell);
+                cell.textContent = value;
+                console.log('value:', value);
+
+                 }
+        });
+            }
+        });
+
+       
+       
+    });
+}
+});
+
+
+
+
+     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Memory button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+  
+
+     document.addEventListener('DOMContentLoaded', function() {
+
+//----------------Memory button clicking function----------------------//
+// Your existing code here
+  document.getElementById('memory_button').addEventListener('click', function() {
+// Display loading icon
+
+     document.getElementById("run-btn1").style.display = "none";
+      document.getElementById('loadingIcon1').style.display = 'block';
+      document.getElementById('errorMessage1').style.display = 'none';
+      document.getElementById('successMessage1').style.display = 'none';
+
+      // Assuming your server is running on localhost:3000
+      fetch("/runmemorybenchmark")
+          .then(response => {
+              // Hide loading icon
+              document.getElementById('loadingIcon1').style.display = 'none';
+              console.log('Step 1: Response received');
+              if (!response.ok) {
+                  // Show error message
+                  document.getElementById('errorMessage1').style.display = 'block';
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              // Show success message and parse the data
+              document.getElementById('successMessage1').style.display = 'block';
+              return response.json();
+          })
+          .then(data => {
+            console.log('Step 2: Data received from server', data);
+
+              // Check if the "data" property is defined
+              if (data && data.results) {
+                  // Call the parsing function
+                 
+                  memoryResults = data.results;
+                  console.log(memoryResults);
+                  parseBenchmarkResults1(data.results);
+                  alert('Memory benchmark completed successfully');
+              } else {
+                  console.error('Invalid or missing "results" property in the response:', data);
+                  alert('Error occurred during memory benchmark');
+              }
+
+
+              //alert('Disk benchmark completed successfully');
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Error occurred during memory benchmark');
+          });
+  });
+
+//----------------Memory result parsing function----------------------//
+ // Assuming "data.results" is an array of objects with key-value pairs
+ function parseBenchmarkResults1(results) {
+  // Check if the "results" property is defined
+  console.log('Received results from server:', results);
+  // Clear existing table rows
+  var memtableBody = document.getElementById('benchmarkmemTableBody');
+  var memtableBody2 = document.getElementById('benchmarkmemTableBody2');
+  var memtableBody3 = document.getElementById('benchmarkmemTableBody3');
+
+  memtableBody.innerHTML = '';
+ memtableBody2.innerHTML = '';
+  memtableBody3.innerHTML = '';
+
+  // Iterate through results and update the table
+  results.forEach(result => {
+      console.log('Processing result:', result);
+      var row;
+      Object.values(result).forEach(value1 => {
+          // console.log('enter in ', value1);
+          if(value1 == "Benchmark_RAMSMP_INTmem"){
+               row = memtableBody.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "Benchmark_RAMSMP_FLOATmem"){
+               row = memtableBody2.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "BM_CacheBench"){
+               row = memtableBody3.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }
+      });
+
+     
+     
+  });
+}
+});
+
+
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Network button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+  
+
+document.addEventListener('DOMContentLoaded', function() {
+
+//----------------Network button clicking function----------------------//
+// Your existing code here
+  document.getElementById('network_button').addEventListener('click', function() {
+// Display loading icon
+
+     document.getElementById("run-btn2").style.display = "none";
+      document.getElementById('loadingIcon2').style.display = 'block';
+      document.getElementById('errorMessage2').style.display = 'none';
+      document.getElementById('successMessage2').style.display = 'none';
+
+      // Assuming your server is running on localhost:3000
+      fetch("/runnetworkbenchmark")
+          .then(response => {
+              // Hide loading icon
+              document.getElementById('loadingIcon2').style.display = 'none';
+              console.log('Step 1: Response received');
+              if (!response.ok) {
+                  // Show error message
+                  document.getElementById('errorMessage2').style.display = 'block';
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              // Show success message and parse the data
+              document.getElementById('successMessage2').style.display = 'block';
+              return response.json();
+          })
+          .then(data => {
+            console.log('Step 2: Data received from server', data);
+
+              // Check if the "data" property is defined
+              if (data && data.results) {
+                  // Call the parsing function
+                 
+                  networkResults = data.results;
+                  console.log(networkResults);
+                  parseBenchmarkResults1(data.results);
+                  alert('Network benchmark completed successfully');
+              } else {
+                  console.error('Invalid or missing "results" property in the response:', data);
+                  alert('Error occurred during memory benchmark');
+              }
+
+
+              //alert('Disk benchmark completed successfully');
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Error occurred during memory benchmark');
+          });
+  });
+
+
+//----------------Network result parsing function----------------------//
+ // Assuming "data.results" is an array of objects with key-value pairs
+ function parseBenchmarkResults1(results) {
+  // Check if the "results" property is defined
+  console.log('Received results from server:', results);
+  // Clear existing table rows
+  var nettableBody = document.getElementById('benchmarknetTableBody');
+  var nettableBody2 = document.getElementById('benchmarknetTableBody2');
+  var nettableBody3 = document.getElementById('benchmarknetTableBody3');
+
+  nettableBody.innerHTML = '';
+ nettableBody2.innerHTML = '';
+  nettableBody3.innerHTML = '';
+
+  // Iterate through results and update the table
+  results.forEach(result => {
+      console.log('Processing result:', result);
+      var row;
+      Object.values(result).forEach(value1 => {
+          // console.log('enter in ', value1);
+          if(value1 == "BM_EthrBenchmark"){
+               row = nettableBody.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "BM_SockperfLatencyUnderLoad"){
+               row = nettableBody2.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "iperf"){
+               row = nettableBody3.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }
+      });
+
+     
+     
+  });
+}
+});
+
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------CPU button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+  
+
+document.addEventListener('DOMContentLoaded', function() {
+
+//----------------cpu button clicking function----------------------//
+// Your existing code here
+  document.getElementById('cpu_button').addEventListener('click', function() {
+// Display loading icon
+
+     document.getElementById("run-btn3").style.display = "none";
+      document.getElementById('loadingIcon3').style.display = 'block';
+      document.getElementById('errorMessage3').style.display = 'none';
+      document.getElementById('successMessage3').style.display = 'none';
+
+      // Assuming your server is running on localhost:3000
+      fetch("/runcpubenchmark")
+          .then(response => {
+              // Hide loading icon
+              document.getElementById('loadingIcon3').style.display = 'none';
+              console.log('Step 1: Response received');
+              if (!response.ok) {
+                  // Show error message
+                  document.getElementById('errorMessage3').style.display = 'block';
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              // Show success message and parse the data
+              document.getElementById('successMessage3').style.display = 'block';
+              return response.json();
+          })
+          .then(data => {
+            console.log('Step 2: Data received from server', data);
+
+              // Check if the "data" property is defined
+              if (data && data.results) {
+                  // Call the parsing function
+                 
+                  cpuResults = data.results;
+                  console.log(cpuResults);
+                  parseBenchmarkResults1(data.results);
+                  alert('cpu benchmark completed successfully');
+              } else {
+                  console.error('Invalid or missing "results" property in the response:', data);
+                  alert('Error occurred during cpu benchmark');
+              }
+
+
+              //alert('Disk benchmark completed successfully');
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Error occurred during cpu benchmark');
+          });
+  });
+
+
+//----------------CPU result parsing function----------------------//
+ // Assuming "data.results" is an array of objects with key-value pairs
+ function parseBenchmarkResults1(results) {
+  // Check if the "results" property is defined
+  console.log('Received results from server:', results);
+  // Clear existing table rows
+  var cputableBody = document.getElementById('benchmarkcpuTableBody');
+  var cputableBody2 = document.getElementById('benchmarkcpuTableBody2');
+  var cputableBody3 = document.getElementById('benchmarkcpuTableBody3');
+
+  cputableBody.innerHTML = '';
+ cputableBody2.innerHTML = '';
+  cputableBody3.innerHTML = '';
+
+  // Iterate through results and update the table
+  results.forEach(result => {
+      console.log('Processing result:', result);
+      var row;
+      Object.values(result).forEach(value1 => {
+          // console.log('enter in ', value1);
+          if(value1 == "BM_CRayBenchmark"){
+               row = cputableBody.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "BM_Blake2_Benchmark"){
+               row = cputableBody2.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "BM_SysbenchCPUBenchmark"){
+               row = cputableBody3.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }
+      });
+
+     
+     
+  });
+}
+});
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------GPU button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+  
+
+document.addEventListener('DOMContentLoaded', function() {
+
+//----------------GPU button clicking function----------------------//
+// Your existing code here
+  document.getElementById('gpu_button').addEventListener('click', function() {
+// Display loading icon
+
+     document.getElementById("run-btn4").style.display = "none";
+      document.getElementById('loadingIcon4').style.display = 'block';
+      document.getElementById('errorMessage4').style.display = 'none';
+      document.getElementById('successMessage4').style.display = 'none';
+
+      // Assuming your server is running on localhost:3000
+      fetch("/rungpubenchmark")
+          .then(response => {
+              // Hide loading icon
+              document.getElementById('loadingIcon4').style.display = 'none';
+              console.log('Step 1: Response received');
+              if (!response.ok) {
+                  // Show error message
+                  document.getElementById('errorMessage4').style.display = 'block';
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              // Show success message and parse the data
+              document.getElementById('successMessage4').style.display = 'block';
+              return response.json();
+          })
+          .then(data => {
+            console.log('Step 2: Data received from server', data);
+
+              // Check if the "data" property is defined
+              if (data && data.results) {
+                  // Call the parsing function
+                 
+                  gpuResults = data.results;
+                  console.log(gpuResults);
+                  parseBenchmarkResults1(data.results);
+                  alert('gpu benchmark completed successfully');
+              } else {
+                  console.error('Invalid or missing "results" property in the response:', data);
+                  alert('Error occurred during gpu benchmark');
+              }
+
+
+              //alert('gpu benchmark completed successfully');
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Error occurred during gpu benchmark');
+          });
+  });
+
+
+//----------------GPU result parsing function----------------------//
+ // Assuming "data.results" is an array of objects with key-value pairs
+ function parseBenchmarkResults1(results) {
+  // Check if the "results" property is defined
+  console.log('Received results from server:', results);
+  // Clear existing table rows
+  var gputableBody = document.getElementById('benchmarkgpuTableBody');
+  var gputableBody2 = document.getElementById('benchmarkgpuTableBody2');
+  var gputableBody3 = document.getElementById('benchmarkgpuTableBody3');
+
+  gputableBody.innerHTML = '';
+ gputableBody2.innerHTML = '';
+  gputableBody3.innerHTML = '';
+
+  // Iterate through results and update the table
+  results.forEach(result => {
+      console.log('Processing result:', result);
+      var row;
+      Object.values(result).forEach(value1 => {
+          // console.log('enter in ', value1);
+          if(value1 == "BM_UnigineHeavenBenchmark"){
+               row = gputableBody.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "BM_FurMarkBenchmark"){
+               row = gputableBody2.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }else if(value1 == "BM_TessMarkBenchmark"){
+               row = gputableBody3.insertRow();
+               Object.entries(result).forEach(([key, value]) => {
+          if (key !== "Benchmark") { // Skip the "Benchmark" key
+              var cell = row.insertCell();
+              console.log('cell:', cell);
+              cell.textContent = value;
+              console.log('value:', value);
+
+               }
+      });
+          }
+      });
+
+     
+     
+  });
+}
+});
+//----------------Disk result parsing function----------------------//
+// Assuming "data.results" is an array of objects with key-value pairs
+/*function parseBenchmarkResults1(results) {
+    // Clear existing table rows for all three tables
+    var tableBody1 = document.getElementById('benchmarkTableBody');
+    var tableBody2 = document.getElementById('benchmarkTableBody2');
+    var tableBody3 = document.getElementById('benchmarkTableBody3');
+    tableBody.innerHTML = '';
+    tableBody2.innerHTML = '';
+    tableBody3.innerHTML = '';
+
+    // Iterate through results and update each table
+    results.forEach(result => {
+        console.log('Processing result:', result);
+
+        // Determine which table to update based on the 'benchmark' property in the result object
+        if (result.benchmark === 'Fio-Random') { // Replace 'Benchmark1' with the actual benchmark name for the first table
+            var row = tableBody1.insertRow();
+            Object.values(result).forEach(value => {
+                var cell = row.insertCell();
+                cell.textContent = value;
+            });
+        } else if (result.benchmark === 'Fio-sequential') { // Replace 'Benchmark2' with the actual benchmark name for the second table
+            var row = tableBody2.insertRow();
+            Object.values(result).forEach(value => {
+                var cell = row.insertCell();
+                cell.textContent = value;
+            });
+        } else if (result.benchmark === 'BM_Compilebench') { // Replace 'Benchmark3' with the actual benchmark name for the third table
+            var row = tableBody3.insertRow();
+            Object.values(result).forEach(value => {
+                var cell = row.insertCell();
+                cell.textContent = value;
+            });
+        }
+    });
+}*/
+
+
+//----------------Disk result saving to DB function----------------------//
+function Disk_saveData() {
+  console.log("disk save btn clicked...");
+  const button = document.getElementById('disk-save-btn');
+  if (diskResults) {
+        fetch('/saveResults-disk', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ results: diskResults }),
+            })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Success:', data);
+            button.innerHTML = 'Saved &#10004;'; // HTML code for the tick mark
+            button.disabled = true;
+        } else {
+            // Handle the case where success is false
+            console.error('Save unsuccessful');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+else {
+        console.error('No results to save. Run the disk benchmark first.');
+        // You might want to provide user feedback here, e.g., display a message.
+    }
+
+  }
+ 
+  //----------------Memory result saving to DB function----------------------//
+function Memory_saveData() {
+  console.log("memory save btn clicked...");
+  const button = document.getElementById('mem-save-btn');
+  if (memoryResults) {
+        fetch('/saveResults-memory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ results: memoryResults }),
+            })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Success:', data);
+            button.innerHTML = 'Saved &#10004;'; // HTML code for the tick mark
+            button.disabled = true;
+        } else {
+            // Handle the case where success is false
+            console.error('Save unsuccessful');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+else {
+        console.error('No results to save. Run the memory benchmark first.');
+        // You might want to provide user feedback here, e.g., display a message.
+    }
+
+  }
+
+  //----------------Network result saving to DB function----------------------//
+function Network_saveData() {
+  console.log("network save btn clicked...");
+  const button = document.getElementById('net-save-btn');
+  if (networkResults) {
+        fetch('/saveResults-network', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ results: networkResults }),
+            })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Success:', data);
+            button.innerHTML = 'Saved &#10004;'; // HTML code for the tick mark
+            button.disabled = true;
+        } else {
+            // Handle the case where success is false
+            console.error('Save unsuccessful');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+else {
+        console.error('No results to save. Run the network benchmark first.');
+        // You might want to provide user feedback here, e.g., display a message.
+    }
+
+  }
+
+  //----------------CPU result saving to DB function----------------------//
+function Cpu_saveData() {
+  console.log("cpu save btn clicked...");
+  const button = document.getElementById('cpu-save-btn');
+  if (cpuResults) {
+        fetch('/saveResults-cpu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ results: cpuResults }),
+            })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Cpu response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Success:', data);
+            button.innerHTML = 'Saved &#10004;'; // HTML code for the tick mark
+            button.disabled = true;
+        } else {
+            // Handle the case where success is false
+            console.error('Save unsuccessful');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+else {
+        console.error('No results to save. Run the cpu benchmark first.');
+        // You might want to provide user feedback here, e.g., display a message.
+    }
+
+  }
+
+
+  //----------------GPU result saving to DB function----------------------//
+function Gpu_saveData() {
+  console.log("gpu save btn clicked...");
+  const button = document.getElementById('gpu-save-btn');
+  if (gpuResults) {
+        fetch('/saveResults-gpu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ results: gpuResults }),
+            })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Cpu response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Success:', data);
+            button.innerHTML = 'Saved &#10004;'; // HTML code for the tick mark
+            button.disabled = true;
+        } else {
+            // Handle the case where success is false
+            console.error('Save unsuccessful');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+else {
+        console.error('No results to save. Run the gpu benchmark first.');
+        // You might want to provide user feedback here, e.g., display a message.
+    }
+
+  }
+
+//----------------Comparison popup function----------------------//
+// Function to show the comparison popup
+function showComparisonPopup() {
+    // Fetch data from the server
+    fetch('/getComparisonData-disk')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+              console.log('Fetched Data:', data);
+                // Populate the select box with fetched data
+                const selectComparisonItems = document.getElementById('selectComparisonItems');
+            selectComparisonItems.innerHTML = ''; // Clear previous options
+               index=0;
+            data.data.forEach(item => {
+                const option = document.createElement('option');
+                
+                option.value = index++; // Use the unique identifier as the value
+                console.log('index:', index);
+                option.innerHTML = `${index} - ${item.sys_name} - ${item.benchmark}`;
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = item.id;
+                option.prepend(checkbox);
+
+                selectComparisonItems.appendChild(option);
+            });
+
+            // Log the selected items on change
+            selectComparisonItems.addEventListener('change', () => {
+              const selectedData = Array.from(document.getElementById('selectComparisonItems').selectedOptions).map(option => option.value);
+                    generateBarChart_DISK(selectedData);
+              
+            });
+           // Show the popup
+           document.getElementById('comparisonPopup').style.display = 'block';    
+            } else {
+                console.error('Failed to fetch data for comparison');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data for comparison', error);
+        });
+}
+
+//----------------Comparison popup Close function----------------------//
+// Function to close the comparison popup
+function closeComparisonPopup() {
+    document.getElementById('comparisonPopup').style.display = 'none';
+}
+
+
+// -----------------------prepare dataser fof chart - DISK--------------------//
+function prepareDataset_DISK (selectedData) {
+      const labels = ['Average read', 'Average write'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name} - Average Read`,
+        data: [item.averageread_mib_s, item.averagewrite_mib_s],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+
+// -----------------------generate Bar Chart - DISK--------------------//
+let relevantArray = [];
+let comparisonChart= null; // Declare a variable to store the chart instance
+let  dataset;
+function generateBarChart_DISK(selectedData) {
+     // Log the selected items in the chart function
+      console.log('Selected Items in generateBarChart_DISK:', selectedData);
+
+      // Fetch data based on the selected row's properties
+      fetch('/getComparisonData-disk') // Modify the endpoint if needed
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // Log the fetched data
+                  console.log('Fetched Data:', data);
+
+                  const relevantArray = selectedData.map(index => {
+                      const selectedIndex = Number(index);
+                      return data.data[selectedIndex];
+                  });
+
+                  // Log the relevant array
+                  console.log('Relevant Array:', relevantArray);
+
+                  // Destroy the existing chart if it exists
+                  if (comparisonChart) {
+                      comparisonChart.destroy();
+                  }
+
+                  // Now you can use the relevantArray to generate the bar chart
+                  const dataset = prepareDataset_DISK(relevantArray);
+
+                  // Generate the bar chart using Chart.js
+                  const ctx = document.getElementById('comparisonChart').getContext('2d');
+                  comparisonChart = new Chart(ctx, {
+                      type: 'bar',
+                      data: dataset,
+                      options: {
+                          scales: {
+                              y: {
+                                  beginAtZero: true,
+                              },
+                          },
+                      },
+                  });
+              } else {
+                  console.error('Failed to fetch data:', data);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+
+}
+
+
+//------------------------disk info tool tip-------------------------------//
+
+
+
+</script>
+
+
+
+  <!-- Swiper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
+
+
+</body>
+</html>

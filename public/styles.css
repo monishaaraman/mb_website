@@ -1,0 +1,742 @@
+@import url('animo.css');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #001827;
+    overflow: hidden;
+}
+
+header {
+    background-color: #0b1216; /* Set your desired background color */
+    color: #fff; /* Set the text color */
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+
+
+/* -----------Build button--------------- */
+.build-button {
+  display: block;
+  border: none;
+  background-color: #F891B3;
+  color: #ffff;
+  padding: 10px 20px;
+  font-size: 20px;
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 5px 5px 5px #FBC1D4;
+  transition: all 0.3s ease;
+}
+.build-button:hover {
+  box-shadow: 0px 2px 20px #A20A3C;
+  top: 3px;
+}
+.build-button:active {
+  box-shadow: none;
+  top: 5px;
+}
+
+
+
+/* -----------Paragraph--------------- */
+
+ .p1{
+    height: 30px;
+    color: #fff; /* Button text color */
+    font-size: 20px;
+
+}
+
+/* Keyframes for the animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Keyframes for the animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+/* -----------Collapsible panel--------------- */
+.collapsible-panel {
+    background-color: #001827;
+    margin: 20px;
+    border: 1px solid #292626; /* Add a border for styling */
+}
+
+.collapsible-panel h2 {
+    background-color: #db34d8;
+    color: #fff;
+    padding: 10px;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+
+
+
+/* -----------not in use--------------- */
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db; /* Blue color for the loading bar */
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+
+/* -----------not in use--------------- */
+  .graph-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+
+
+
+  /* -----------Main body panel--------------- */
+  .main_body{
+    display: flex;
+    justify-content: start;
+     flex-direction: column;
+     align-items: center;
+    background-color: #222;
+    margin: 0;
+    height: 100vh;
+  }
+
+
+
+/* -----------not in use--------------- */
+#card_style{
+    background-color: rgba(222, 184, 135, 0);
+    border-radius: 15px;
+    font-size: 20px;
+        box-shadow: -5px -5px 5px rgba(77, 77, 77, 0.2),
+                    5px 5px 5px rgba(0, 0, 0, 0.1);
+  }
+
+
+
+/* -----------not in use--------------- */
+  #popup-button {
+    text-align: center;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1em;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 15px;
+    margin: -10px -12px -10px ;
+    height: 40px;
+    width: 100px;
+    background-size: 300% 300%;
+    color: white;
+    box-shadow: 0 4px 6px rgba(202, 202, 202, 0.11), 0 1px 3px rgba(226, 226, 226, 0.08);
+
+    background-image: linear-gradient(to right, #4e024800 0%, #404040 50%, #626262 100%);
+    transition: 0.5s;
+  }
+
+#popup-button:hover {
+    background-position: right center;
+  }
+
+
+/* -----------not in use--------------- */
+  .arrow-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer; color: #ffffff;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/* -----------not in use--------------- */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background-color: #b7b7b700;
+    width: 20px;
+    margin: -10px -11px -10px ;
+}
+
+
+/* -----------Tests button animation--------------- */
+#glow-on-hover {
+  width: 220px;
+  height: 50px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #11111135;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+#glow-on-hover:before {
+  content: '';
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left:-2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+#glow-on-hover:active {
+  color: #0000005f
+}
+
+#glow-on-hover:active:after {
+  background: transparent;
+}
+
+#glow-on-hover:hover:before {
+  opacity: 1;
+}
+
+#glow-on-hover:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #11111162;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+
+
+
+
+
+
+/* -----------Tests result table--------------- */
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+
+/* -----------------------------for the caption (above the table header) ---------------------------------------*/
+
+table#benchmarkTable caption {
+  caption-side: top; /* Ensures the caption is at the top of the table */
+  font-weight: bold; /* Optional: makes the caption text bold */
+  text-align: left; /* Optional: centers the caption text */
+
+}
+
+table#benchmarkTable2 caption {
+  caption-side: top; /* Ensures the caption is at the top of the table */
+  font-weight: bold; /* Optional: makes the caption text bold */
+  text-align: left; /* Optional: centers the caption text */
+
+}
+
+table#benchmarkTable3 caption {
+  caption-side: top; /* Ensures the caption is at the top of the table */
+  font-weight: bold; /* Optional: makes the caption text bold */
+  text-align: left; /* Optional: centers the caption text */
+
+}
+
+/* -----------not in use--------------- */
+
+.slider_body{
+  display: flex;
+  justify-content: start;
+   flex-direction: column;
+   align-items: center;
+  margin: 0;
+  height: 300px;
+  width: 800px;
+}
+
+
+/* -----------Save to DB button--------------- */
+.button_save {
+  position: relative;
+  padding: 8px 16px;
+  background: #009579;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.button_save:active {
+  background: #007a63;
+}
+
+.button_save__text {
+  font: bold 20px "Quicksand", san-serif;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.button_save--loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button_save--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+
+/* -----------Comparison button--------------- */
+
+.comparison-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+select {
+  appearance: none;
+
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+
+/* -----------Comparison popup--------------- */
+.popup {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #f0f0f0fc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1;
+  margin: auto;
+  text-align: center;
+}
+
+/* -----------Popup close button--------------- */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+/* -----------Comparison table --not used--------------- */
+#selectedItemsTable {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Style table header and cells */
+#selectedItemsTable th, #selectedItemsTable td {
+  border: 1px solid #80808052;
+  padding: 8px;
+  text-align: left;
+  color: #001827;
+}
+
+#selectedItemsTable th {
+  background-color: #8f8f8f;
+}
+#selectedItemsTable tr {
+ color: #141414;
+
+}
+/* Apply styles to the checkboxes */
+
+/* Style for checked checkboxes */
+
+/* Hover effect on table rows */
+#selectedItemsTable tr:hover {
+  background-color: #141414;
+}
+
+
+.chart-container{
+  display: block;
+  height: 70%;
+  width: 70%;
+  margin: auto;
+
+}
+
+
+/* -----------info tooltip-----------*/
+.modalbg {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 99999;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+  -o-transition: all 1s ease-out;
+  transition: all 1s ease-out;
+  -webkit-transition-delay: 0.2s;
+  -moz-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  -transition-delay: 0.2s;
+  display: block;
+  pointer-events: none;
+}
+.modalbg .dialog {
+  width: 50%;
+  position: relative;
+  top: -1000px;
+  margin: 10% auto;
+  padding: 5px 20px 13px 20px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #ffffffa4;
+  background: -moz-linear-gradient(#4a4a4a, #ccc);
+  background: -webkit-linear-gradient(#fff, #ccc);
+  background: -o-linear-gradient(#fff, #ccc);
+  box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -webkit-box-shadow: 0 0 10px #000;
+}
+.modalbg .dialog .ie7 {
+  filter: progid:DXImageTransform.Microsoft.Shadow(color='#000', Direction=135, Strength=3);
+  font-family: cursive;
+}
+.modalbg:target {
+  display: block;
+  pointer-events: auto;
+  background: rgba(4, 10, 30, 0.8);
+  -moz-transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.modalbg:target .dialog {
+  top: -90px;
+  -moz-transition: all 0.5s ease-out;
+  -webkit-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+  -webkit-transition-delay: 0.2s;
+  -moz-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  -transition-delay: 0.2s;
+}
+.close {
+  background: #606061;
+  color: #FFFFFF;
+  line-height: 25px;
+  position: absolute;
+  right: -12px;
+  text-align: center;
+  top: -10px;
+  width: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -webkit-box-shadow: 0 0 10px #000;
+  -moz-transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
+}
+.close .ie7 {
+  filter: progid:DXImageTransform.Microsoft.Shadow(color='#000', Direction=135, Strength=3);
+}
+.close:hover {
+  background: #00d9ff;
+  -moz-transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.fineprint {
+  font-style: italic;
+  font-size: 10px;
+  color: #646;
+}
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+.fa.fa-circle-info {
+  font-size: 38px;
+  color: #a2a2a2;
+}
+
+
+/* menu panel */
+.wrapper {
+  display: flex;
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  width: 450px;
+  height: 80px;
+  border-radius: 50px;
+  margin: 0;
+  padding: 0 10px;
+}
+.wrapper ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  list-style-type: none;
+}
+.wrapper ul li {
+  width: 20%;
+  text-align: center;
+}
+.wrapper ul li a {
+  color: #0a50b9;
+  font-size: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.wrapper ul li .tooltip{
+  position: absolute;
+  top: -90px;
+  left: -45px;
+  background: #fff;
+  width: 115px;
+  padding: 10px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: #044b85;
+  font-weight: bold;
+  display: none;
+}
+.wrapper ul li a:hover .tooltip{
+   display: block;
+}
+.wrapper ul li .tooltip:before{
+  content: "";
+  position: absolute;
+  top: 33px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: 10px solid #fff;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+}
+
+
+/* nav menu */
+
+.menu-bar {
+  background-color: #333;
+  color: white;
+  padding: 0px;
+  display: flex; /* Use flexbox for easy alignment */
+  justify-content: space-between; /* Space between heading and menu */
+  align-items: center; /* Vertically center items */
+  height: 50px;
+}
+
+.heading h1 {
+  margin: 0;
+}
+
+.menu-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+}
+
+.menu-bar li {
+  display: flex;
+  margin-left: 20px;
+  background-color: #5f5f5f00;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle; /* Center text vertically */
+
+}
+
+.menu-bar a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  text-align: center;
+  height: 100%;
+}
+
+.menu-bar a:hover {
+  background-color: rgb(235, 235, 235);
+  color: #0b1216;
+  
+}
+
+.menu-bar nav{
+  height: 100%;
+}
+
+.menu-bar ul li a.active {
+  /* Add styles for the active menu item */
+  font-weight: bold;
+  color: #007bff; /* Change to your desired color */
+}
