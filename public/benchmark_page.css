@@ -1,0 +1,121 @@
+#overlay_fetching_bench, #overlay_fetching_comparison_popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(80, 80, 80, 0.66);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+
+
+  /* -----------Comparison button--------------- */
+
+.comparison-btn {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  select {
+    appearance: none;
+  
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+  }
+  
+  
+  /* -----------Comparison popup--------------- */
+  .popup {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #f0f0f0fc;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 1;
+    margin: auto;
+    text-align: center;
+  }
+  
+  /* -----------Popup close button--------------- */
+  .close-btn {
+    position: absolute;
+    top: 9%;
+    right: 9%;
+    cursor: pointer;
+    font-weight: 800;
+    background-color: #ff7171;
+    color: #fff;
+    font-size: 30px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  
+  
+  /* -----------Comparison table --not used--------------- */
+  #selectedItemsTable {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* Style table header and cells */
+  #selectedItemsTable th, #selectedItemsTable td {
+    border: 1px solid #80808052;
+    padding: 8px;
+    text-align: left;
+    color: #001827;
+  }
+  
+  #selectedItemsTable th {
+    background-color: #8f8f8f;
+  }
+  #selectedItemsTable tr {
+   color: #141414;
+  
+  }
+  /* Apply styles to the checkboxes */
+  
+  /* Style for checked checkboxes */
+  
+  /* Hover effect on table rows */
+  #selectedItemsTable tr:hover {
+    background-color: #141414;
+  }
+  
+  
+  .chart-container{
+    display: block;
+    height: 70%;
+    width: 70%;
+    margin: auto;
+  
+  }
+  

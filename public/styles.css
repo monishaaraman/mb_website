@@ -3,8 +3,15 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #001827;
+    background-color: #ffffff;
     overflow: hidden;
+}
+
+.benchmark_page{
+  margin: 0;
+  padding: 0;
+  background-color: #001827;
+  overflow: hidden;
 }
 
 header {
@@ -275,13 +282,14 @@ table {
 	border-collapse: collapse;
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 10px;
 }
 
 th,
 td {
 	padding: 15px;
 	background-color: rgba(255,255,255,0.2);
-	color: #fff;
+	color: #2e2e2e;
 }
 
 th {
@@ -316,7 +324,17 @@ tbody {
 		}
 	}
 }
+table caption {
+  caption-side: top; /* Ensures the caption is at the top of the table */
+  font-weight: bold; /* Optional: makes the caption text bold */
+  text-align: center; /* Optional: centers the caption text */
+  margin-left: 10px;
+  
 
+}
+.selected-row-tbody {
+  background-color: #ffffff85; /* Highlight color for selected rows */
+}
 /* -----------------------------for the caption (above the table header) ---------------------------------------*/
 
 table#benchmarkTable caption {
@@ -406,102 +424,6 @@ table#benchmarkTable3 caption {
 }
 
 
-/* -----------Comparison button--------------- */
-
-.comparison-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-select {
-  appearance: none;
-
-  background-color: transparent;
-  border: none;
-  padding: 0 1em 0 0;
-  margin: 0;
-  width: 100%;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: inherit;
-  line-height: inherit;
-}
-
-
-/* -----------Comparison popup--------------- */
-.popup {
-  display: none;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  height: 70%;
-  width: 70%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: #f0f0f0fc;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  z-index: 1;
-  margin: auto;
-  text-align: center;
-}
-
-/* -----------Popup close button--------------- */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-
-
-/* -----------Comparison table --not used--------------- */
-#selectedItemsTable {
-  font-family: Arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-/* Style table header and cells */
-#selectedItemsTable th, #selectedItemsTable td {
-  border: 1px solid #80808052;
-  padding: 8px;
-  text-align: left;
-  color: #001827;
-}
-
-#selectedItemsTable th {
-  background-color: #8f8f8f;
-}
-#selectedItemsTable tr {
- color: #141414;
-
-}
-/* Apply styles to the checkboxes */
-
-/* Style for checked checkboxes */
-
-/* Hover effect on table rows */
-#selectedItemsTable tr:hover {
-  background-color: #141414;
-}
-
-
-.chart-container{
-  display: block;
-  height: 70%;
-  width: 70%;
-  margin: auto;
-
-}
 
 
 /* -----------info tooltip-----------*/

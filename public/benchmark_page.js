@@ -1,741 +1,239 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="animo.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://use.fontawesome.com/b5bf1bd49e.js"></script> 
-    
-  <script src="body.js"></script>
- 
-    <title>Micro-Benchmark</title>
+function fetchbenchinfo() {
+          // Display loading message
+          document.getElementById('overlay_fetching_bench').style.display = 'flex';
 
-   
-   
-</head>
-<body>
+          // Simulate fetching data from the server
+          checkMicrobenchmarkFolder();
+      }
 
 
-          
-          <div id="particleCanvas-Blue"></div>
-          <div id="particleCanvas-White"></div>
+document.addEventListener('DOMContentLoaded', function () {
 
-          <!-- Build button -->
-          <button class="build-button" id="buildButton">Build</button>
-
-          <!-- LOADING animation -->
-          <div id="loadingIcon_b" style="display: none;">
-                  <section>
-                          <div class="loading loading02">
-                          <span data-text="L">L</span>
-                          <span data-text="O">O</span>
-                          <span data-text="A">A</span>
-                          <span data-text="D">D</span>
-                          <span data-text="I">I</span>
-                          <span data-text="N">N</span>
-                          <span data-text="G">G</span>
-                          </div>
-                </section>
-        <p>Please wait...</p>
-          </div>
-          <p class="p1" id="build-message"></p>
-      
-          <!-- Compare button -->
-          <div class="comparison-btn" onclick="showComparisonPopup()">Compare</div>
-
-         <!-- Popup for comparison -->
-          <div class="popup" id="comparisonPopup">
-              <div class="close-btn" onclick="closeComparisonPopup()">X</div>
-              <h2>Select results for Comparison</h2>
-              <select id="selectComparisonItems" multiple></select>
-              <!-- Chart container -->
-              <div class="chart-container">
-                  <canvas id="comparisonChart"></canvas>
-              </div>
-           </div>
-
-         <!-- Container for collapsible panel -->
-        <div class="container mt-5" style="overflow: auto;">
-            
-            <!-------------------------------------------------------------------------Disk panel -------------------------------------------------------------------------------------->
-            <div class="card mt-3" id="card_style">
-                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
-                
-                <h5 class="mb-0" >
-                    <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover">
-                        Disk
-                    </button>
-                </h5>
-
-                
-                    <a  href="#openModal_info"><i class="fa fa-circle-info fa-lg style=color: #fff;"></i></a>
-                    <div id="openModal_info" class="modalbg">
-                    <div class="dialog">
-                        <a href="#close" title="Close" class="close">X</a>
-                        <h3>Disk Benchmark info</h3>
-                        <h4>Benchmark: FIO - Storage Speed Test</h4>
-
-        <p>We'll report:</p>
-
-        <ul>
-            <li><strong>Time (ms):</strong> Test duration (lower is better).</li>
-            <li><strong>CPU Time (ms):</strong> CPU usage during the test (lower is better).</li>
-            <li><strong>Iterations:</strong> Number of test repetitions.</li>
-            <li><strong>Avg. Read Speed (MiB/s):</strong> Reading speed (higher is better).</li>
-            <li><strong>Avg. Write Speed (MiB/s):</strong> Writing speed (higher is better).</li>
-        </ul>
-                        <p class="fineprint">..<a href="webdesignerdepot.com">Webdesigner Depot</a></p>
-                        <p class="fineprint">note:</p>
-                    </div>
-                    </div>
-                
-                </div>
-                
-                <!-- Disk panel content -->
-            <div id="collapseContent2" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
-                <div class="card-body">
-                    <!-- Content goes here -->
-
-                    <!-- RUN button -->
-                <div class='runbtn_container' id="run-btn">
-                        <a href='#'class='playBut' id= "disk_button">
-                            
-                            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-                            <svg version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                            x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-                            xml:space="preserve">
-                            
-                            <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-                            73.5,62.5 148.5,105.8 73.5,149.1 "/>
-                            
-                            <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                            </svg>
-                        </a>
-                    <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
-                    </div>
-
-
-                    <!-- LOADING animation-->
-                    <div id="loadingIcon" style="display: none;">
-                            <section>
-                        <div class="loading loading07">
-                        <span data-text="R">R</span>
-                        <span data-text="U">U</span>
-                        <span data-text="N">N</span>
-                        <span data-text="N">N</span>
-                        <span data-text="I">I</span>
-                        <span data-text="N">N</span>
-                        <span data-text="G">G</span>
-                        </div>
-                        </section>
-                    <p>Please wait...</p>
-                    </div>
-                    
-                    <!-- Error mesaage-->
-                    <div id="errorMessage" style="display: none;">
-                    <p class="p1">Error occurred during disk benchmark.</p>
-                    </div>
-                    
-                    <!-- Success mesaage-->
-                    <div id="successMessage" style="display: none;">
-                        <p class="p1">Disk benchmark completed successfully.</p>
-
-                        
-
-                        <table id="benchmarkTable" class="table">
-                            <caption>BENCHMARK NAME:   Fio-Random</caption>
-                            <thead>         
-                                <tr>
-                                    <th>System Model Name</th>
-                                    <!-- <th>Benchmark</th> -->
-                                    <th>Time (ms)</th>
-                                    <th>CPU (ms)</th>
-                                    <th>Iterations</th>
-                                    <th>Average Read (in MiB/s)</th>
-                                    <th>Average Write (in MiB/s)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="benchmarkTableBody"></tbody>
-                        </table>
-
-                        <!-- Additional testcase tables-->
-                       
-
-                        <table id="benchmarkTable2" class="table">
-                            <caption>BENCHMARK NAME:  Fio-sequential</caption>
-                            <thead>
-                                
-                                <tr>
-                                    <th>System Model Name</th>
-                                    <!-- <th>Benchmark</th> -->
-                                    <th>Time (ms)</th>
-                                    <th>CPU (ms)</th>
-                                    <th>Iterations</th>
-                                    <th>Average Read (in MiB/s)</th>
-                                    <th>Average Write (in MiB/s)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="benchmarkTableBody2"></tbody>
-                        </table>
-
-                        
-                        <table id="benchmarkTable3" class="table">
-                            <caption>BENCHMARK NAME:   BM_Compilebench</caption>
-                            <thead>
-                                
-                                <tr>
-                                    <th>System Model Name</th>
-                                    <!-- <th>Benchmark</th> -->
-                                    <th>Time (ms)</th>
-                                    <th>CPU (ms)</th>
-                                    <th>Iterations</th>
-                                    <th>Average Compile (in MB/s)</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody id="benchmarkTableBody3"></tbody>
-                        </table>
-
-
-                        <!-- Save to DB button-->
-                        <button class="button_save" id="disk-save-btn" onclick="Disk_saveData()">
-                            <span class="button_save__text">Save</span>
-                        </button>
-                
-                    </div>
-                </div>
-                </div>
-            </div>
-        
-            <!-------------------------------------------------------------------------Memory panel -------------------------------------------------------------------------------------->
-            <div class="card mt-3" id="card_style">
-                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-                <h5 class="mb-0">
-                    <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3" id="glow-on-hover">
-                    Memory
-                    </button>
-                </h5>
-                </div>
-                
-                <!-- Memory panel content -->
-            <div id="collapseContent3" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
-                <div class="card-body">
-                    <!-- Content goes here -->
-
-                    <!-- RUN button -->
-                <div class='runbtn_container' id="run-btn1">
-                        <a href='#'class='playBut' id= "memory_button">
-                            
-                            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-                            <svg version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                            x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-                            xml:space="preserve">
-                            
-                            <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-                            73.5,62.5 148.5,105.8 73.5,149.1 "/>
-                            
-                            <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                            </svg>
-                        </a>
-                    <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
-                    </div>
-
-
-                    <!-- LOADING animation-->
-                    <div id="loadingIcon1" style="display: none;">
-                            <section>
-                        <div class="loading loading07">
-                        <span data-text="R">R</span>
-                        <span data-text="U">U</span>
-                        <span data-text="N">N</span>
-                        <span data-text="N">N</span>
-                        <span data-text="I">I</span>
-                        <span data-text="N">N</span>
-                        <span data-text="G">G</span>
-                        </div>
-                        </section>
-                    <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
-                    </div>
-                    
-                    <!-- Error mesaage-->
-                    <div id="errorMessage1" style="display: none;">
-                    <p class="p1">Error occurred during memory benchmark.</p>
-                    </div>
-                    
-                    <!-- Success mesaage-->
-                    <div id="successMessage1" style="display: none;">
-                        <p class="p1">Memory benchmark completed successfully.</p>
-                        <table id="benchmarkmemTable" class="table">
-                            <caption>BENCHMARK NAME:  Benchmark_RAMSMP_INTmem</caption>
-                            <thead>
-                                <tr>
-                                    <th>System Model Name</th>
-                                    <!-- <th>Benchmark</th> -->
-                                    <th>Time (ms)</th>
-                                    <th>CPU (ms)</th>
-                                    <th>Iterations</th>
-                                    <th>Average Integer Memory (in MiB/s)</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody id="benchmarkmemTableBody"></tbody>
-                        </table>
-
-                       <!-- Additional testcase tables-->
-                       
-
-                       <table id="benchmarkmemTable2" class="table">
-                        <caption>BENCHMARK NAME:  Benchmark_RAMSMP_FLOATmem</caption>
-                        <thead>
-                            
-                            <tr>
-                                <th>System Model Name</th>
-                                <!-- <th>Benchmark</th> -->
-                                <th>Time (ms)</th>
-                                <th>CPU (ms)</th>
-                                <th>Iterations</th>
-                                <th>Average Float Memory (in MiB/s) </th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody id="benchmarkmemTableBody2"></tbody>
-                    </table>
-
-                    
-                    <table id="benchmarkmemTable3" class="table">
-                        <caption>BENCHMARK NAME:   BM_CacheBench</caption>
-                        <thead>
-                            
-                            <tr>
-                                <th>System Model Name</th>
-                                <!-- <th>Benchmark</th> -->
-                                <th>Time (ms)</th>
-                                <th>CPU (ms)</th>
-                                <th>Iterations</th>
-                                <th>Average Cache (in MiB/s)</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody id="benchmarkmemTableBody3"></tbody>
-                    </table>
-
-                        <!-- Save to DB button-->
-                        <button class="button_save" id="mem-save-btn" onclick="Memory_saveData()">   <!--need to check-->
-                            <span class="button_save__text">Save</span>                                                    <!--need to check-->
-                        </button>
-                
-                    </div>
-                </div>
-                </div>
-            </div>
-        
-            
-        
-<!------------------------------------------------------------memory panel completion--------------------------------------------------->
-
-
-                 <!-------------------------------------------------------------------------Network panel -------------------------------------------------------------------------------------->
-            <div class="card mt-3" id="card_style">
-                <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-                <h5 class="mb-0">
-                    <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4" id="glow-on-hover">
-                    Network
-                    </button>
-                </h5>
-                </div>
-                
-                <!-- network panel content -->
-            <div id="collapseContent4" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
-                <div class="card-body">
-                    <!-- Content goes here -->
-
-                    <!-- RUN button -->
-                <div class='runbtn_container' id="run-btn2">
-                        <a href='#'class='playBut' id= "network_button">
-                            
-                            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-                            <svg version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                            x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-                            xml:space="preserve">
-                            
-                            <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-                            73.5,62.5 148.5,105.8 73.5,149.1 "/>
-                            
-                            <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                            </svg>
-                        </a>
-                    <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
-                    </div>
-
-
-                    <!-- LOADING animation-->
-                    <div id="loadingIcon2" style="display: none;">
-                            <section>
-                        <div class="loading loading07">
-                        <span data-text="R">R</span>
-                        <span data-text="U">U</span>
-                        <span data-text="N">N</span>
-                        <span data-text="N">N</span>
-                        <span data-text="I">I</span>
-                        <span data-text="N">N</span>
-                        <span data-text="G">G</span>
-                        </div>
-                        </section>
-                    <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
-                    </div>
-                    
-                    <!-- Error mesaage-->
-                    <div id="errorMessage2" style="display: none;">
-                    <p class="p1">Error occurred during network benchmark.</p>
-                    </div>
-                    
-                    <!-- Success mesaage-->
-                    <div id="successMessage2" style="display: none;">
-                        <p class="p1">Network benchmark completed successfully.</p>
-                        <table id="benchmarknetTable" class="table">
-                            <caption>BENCHMARK NAME: BM_EthrBenchmark</caption>
-                            <thead>
-                                <tr>
-                                    <th>System Model Name</th>
-                                    <!-- <th>Benchmark</th> -->
-                                    <th>Time (ms)</th>
-                                    <th>CPU (ms)</th>
-                                    <th>Iterations</th>
-                                    <th>Average Bandwidth (bits/sec)</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody id="benchmarknetTableBody"></tbody>
-                        </table>
-
-                       <!-- Additional testcase tables-->
-                       
-
-                       <table id="benchmarknetTable2" class="table">
-                        <caption>BENCHMARK NAME:  BM_SockperfLatencyUnderLoad</caption>
-                        <thead>
-                            
-                            <tr>
-                                <th>System Model Name</th>
-                                <!-- <th>Benchmark</th> -->
-                                <th>Time (ms)</th>
-                                <th>CPU (ms)</th>
-                                <th>Iterations</th>
-                                <th>Average Latency (in usec) </th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody id="benchmarknetTableBody2"></tbody>
-                    </table>
-
-                    
-                    <table id="benchmarknetTable3" class="table">
-                        <caption>BENCHMARK NAME:   iperf</caption>
-                        <thead>
-                            
-                            <tr>
-                                <th>System Model Name</th>
-                                <!-- <th>Benchmark</th> -->
-                                <th>Time (ms)</th>
-                                <th>CPU (ms)</th>
-                                <th>Iterations</th>
-                                <th>Average Receiver Bitrate (Mbits/sec)</th>
-                                <th>Average Sender Bitrate (Mbits/sec)</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody id="benchmarknetTableBody3"></tbody>
-                    </table>
-
-                        <!-- Save to DB button-->
-                        <button class="button_save" id="net-save-btn" onclick="Network_saveData()">   <!--need to check-->
-                            <span class="button_save__text">Save</span>                                                    <!--need to check-->
-                        </button>
-                
-                    </div>
-                </div>
-                </div>
-            </div>
-        
-            
-        
-<!------------------------------------------------------------network panel completion--------------------------------------------------->
-
-<!-------------------------------------------------------------------------CPU panel -------------------------------------------------------------------------------------->
-<div class="card mt-3" id="card_style">
-    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-    <h5 class="mb-0">
-        <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent5" aria-expanded="false" aria-controls="collapseContent5" id="glow-on-hover">
-        Cpu
-        </button>
-    </h5>
-    </div>
-    
-    <!-- network panel content -->
-<div id="collapseContent5" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
-    <div class="card-body">
-        <!-- Content goes here -->
-
-        <!-- RUN button -->
-    <div class='runbtn_container' id="run-btn3">
-            <a href='#'class='playBut' id= "cpu_button">
-                
-                <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-                <svg version="1.1"
-                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-                xml:space="preserve">
-                
-                <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-                73.5,62.5 148.5,105.8 73.5,149.1 "/>
-                
-                <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                </svg>
-            </a>
-        <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
-        </div>
-
-
-        <!-- LOADING animation-->
-        <div id="loadingIcon3" style="display: none;">
-                <section>
-            <div class="loading loading07">
-            <span data-text="R">R</span>
-            <span data-text="U">U</span>
-            <span data-text="N">N</span>
-            <span data-text="N">N</span>
-            <span data-text="I">I</span>
-            <span data-text="N">N</span>
-            <span data-text="G">G</span>
-            </div>
-            </section>
-        <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
-        </div>
-        
-        <!-- Error mesaage-->
-        <div id="errorMessage3" style="display: none;">
-        <p class="p1">Error occurred during cpu benchmark.</p>
-        </div>
-        
-        <!-- Success mesaage-->
-        <div id="successMessage3" style="display: none;">
-            <p class="p1">Cpu benchmark completed successfully.</p>
-            <table id="benchmarkcpuTable" class="table">
-                <caption>BENCHMARK NAME: BM_CRayBenchmark</caption>
-                <thead>
-                    <tr>
-                        <th>System Model Name</th>
-                        <!-- <th>Benchmark</th> -->
-                        <th>Time (ms)</th>
-                        <th>CPU (ms)</th>
-                        <th>Iterations</th>
-                        <th>Average Rendering time (seconds)</th>
-                        
-                    </tr>
-                </thead>
-                <tbody id="benchmarkcpuTableBody"></tbody>
-            </table>
-
-           <!-- Additional testcase tables-->
-           
-
-           <table id="benchmarkcpuTable2" class="table">
-            <caption>BENCHMARK NAME:  BM_Blake2_Benchmark</caption>
-            <thead>
-                
-                <tr>
-                    <th>System Model Name</th>
-                    <!-- <th>Benchmark</th> -->
-                    <th>Time (ms)</th>
-                    <th>CPU (ms)</th>
-                    <th>Iterations</th>
-                    <th>Average Per Byte (Cycles Per Byte) </th>
-                    
-                </tr>
-            </thead>
-            <tbody id="benchmarkcpuTableBody2"></tbody>
-        </table>
-
-        
-        <table id="benchmarkcpuTable3" class="table">
-            <caption>BENCHMARK NAME:   BM_SysbenchCPUBenchmark</caption>
-            <thead>
-                
-                <tr>
-                    <th>System Model Name</th>
-                    <!-- <th>Benchmark</th> -->
-                    <th>Time (ms)</th>
-                    <th>CPU (ms)</th>
-                    <th>Iterations</th>
-                    <th>Average Events/s (seconds) </th>
-                    
-                </tr>
-            </thead>
-            <tbody id="benchmarkcpuTableBody3"></tbody>
-        </table>
-
-            <!-- Save to DB button-->
-            <button class="button_save" id="cpu-save-btn" onclick="Cpu_saveData()">   
-                <span class="button_save__text">Save</span>                                                    
-            </button>
-    
-        </div>
-    </div>
-    </div>
-</div>
-
-
-
-<!------------------------------------------------------------cpu panel completion--------------------------------------------------->
-
-<!-------------------------------------------------------------------------GPU panel -------------------------------------------------------------------------------------->
-<div class="card mt-3" id="card_style">
-    <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: center;">
-    <h5 class="mb-0">
-        <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent6" aria-expanded="false" aria-controls="collapseContent6" id="glow-on-hover">
-        Gpu
-        </button>
-    </h5>
-    </div>
-    
-    <!-- network panel content -->
-<div id="collapseContent6" class="collapse" aria-labelledby="collapseHeading2" style="overflow: hidden;">
-    <div class="card-body">
-        <!-- Content goes here -->
-
-        <!-- RUN button -->
-    <div class='runbtn_container' id="run-btn4">
-            <a href='#'class='playBut' id= "gpu_button">
-                
-                <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-                <svg version="1.1"
-                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-                xml:space="preserve">
-                
-                <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-                73.5,62.5 148.5,105.8 73.5,149.1 "/>
-                
-                <circle class='circle' id="XMLID_17_" fill="none"  stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                </svg>
-            </a>
-        <p style="font-size: 25px; color: aliceblue;">Run Test</p> 
-        </div>
-
-
-        <!-- LOADING animation-->
-        <div id="loadingIcon4" style="display: none;">
-                <section>
-            <div class="loading loading07">
-            <span data-text="R">R</span>
-            <span data-text="U">U</span>
-            <span data-text="N">N</span>
-            <span data-text="N">N</span>
-            <span data-text="I">I</span>
-            <span data-text="N">N</span>
-            <span data-text="G">G</span>
-            </div>
-            </section>
-        <p style="color: #d9d9d9; text-align: center;">Please wait...</p>
-        </div>
-        
-        <!-- Error mesaage-->
-        <div id="errorMessage4" style="display: none;">
-        <p class="p1">Error occurred during gpu benchmark.</p>
-        </div>
-        
-        <!-- Success mesaage-->
-        <div id="successMessage4" style="display: none;">
-            <p class="p1">Gpu benchmark completed successfully.</p>
-            <table id="benchmarkgpuTable" class="table">
-                <caption>BENCHMARK NAME: BM_UnigineHeavenBenchmark</caption>
-                <thead>
-                    <tr>
-                        <th>System Model Name</th>
-                        <!-- <th>Benchmark</th> -->
-                        <th>Time (ms)</th>
-                        <th>CPU (ms)</th>
-                        <th>Iterations</th>
-                        <th>Average FPS (Frames Per Second)</th>
-                        
-                    </tr>
-                </thead>
-                <tbody id="benchmarkgpuTableBody"></tbody>
-            </table>
-
-           <!-- Additional testcase tables-->
-           
-
-           <table id="benchmarkgpuTable2" class="table">
-            <caption>BENCHMARK NAME:  BM_FurMarkBenchmark</caption>
-            <thead>
-                
-                <tr>
-                    <th>System Model Name</th>
-                    <!-- <th>Benchmark</th> -->
-                    <th>Time (ms)</th>
-                    <th>CPU (ms)</th>
-                    <th>Iterations</th>
-                    <th>Average Furmark Score (Points) </th>
-                    
-                </tr>
-            </thead>
-            <tbody id="benchmarkgpuTableBody2"></tbody>
-        </table>
-
-        
-        <table id="benchmarkgpuTable3" class="table">
-            <caption>BENCHMARK NAME:   BM_TessMarkBenchmark</caption>
-            <thead>
-                
-                <tr>
-                    <th>System Model Name</th>
-                    <!-- <th>Benchmark</th> -->
-                    <th>Time (ms)</th>
-                    <th>CPU (ms)</th>
-                    <th>Iterations</th>
-                    <th>Average Tessmark Score (Points) </th>
-                    
-                </tr>
-            </thead>
-            <tbody id="benchmarkgpuTableBody3"></tbody>
-        </table>
-
-            <!-- Save to DB button-->
-            <button class="button_save" id="gpu-save-btn" onclick="Gpu_saveData()">   
-                <span class="button_save__text">Save</span>                                                    
-            </button>
-    
-        </div>
-    </div>
-    </div>
-</div>
-
-
-</div>
-<!------------------------------------------------------------gpu panel completion--------------------------------------------------->
-       
-
-        
-
-   
-
-
-<script>
+  
+// Your script code here
+window.particlesJS("particleCanvas-Blue", {
+    particles: {
+        number: {
+            value: 1000,
+            density: {
+                enable: true,
+                value_area: 1000
+            }
+        },
+        color: {
+            value: "#1B5F70"
+        },
+        shape: {
+            type: "circle",
+            stroke: {
+                width: 0,
+                color: "#000000"
+            },
+            polygon: {
+                nb_sides: 3
+            },
+            image: {
+                src: "img/github.svg",
+                width: 100,
+                height: 100
+            }
+        },
+        opacity: {
+            value: 0.5,
+            random: false,
+            anim: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.1,
+                sync: false
+            }
+        },
+        size: {
+            value: 10,
+            random: true,
+            anim: {
+                enable: false,
+                speed: 10,
+                size_min: 0.1,
+                sync: false
+            }
+        },
+        line_linked: {
+            enable: false,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.4,
+            width: 1
+        },
+        move: {
+            enable: true,
+            speed: 0.5,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "bounce",
+            bounce: false,
+            attract: {
+                enable: false,
+                rotateX: 394.57382081613633,
+                rotateY: 157.82952832645452
+            }
+        }
+    },
+    interactivity: {
+        detect_on: "canvas",
+        events: {
+            onhover: {
+                enable: true,
+                mode: "grab"
+            },
+            onclick: {
+                enable: false,
+                mode: "push"
+            },
+            resize: true
+        },
+        modes: {
+            grab: {
+                distance: 200,
+                line_linked: {
+                    opacity: 0.2
+                }
+            },
+            bubble: {
+                distance: 1500,
+                size: 40,
+                duration: 7.272727272727273,
+                opacity: 0.3676323676323676,
+                speed: 3
+            },
+            repulse: {
+                distance: 50,
+                duration: 0.4
+            },
+            push: {
+                particles_nb: 4
+            },
+            remove: {
+                particles_nb: 2
+            }
+        }
+    },
+    retina_detect: true
+});
+window.
+particlesJS("particleCanvas-White", {
+    particles: {
+        number: {
+            value: 250,
+            density: {
+                enable: true,
+                value_area: 800
+            }
+        },
+        color: {
+            value: "#fff2"
+        },
+        shape: {
+            type: "circle",
+            stroke: {
+                width: 0,
+                color: "#000000"
+            },
+            polygon: {
+                nb_sides: 3
+            },
+            image: {
+                src: "img/github.svg",
+                width: 100,
+                height: 100
+            }
+        },
+        opacity: {
+            value: 0.5,
+            random: true,
+            anim: {
+                enable: false,
+                speed: 0.2,
+                opacity_min: 0,
+                sync: false
+            }
+        },
+        size: {
+            value: 15,
+            random: true,
+            anim: {
+                enable: true,
+                speed: 10,
+                size_min: 0.1,
+                sync: false
+            }
+        },
+        line_linked: {
+            enable: false,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.4,
+            width: 1
+        },
+        move: {
+            enable: true,
+            speed: 0.5,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "bounce",
+            bounce: false,
+            attract: {
+                enable: true,
+                rotateX: 3945.7382081613637,
+                rotateY: 157.82952832645452
+            }
+        }
+    },
+    interactivity: {
+        detect_on: "canvas",
+        events: {
+            onhover: {
+                enable: false,
+                mode: "grab"
+            },
+            onclick: {
+                enable: false,
+                mode: "push"
+            },
+            resize: true
+        },
+        modes: {
+            grab: {
+                distance: 200,
+                line_linked: {
+                    opacity: 0.2
+                }
+            },
+            bubble: {
+                distance: 1500,
+                size: 40,
+                duration: 7.272727272727273,
+                opacity: 0.3676323676323676,
+                speed: 3
+            },
+            repulse: {
+                distance: 50,
+                duration: 0.4
+            },
+            push: {
+                particles_nb: 4
+            },
+            remove: {
+                particles_nb: 2
+            }
+        }
+    },
+    retina_detect: true
+});
+});
 
 // Declare a global variable to store data.results
 let diskResults;
@@ -822,10 +320,12 @@ function getRandomColor() {
                             if (execResponse.status === 200) {
                                 // "BENCH" executable exists, hide the build button
                                 document.getElementById("buildButton").style.display = "none";
+                                document.getElementById('overlay_fetching_bench').style.display = 'none';
                                 document.getElementById("build-message").innerText = "You've already built.";
                             } else {
                                 // "BENCH" executable doesn't exist, show the build button
                                 document.getElementById("buildButton").style.display = "block";
+                                
                                 document.getElementById("build-message").innerText = "You should build first.";
                             }
                         })
@@ -840,8 +340,7 @@ function getRandomColor() {
     }
 
 
-    // Check on page load
-    checkMicrobenchmarkFolder();
+   
 
 
 //----------------Build button clicking function----------------------//
@@ -852,18 +351,19 @@ document.getElementById("buildButton").addEventListener("click", function () {
       fetch("/check_microbenchmark")
         .then(response => {
             if (response.status === 200) {
-                alert("The 'microbenchmark' folder already exists.");
+                console.log("The 'microbenchmark' folder already exists.");
             } else {
                 // Clone the repository
                 fetch("/clone_and_build_microbenchmark")
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                          //  alert("Repository cloned  cloned and built  successfully.");
+                          //  console.log("Repository cloned  cloned and built  successfully.");
                             document.getElementById("build-message").innerText = "You've built successfully";
                             document.getElementById('loadingIcon_b').style.display = 'none';
+                            document.getElementById('overlay_fetching_bench').style.display = 'none';
                         } else {
-                            alert("Failed to clone repository.");
+                            console.log("Failed to clone repository.");
                             document.getElementById('loadingIcon_b').style.display = 'none';
                             document.getElementById("build-message").innerText = "build error";
                         }
@@ -877,57 +377,58 @@ document.getElementById("buildButton").addEventListener("click", function () {
 
 
 
- document.addEventListener('DOMContentLoaded', function() {
+
 
   //----------------Disk button clicking function----------------------//
   // Your existing code here
-    document.getElementById('disk_button').addEventListener('click', function() {
-  // Display loading icon
+  document.getElementById('disk_button').addEventListener('click', function () {
+    // Display loading icon
+    document.getElementById("run-btn").style.display = "none";
+    document.getElementById('loadingIcon').style.display = 'block';
+    document.getElementById('errorMessage').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'none';
 
-       document.getElementById("run-btn").style.display = "none";
-        document.getElementById('loadingIcon').style.display = 'block';
-        document.getElementById('errorMessage').style.display = 'none';
-        document.getElementById('successMessage').style.display = 'none';
+    // Assuming your server is running on localhost:3000
+    fetch("/rundiskbenchmark")
+        .then(response => {
+            // Hide loading icon
+            document.getElementById('loadingIcon').style.display = 'none';
+            console.log('Step 1: Response received');
+            if (!response.ok) {
+                // Show error message
+             //   document.getElementById('errorMessage').style.display = 'block';
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-        // Assuming your server is running on localhost:3000
-        fetch("/rundiskbenchmark")
-            .then(response => {
-                // Hide loading icon
-                document.getElementById('loadingIcon').style.display = 'none';
-                console.log('Step 1: Response received');
-                if (!response.ok) {
-                    // Show error message
-                    document.getElementById('errorMessage').style.display = 'block';
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+            // Show success message and parse the data
+          //  document.getElementById('successMessage').style.display = 'block';
+            return response.json();
+        })
+        .then(data => {
+            console.log('Step 2: Data received from server', data);
 
-                // Show success message and parse the data
-                document.getElementById('successMessage').style.display = 'block';
-                return response.json();
-            })
-            .then(data => {
-              console.log('Step 2: Data received from server', data);
-
-                // Check if the "data" property is defined
-                if (data && data.results) {
-                    // Call the parsing function
-                   
-                    diskResults = data.results;
-                    console.log(diskResults);
-                    parseBenchmarkResults1(data.results);
-                    alert('Disk benchmark completed successfully');
-                } else {
-                    console.error('Invalid or missing "results" property in the response:', data);
-                    alert('Error occurred during disk benchmark');
-                }
-
-                //alert('Disk benchmark completed successfully');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error occurred during disk benchmark');
-            });
-    });
+            // Check if the "data" property is defined
+            if (data && data.results) {
+                // Call the parsing function
+                diskResults = data.results;
+                console.log(diskResults);
+                parseBenchmarkResults1(data.results);
+                console.log('Disk benchmark completed successfully');
+            } else {
+                console.error('Invalid or missing "results" property in the response:', data);
+                console.log('Error occurred during disk benchmark');
+            }
+        })
+        .catch(error => {
+            // Display error message
+            console.error('Error:', error);
+           // document.getElementById('errorMessage').style.display = 'block';
+            console.log('Error occurred during disk benchmark');
+        })
+        .finally(() => {
+            // Additional clean-up tasks if needed
+        });
+});
 
 
 
@@ -991,7 +492,7 @@ function parseBenchmarkResults1(results) {
        
     });
 }
-});
+
 
 
 
@@ -1037,18 +538,18 @@ function parseBenchmarkResults1(results) {
                   memoryResults = data.results;
                   console.log(memoryResults);
                   parseBenchmarkResults1(data.results);
-                  alert('Memory benchmark completed successfully');
+                  console.log('Memory benchmark completed successfully');
               } else {
                   console.error('Invalid or missing "results" property in the response:', data);
-                  alert('Error occurred during memory benchmark');
+                  console.log('Error occurred during memory benchmark');
               }
 
 
-              //alert('Disk benchmark completed successfully');
+              //console.log('Disk benchmark completed successfully');
           })
           .catch(error => {
               console.error('Error:', error);
-              alert('Error occurred during memory benchmark');
+              console.log('Error occurred during memory benchmark');
           });
   });
 
@@ -1157,18 +658,18 @@ document.addEventListener('DOMContentLoaded', function() {
                   networkResults = data.results;
                   console.log(networkResults);
                   parseBenchmarkResults1(data.results);
-                  alert('Network benchmark completed successfully');
+                  console.log('Network benchmark completed successfully');
               } else {
                   console.error('Invalid or missing "results" property in the response:', data);
-                  alert('Error occurred during memory benchmark');
+                  console.log('Error occurred during memory benchmark');
               }
 
 
-              //alert('Disk benchmark completed successfully');
+              //console.log('Disk benchmark completed successfully');
           })
           .catch(error => {
               console.error('Error:', error);
-              alert('Error occurred during memory benchmark');
+              console.log('Error occurred during memory benchmark');
           });
   });
 
@@ -1277,18 +778,18 @@ document.addEventListener('DOMContentLoaded', function() {
                   cpuResults = data.results;
                   console.log(cpuResults);
                   parseBenchmarkResults1(data.results);
-                  alert('cpu benchmark completed successfully');
+                  console.log('cpu benchmark completed successfully');
               } else {
                   console.error('Invalid or missing "results" property in the response:', data);
-                  alert('Error occurred during cpu benchmark');
+                  console.log('Error occurred during cpu benchmark');
               }
 
 
-              //alert('Disk benchmark completed successfully');
+              //console.log('Disk benchmark completed successfully');
           })
           .catch(error => {
               console.error('Error:', error);
-              alert('Error occurred during cpu benchmark');
+              console.log('Error occurred during cpu benchmark');
           });
   });
 
@@ -1396,18 +897,18 @@ document.addEventListener('DOMContentLoaded', function() {
                   gpuResults = data.results;
                   console.log(gpuResults);
                   parseBenchmarkResults1(data.results);
-                  alert('gpu benchmark completed successfully');
+                  console.log('gpu benchmark completed successfully');
               } else {
                   console.error('Invalid or missing "results" property in the response:', data);
-                  alert('Error occurred during gpu benchmark');
+                  console.log('Error occurred during gpu benchmark');
               }
 
 
-              //alert('gpu benchmark completed successfully');
+              //console.log('gpu benchmark completed successfully');
           })
           .catch(error => {
               console.error('Error:', error);
-              alert('Error occurred during gpu benchmark');
+              console.log('Error occurred during gpu benchmark');
           });
   });
 
@@ -1710,6 +1211,14 @@ else {
 
 //----------------Comparison popup function----------------------//
 // Function to show the comparison popup
+function showComparisonPopup_1(){
+    document.getElementById('overlay_fetching_comparison_popup').style.display = 'flex';
+    //document.getElementById('comparisonPopup').style.display = 'block';   
+    document.getElementById('contentFrame_compare').style.display = 'block';  
+   
+}
+
+
 function showComparisonPopup() {
     // Fetch data from the server
     fetch('/getComparisonData-disk')
@@ -1759,6 +1268,11 @@ function closeComparisonPopup() {
     document.getElementById('comparisonPopup').style.display = 'none';
 }
 
+function closeComparisonPopup_1() {
+    document.getElementById('overlay_fetching_comparison_popup').style.display = 'none';
+    //document.getElementById('comparisonPopup').style.display = 'block';   
+    document.getElementById('contentFrame_compare').style.display = 'none';  
+}
 
 // -----------------------prepare dataser fof chart - DISK--------------------//
 function prepareDataset_DISK (selectedData) {
@@ -1839,15 +1353,5 @@ function generateBarChart_DISK(selectedData) {
 
 //------------------------disk info tool tip-------------------------------//
 
-
-
-</script>
-
-
-
-  <!-- Swiper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
-
-
-</body>
-</html>
+ // Check on page load
+ fetchbenchinfo();

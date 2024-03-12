@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+   
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+           
+        }
+
+        #sidebar {
+            height: 100vh;
+            width: 200px;
+            background-color: #333;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 20px;
+            color: white;
+        }
+
+        #sidebar a {
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .submenu a {
+            color: #ddd;
+        }
+
+        .dropdown-arrow {
+            margin-left: auto;
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+
+        .has-submenu.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .submenu .selected {
+            background-color: #555;
+        }
+        .content-section {
+            margin-left: 250px;
+            display: none;
+            overflow: auto;
+        }
+        .chart-container{
+            height: 60%;
+            width: 50%;
+            background-color: #ffffffb5;
+            margin-top: 10px;
+            margin-left: 17%;
+            
+        }
+
+        .table_style{
+            height: 50%;
+            overflow: auto;
+            margin-left: 10%;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(0, 156, 203); text-align: center;">
+
+    <div id="sidebar">
+      
+        
+        <a href="javascript:void(0);" class="has-submenu">
+            Disk
+            <div class="dropdown-arrow">&#9660;</div>
+        </a>
+        <div class="submenu" id="diskSubmenu">
+            <a href="javascript:void(0);" class="selected">Compile-Bench</a>
+            <a href="javascript:void(0);">Fio-Random</a>
+            <a href="javascript:void(0);">Fio-Squential</a>
+        </div>
+        <a href="#" class="has-submenu">
+            Memory
+            <div class="dropdown-arrow">&#9660;</div>
+        </a>
+        <div class="submenu" id="memorySubmenu">
+            <a href="javascript:void(0);" >Cache-Bench</a>
+            <a href="javascript:void(0);">RAMSMP-Float</a>
+            <a href="javascript:void(0);">RAMSMP-Integer</a>
+        </div>
+    </div>
+    
+    <div id="content-disk-compileBench" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-disk-compileBench">
+                <caption>BENCHMARK NAME - Compile-Bench</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Compile (MB/s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-disk-compileBench" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-disk-fio_random" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+        <table id="comparison-table-disk-fio_random">
+            <caption>BENCHMARK NAME - Fio-Random</caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>System Name</th>
+                    <th>Benchmark</th>
+                    <th>Time (ms)</th>
+                    <th>CPU (ms)</th>
+                    <th>Iterations</th>
+                    <th>Average Read (MB/s)</th>
+                    <th>Average Write (MB/s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table data will be inserted here dynamically using JavaScript -->
+            </tbody>
+        </table>
+    </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+        <canvas id="comparisonChart-disk-fio_random" width="500" height="300"></canvas>
+        </div>
+
+    </div>
+    
+    <script>
+        const selectedRows = {};
+
+async function fetchComparisonData(tableType,subType) {
+    try {
+        const response = await fetch(`/getComparisonData-${tableType}-${subType}`);
+        const { success, data } = await response.json();
+
+        if (success) {
+            populateTable(data, tableType, subType);
+        } else {
+            console.error(`Error retrieving ${tableType}-${subType} data:`, data);
+        }
+    } catch (error) {
+        console.error(`Error fetching ${tableType}-${subType} data:`, error);
+    }
+}
+
+function populateTable(data, tableType, subType) {
+    const tableBody = document.querySelector(`#comparison-table-${tableType}-${subType} tbody`);
+ // Remove all child nodes from the tbody
+ while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        const columns = getColumnValues(row, tableType, subType);
+
+        tr.innerHTML = columns.map(col => `<td>${col}</td>`).join('');
+
+        // Add a click event listener to each row
+        tr.addEventListener('click', () => handleRowClick(row, tr, tableType, subType));
+        tableBody.appendChild(tr);
+    });
+
+      // Display the content section
+     // document.getElementById(`content-${tableType}-${subType}`).style.display = 'block';
+}
+
+function getColumnValues(row, tableType, subType) {
+    switch (tableType) {
+        case 'disk':
+            if(subType == 'compileBench')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_compile_mbs];
+            if(subType == 'fio_random')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs];
+        case 'memory':
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_cache_mibs];
+        // Add cases for other tables as needed
+        default:
+            return [];
+    }
+}
+
+function handleRowClick(selectedRow, tr, tableType, subType) {
+    const selectedRowsOfType = selectedRows[`${tableType}${subType}`] || [];
+    const index = selectedRowsOfType.findIndex(row => row.id === selectedRow.id);
+    console.log("selectedRowsOfType=",selectedRowsOfType);
+console.log("index=",index);
+    // Toggle selection status
+    if (index === -1) {
+        selectedRowsOfType.push(selectedRow);
+        tr.classList.add('selected-row-tbody'); // Add class to highlight the selected row
+    } else {
+        selectedRowsOfType.splice(index, 1);
+        tr.classList.remove('selected-row-tbody'); // Remove class to unhighlight the deselected row
+    }
+// Update the selectedRows object with the modified array
+selectedRows[`${tableType}${subType}`] = selectedRowsOfType;
+    updateChart(tableType, subType);
+}
+
+function updateChart( tableType, subType) {
+    const selectedRowsOfType = selectedRows[`${tableType}${subType}`] || [];
+    const chartId = `comparisonChart-${tableType}-${subType}`;
+    console.log("selectedRowsOfType=",selectedRowsOfType);
+     // Check if the chart exists in window[chartId]
+     if (window[chartId] instanceof Chart) {
+        // Clear existing chart
+        window[chartId].destroy();
+    }
+
+    // // Prepare data for the selected rows
+    // const labels = selectedRowsOfType.map(row => `ID ${row.id}`);
+    // console.log("labels=",labels);
+    // const dataValues = selectedRowsOfType.map(row => {
+    //     switch (tableType) {
+    //         case 'disk':
+    //             if(subType =='compileBench')
+    //             return [row.average_compile_mbs];
+    //             if(subType =='fio_random')
+    //             return [row.average_read_mibs, row.average_write_mibs];
+    //         case 'memory':
+    //             return [row.average_cache_mibs];
+    //         // Add cases for other tables as needed
+    //         default:
+    //             return [];
+    //     }
+    // });
+    // console.log("dataValues=",dataValues);
+    // const datasets = dataValues[0].map((_, index) => {
+    //     return {
+    //         label: `Comparison Chart - ${tableType.charAt(0).toUpperCase() + tableType.slice(1)} - ${subType.charAt(0).toUpperCase() + subType.slice(1)} ${index + 1}`,
+    //         data: dataValues.map(values => values[index]),
+    //         axis: index % 2 === 0 ? 'x' : 'y',
+    //         backgroundColor: `rgba(75, 192, 192, 0.${index + 2})`,
+    //         borderColor: `rgba(75, 192, 192, 1)`,
+    //         borderWidth: 1,
+    //     };
+    // });
+
+    let dataset = { };
+
+    // Prepare data for the selected rows
+    if(tableType == 'disk')
+    {
+            if(subType == 'fio_random'){
+                 dataset = prepareDataset_disk_fio_random(selectedRowsOfType);
+            }else if(subType == 'compileBench') {
+                dataset = prepareDataset_disk_compileBench(selectedRowsOfType);
+            }
+    }
+    
+
+    // Generate the bar chart using Chart.js
+    const ctx = document.getElementById(chartId).getContext('2d');
+    window[chartId] = new Chart(ctx, {
+        type: 'bar',
+        data: dataset,
+        
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+}
+
+// -----------------------prepare dataser fof chart - DISK--------------------//
+function prepareDataset_disk_fio_random (selectedData) {
+      const labels = ['Average read', 'Average write'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_read_mibs, item.average_write_mibs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+
+function prepareDataset_disk_compileBench (selectedData) {
+      const labels = ['Average compile'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_compile_mbs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+
+window.onload = () => {
+    document.getElementById('content-disk-compileBench').style.display = 'block';
+            fetchComparisonData('disk','compileBench');
+           // fetchComparisonData('memory','compile-bench');
+            // Add more calls for other tables as needed
+        };
+
+// -----------------------generate Bar Chart - DISK--------------------//
+
+
+
+
+        // JavaScript to toggle submenus and highlight the selected item
+        document.querySelectorAll('.has-submenu').forEach(item => {
+            item.addEventListener('click', () => {
+                const submenu = item.nextElementSibling;
+                const allSubMenuItems = submenu.querySelectorAll('a');
+    
+                // Remove 'selected' class from all submenu items
+                allSubMenuItems.forEach(submenuItem => {
+                    submenuItem.classList.remove('selected');
+                });
+    
+                item.classList.toggle('open');
+                submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    
+        // JavaScript to handle the selection of submenu items and update content
+        document.querySelectorAll('.submenu a').forEach(submenuItem => {
+            submenuItem.addEventListener('click', () => {
+                // Remove 'selected' class from all submenu items
+                document.querySelectorAll('.submenu a').forEach(item => {
+                    item.classList.remove('selected');
+                });
+    
+                // Add 'selected' class to the clicked submenu item
+                submenuItem.classList.add('selected');
+    
+                // Update content based on the selected submenu
+                updateContent(submenuItem.innerText);
+            });
+        });
+    
+        // Function to update content based on the selected submenu
+        function updateContent(submenuText) {
+            if(submenuText == 'Compile-Bench'){
+                  // alert("Compile-Bench");
+                   
+                   document.getElementById('content-disk-compileBench').style.display = 'block';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   fetchComparisonData('disk','compileBench');
+            } else if(submenuText == 'Fio-Random'){
+                document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'block';
+                   fetchComparisonData('disk','fio_random');
+               // alert("Fio-Random");
+            }
+            // const contentArea = document.getElementById('content');
+            // contentArea.innerHTML = `<h1>${submenuText}</h1>
+            //                          <p>This is the content for ${submenuText}.</p>`;
+        }
+    </script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </body>
+    </html>

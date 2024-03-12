@@ -1,60 +1,84 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var buildButton = document.getElementById('buildButton');
-    if (buildButton) {
-        buildButton.addEventListener('click', function(event) {
-            console.log("clicked...");
-            event.preventDefault(); // Prevent the default action of the anchor tag
-            fetch('/build', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('message').innerText = data.message;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('message').innerText = 'Build failed';
-                });
-        });
-    } else {
-        console.error('Build button not found');
-    }
+    // Function to check if the "microbenchmark" folder exists
+    function checkHardwareMapFolder() {
+        fetch("/check_hardwaremap")
+        .then(response => {
+            if (response.status === 200) {
+                // Folder exists, check if "BENCH" executable exists
+                fetch("/check_hardwaremap_executable")
+                    .then(execResponse => {
+                        if (execResponse.status === 200) {
+                            // "BENCH" executable exists, hide the build button
+                            document.getElementById("sys_buildButton").style.display = "none";
+                            document.getElementById('loading-bar-sys').style.display = 'block';
+                            document.getElementById("message-sys-build").innerText = "You've already built.";
+                            fetch('/getSystemInfo_all')
+              .then(response => response.json())
+              .then(data => {
+                  // Store the fetched data
+                  console.log("data:",data);
+                  systemInfoData = data.systemInfo;
 
-    // fetch('/cpu-details')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //         const cpuDetailsArray = data.split('\n');
-    //         const cpuDetailsTableBody = document.getElementById('cpuDetailsBody');
-    //         cpuDetailsArray.forEach(detail => {
-    //             const [property, value] = detail.split(':');
-    //             const row = document.createElement('tr');
-    //             const propertyCell = document.createElement('td');
-    //             const valueCell = document.createElement('td');
-    //             propertyCell.textContent = property.trim();
-    //             valueCell.textContent = value.trim();
-    //             row.appendChild(propertyCell);
-    //             row.appendChild(valueCell);
-    //             cpuDetailsTableBody.appendChild(row);
-    //         });
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //         const cpuDetailsTableBody = document.getElementById('cpuDetailsBody');
-    //         cpuDetailsTableBody.innerHTML = '<tr><td colspan="2">Failed to retrieve CPU details</td></tr>';
-    //     });
+                  // Hide loading message
+                  document.getElementById('overlay_fetching').style.display = 'none';
+                  console.log("finished...");
+                  console.log("systemInfoData-");
+                  //let cpuinfo = extractSection(systemInfoData, '-------CPU Details');
+                   extractCPUDetails(systemInfoData);
+                   extractGPUDetails(systemInfoData);
+                   extractRAMDetails(systemInfoData);
+                   extractBatteryDetails(systemInfoData);
+                   extractDisplayDetails(systemInfoData);
+                   extractWifiDetails(systemInfoData);
+                   extractEthernetDetails(systemInfoData);
+                   extractKeyboardDetails(systemInfoData);
+                   extractTouchpadDetails(systemInfoData);
+                   extractAudioDetails(systemInfoData);
+                  
+                  console.log(cpuvendor);
+              })
+              .catch(error => {
+                  console.error(`Error fetching system info: ${error}`);
+                  // Handle errors as needed
+              });
+                        } else {
+                            // "BENCH" executable doesn't exist, show the build button
+                            document.getElementById("sys_buildButton").style.display = "block";
+                            
+                            document.getElementById("message-sys-build").innerText = "You should build first.";
+                        }
+                    })
+                    .catch(execError => console.error("Error checking 'hardware_map' executable: " + execError));
+            } else {
+                // Folder doesn't exist, show the build button
+                document.getElementById("sys_buildButton").style.display = "block";
+                document.getElementById("message-sys-build").innerText = "You should build first.";
+            }
+        })
+        .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
+}
 
-
-              // script.js
-      
-});
-
-
-let systemInfoData = null;
-
-      function fetchSystemInfo() {
-          // Display loading message
-          document.getElementById('overlay_fetching').style.display = 'flex';
-
-          // Simulate fetching data from the server
-          fetch('/getSystemInfo_all')
+//----------------Build button clicking function----------------------//
+document.getElementById("sys_buildButton").addEventListener("click", function () {
+  
+    document.getElementById('loadingIcon_sys').style.display = 'block';
+    document.getElementById("sys_buildButton").style.display = "none";
+    document.getElementById("message-sys-build").style.display = "none";
+    fetch("/check_hardwaremap")
+      .then(response => {
+          if (response.status === 200) {
+              console.log("The 'hardware_map' folder already exists.");
+          } else {
+            console.log("enter")
+              // Clone the repository
+              fetch("/clone_and_build_hardwaremap")
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                        //  console.log("Repository cloned  cloned and built  successfully.");
+                          document.getElementById("message-sys-build").innerText = "You've built successfully";
+                          document.getElementById('loadingIcon_sys').style.display = 'none';
+                          document.getElementById('loading-bar-sys').style.display = 'block';
+                          fetch('/getSystemInfo_all')
               .then(response => response.json())
               .then(data => {
                   // Store the fetched data
@@ -83,6 +107,30 @@ let systemInfoData = null;
                   console.error(`Error fetching system info: ${error}`);
                   // Handle errors as needed
               });
+                      } else {
+                          console.log("Failed to clone repository.");
+                          document.getElementById('loadingIcon_sys').style.display = 'none';
+                          document.getElementById("message-sys-build").innerText = "build error";
+                      }
+                  })
+                  .catch(error => console.error("Error cloning repository: " + error));
+          }
+      })
+      .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
+      
+    });
+
+
+let systemInfoData = null;
+
+      function fetchSystemInfo() {
+          // Display loading message
+          document.getElementById('overlay_fetching').style.display = 'flex';
+          document.getElementById('loadingIcon_sys').style.display = 'none';
+         document.getElementById('loading-bar-sys').style.display = 'none';
+          checkHardwareMapFolder();
+          // Simulate fetching data from the server
+          
       }
 
         function extractCPUDetails(systemInfoData) {
@@ -414,4 +462,8 @@ function showinfoDetailsPopup(device) {
 
 
     
-    
+    function closeComparisonPopup_1() {
+        document.getElementById('overlay_fetching_comparison_popup').style.display = 'none';
+        //document.getElementById('comparisonPopup').style.display = 'block';   
+        document.getElementById('contentFrame_compare').style.display = 'none';  
+    }
