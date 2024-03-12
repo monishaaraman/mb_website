@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const port = 4000;
+const port = 8000;
 
 
 //-------------------  -----------------//
@@ -13,6 +13,21 @@ const port = 4000;
 // Endpoint to check if the "BENCH" executable file exists
 app.get('/check_bench_executable', (req, res) => {
     const benchPath = '/usr/share/microbenchmark/BENCH'; // Modify this path accordingly
+
+    fs.access(benchPath, fs.constants.F_OK, (err) => {
+        if (err) {
+            // "BENCH" executable doesn't exist
+            res.sendStatus(404);
+        } else {
+            // "BENCH" executable exists
+            res.sendStatus(200);
+        }
+    });
+});
+
+
+app.get('/check_hardwaremap_executable', (req, res) => {
+    const benchPath = '/usr/local/bin/hardware_map'; // Modify this path accordingly
 
     fs.access(benchPath, fs.constants.F_OK, (err) => {
         if (err) {
@@ -673,6 +688,7 @@ app.get('/clone_and_build_microbenchmark', (req, res) => {
     const cloneCommand = 'sudo git clone https://github.com/monishaaraman/microbenchmark-new.git /usr/share/microbenchmark'; // Modify the clone command and path accordingly
     const buildCommands = [
         'cd /usr/share/microbenchmark',
+        'sudo ./dependencies.sh',
         'sudo cmake .',
         'sudo make'
     ];
@@ -701,7 +717,7 @@ app.get('/clone_and_build_microbenchmark', (req, res) => {
 
 //-----------------Hardware-map folder exists checking api--------------------//
 // Endpoint to check if the "microbenchmark" folder exists
-app.get('/api/check_hardwaremap', (req, res) => {
+app.get('/check_hardwaremap', (req, res) => {
     const folderPath = '/usr/share/hardware_map'; // Modify this path accordingly
 
     fs.access(folderPath, fs.constants.F_OK, (err) => {
@@ -1128,8 +1144,24 @@ app.get('/rungpubenchmark', (req, res) => {
 
 
   // Add a new endpoint to fetch data for comparison
-  app.get('/getComparisonData-disk', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, averageread_mib_s, averagewrite_mib_s FROM disk.disk_table';
+  app.get('/getComparisonData-disk-compileBench', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_compile_mbs FROM disk.compilebench';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+ // Add a new endpoint to fetch data for comparison
+ app.get('/getComparisonData-disk-fio_random', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs FROM disk.fio_random';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1176,21 +1208,8 @@ app.post('/getChartData', (req, res) => {
 
 //---------------------System info------------------------//
 
-app.post('/system_info_build', (req, res) => {
-    const repositoryUrl = 'https://github.com/vijayakumarmani2/Hardware-Map.git'; // Replace with the actual repository URL
-    const repoDirectory = 'Hardware-Map'; // Replace with the actual directory
 
-    // Execute the shell command to clone the repository and run the install script
-    exec(`git clone ${repositoryUrl} && cd ${repoDirectory} && ./install.sh`, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            console.error(`stderr: ${stderr}`);
-            return res.status(500).json({ message: 'Build failed', error: stderr });
-        }
-        console.log(`stdout: ${stdout}`);
-        res.json({ message: 'Build successful' });
-    });
-});
+
 
 app.get('/getSystemInfo_all', (req, res) => {
     const command = 'sudo hardware_map all';
@@ -1268,20 +1287,76 @@ app.get('/convert-to-json', (req, res) => {
                 return res.status(500).send('Internal Server Error');
             }
             try {
-             // Split stdout into lines
-    let lines = stdout.split('\n');
-    
-    // Extract the first line and remove '*' characters
-    let firstLine = lines[0].replace(/\*/g, '').trim();
+                
 
-    // Now you can use firstLine for something, or proceed with other processing
-    console.log("firstLine=",firstLine); // This is just to show the cleaned first line
 
-            // Preprocess stdout to extract valid JSON
-    // Here, we assume the JSON starts after a specific line. Adjust this based on your output.
-    let jsonStartIndex = stdout.indexOf('{');
-    let jsonPart = stdout.substring(jsonStartIndex)
-           // const data = JSON.parse(jsonPart); // Adjust based on actual output format
+const sectionNames = [
+    'CPU Details',
+    'Webcam Details',
+    'Memory Details',
+    'RAM Details',
+    'Display Details',
+    'Battery Details',
+    'Disk Details',
+    'Wifi Details',
+    'Ethernet Details',
+    'Bluetooth Details',
+    'Keyboard Details',
+    'Mouse Details',
+    'Touchpad Details',
+    'Audio Details',
+    'GPU Details'
+];
+
+const allDetails = {};
+
+function extractSystemInformationSection(data) {
+    const startIndex = data.indexOf('***System Information***');
+    if (startIndex !== -1) {
+        const endIndex = data.indexOf('-------', startIndex + 1);
+        if (endIndex !== -1) {
+            const systemInfoSection = data.substring(startIndex, endIndex).trim();
+            const systemInfoObject = {};
+
+            // Extract key-value pairs for the System Information section
+            const keyValuePairs = systemInfoSection.match(/([\w\s]+):\s*([^\n]+)/g);
+
+            if (keyValuePairs) {
+                keyValuePairs.forEach(pair => {
+                    const [key, value] = pair.split(':').map(item => item.trim());
+                    systemInfoObject[key] = value;
+                });
+            }
+
+            return systemInfoObject;
+        }
+    }
+
+    return null;
+}
+
+// Extract 'System Information' section
+const systemInformationObject = extractSystemInformationSection(stdout);
+allDetails['System Information'] = systemInformationObject;
+// Log the details for the 'System Information' section
+console.log(JSON.stringify(systemInformationObject, null, 2))
+// Loop through each section name
+for (const sectionName of sectionNames) {
+    // Extract details for the current section
+    const sectionDetailsString = extractSection(stdout, `-------${sectionName}`);
+    const sectionDetailsObject = extractSectionDetails(sectionName, sectionDetailsString);
+
+    // Store details in the allDetails object
+    allDetails[sectionName] = sectionDetailsObject;
+
+    // Log the details for the current section
+  //  console.log(JSON.stringify(sectionDetailsObject, null, 2));
+}
+
+// Log the merged details for all sections
+console.log(JSON.stringify(allDetails, null, 2));
+
+const jsonData = JSON.stringify(allDetails); // Adjust based on actual output format
             // Assuming the output is valid JSON
             // Send the system information as JSON
            // console.log(data);
@@ -1296,22 +1371,108 @@ app.get('/convert-to-json', (req, res) => {
 
 //   const insertQuery = `INSERT INTO systemInfo_json (data) VALUES ($1)`;
 
-// pool.query(insertQuery, [data])
+// pool.query(insertQuery, [jsonData])
 //   .then(() => console.log('Data inserted successfully!'))
 //   .catch(error => console.error('Error inserting data:', error));
 
-            res.json({ message: 'Data stored successfully!' });
-            } catch (parseError) {
-                console.error(`Error parsing JSON: ${parseError.message}`);
-              }
-        });
+//             res.json({ message: 'Data stored successfully!' });
+//             } catch (parseError) {
+//                 console.error(`Error parsing JSON: ${parseError.message}`);
+//               }
+//         });
+
+        const selectQuery = 'SELECT data FROM systemInfo_json WHERE id=1';
+        pool.query(selectQuery)
+        .then(result => {
+            // Access the JSON data from the result
+            const jsonData = result.rows[0].data;
+            console.log('Retrieved JSON data from PostgreSQL:');
+            console.log(JSON.stringify(jsonData, null, 2));
+        })
+        .catch(error => console.error('Error inserting data:', error));
+
+        res.json({ message: 'Data stored successfully!' });
+    } catch (parseError) {
+        console.error(`Error parsing JSON: ${parseError.message}`);
+      }
+});
+
     }catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error converting and storing data' });
       }
     });
   
+    function executeCommand(command) {
+        return new Promise((resolve, reject) => {
+          exec(command, (error, stdout, stderr) => {
+            if (error) {
+              reject(error);
+              return;
+            }
+            resolve(stdout.trim());
+          });
+        });
+      }
+      
+      
 
+
+      
+function extractSection(data, heading) {
+    const startIndex = data.indexOf(heading);
+    if (startIndex !== -1) {
+        const endIndex = data.indexOf('-------', startIndex + 1);
+        if (endIndex !== -1) {
+            return data.substring(startIndex, endIndex).trim();
+        }
+    }
+    return 'Section not found';
+}
+
+function extractSectionDetails(sectionName, sectionString) {
+    const keyValuePairs = sectionString.match(/([\w\s]+):\s*([^\n]+)/g);
+
+    if (!keyValuePairs) {
+        console.error(`No key-value pairs found for section: ${sectionName}`);
+        return null;
+    }
+
+    const sectionObject = keyValuePairs.reduce((obj, pair) => {
+        const [key, value] = pair.split(':').map(item => item.trim());
+        const cleanedKey = key.replace(new RegExp(`\\s*${sectionName}\\s*`), ''); // Remove section name prefix
+        obj[cleanedKey] = value;
+        return obj;
+    }, {});
+
+    return sectionObject;
+}
+
+
+
+app.get('/download_system_info', (req, res) => {
+        const command = 'sudo hardware_map all';
+      
+        exec(command, (error, stdout, stderr) => {
+          if (error) {
+            return res.status(500).send(`Error executing command: ${error.message}`);
+          }
+      
+          // Save the output to a file
+          const filename = 'hardware_map_output.txt';
+          fs.writeFileSync(filename, stdout);
+      
+          // Send the file as a response
+          res.download(filename, (err) => {
+            if (err) {
+              res.status(500).send(`Error downloading file: ${err.message}`);
+            }
+      
+            // Cleanup: remove the temporary file
+            fs.unlinkSync(filename);
+          });
+        });
+      });
 
 // Start the server
 app.listen(port, () => {
