@@ -28,28 +28,7 @@ h1 {
 
 
 
-/* -----------Build button--------------- */
-.build-button {
-  display: block;
-  border: none;
-  background-color: #F891B3;
-  color: #ffff;
-  padding: 10px 20px;
-  font-size: 20px;
-  width: 200px;
-  border-radius: 10px;
-  margin-top: 10px;
-  box-shadow: 5px 5px 5px #FBC1D4;
-  transition: all 0.3s ease;
-}
-.build-button:hover {
-  box-shadow: 0px 2px 20px #A20A3C;
-  top: 3px;
-}
-.build-button:active {
-  box-shadow: none;
-  top: 5px;
-}
+
 
 
 
@@ -450,7 +429,7 @@ table#benchmarkTable3 caption {
 .modalbg .dialog {
   width: 50%;
   position: relative;
-  top: -1000px;
+  top: -1210px;
   margin: 10% auto;
   padding: 5px 20px 13px 20px;
   -moz-border-radius: 10px;
@@ -606,7 +585,7 @@ a {
 /* nav menu */
 
 .menu-bar {
-  background-color: #333;
+  background-color: #444444;
   color: white;
   padding: 0px;
   display: flex; /* Use flexbox for easy alignment */
@@ -645,6 +624,7 @@ a {
   padding: 10px 20px;
   text-align: center;
   height: 100%;
+  margin-top: 15px 
 }
 
 .menu-bar a:hover {
@@ -660,5 +640,14 @@ a {
 .menu-bar ul li a.active {
   /* Add styles for the active menu item */
   font-weight: bold;
-  color: #007bff; /* Change to your desired color */
+  color: #637A9F; /* Change to your desired color */
+  background-color: #FFFFFF;
+}
+
+.menu{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+
 }

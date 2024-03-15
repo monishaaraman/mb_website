@@ -360,6 +360,13 @@ function extractAudioDetails(systemInfoData) {
 
 displaySystemInfo();
 
+// Function to show the comparison popup
+function openComparepopup_sysinfo(){
+    document.getElementById('overlay_fetching_comparison_popup_sysinfo').style.display = 'flex';
+    //document.getElementById('comparisonPopup').style.display = 'block';   
+    document.getElementById('contentFrame_compare_sysinfo').style.display = 'block';  
+   
+}
 
 function showinfoDetailsPopup(device) {
 
@@ -462,8 +469,8 @@ function showinfoDetailsPopup(device) {
 
 
     
-    function closeComparisonPopup_1() {
-        document.getElementById('overlay_fetching_comparison_popup').style.display = 'none';
+    function closeComparisonPopup_sysinfo() {
+        document.getElementById('overlay_fetching_comparison_popup_sysinfo').style.display = 'none';
         //document.getElementById('comparisonPopup').style.display = 'block';   
-        document.getElementById('contentFrame_compare').style.display = 'none';  
+        document.getElementById('contentFrame_compare_sysinfo').style.display = 'none';  
     }

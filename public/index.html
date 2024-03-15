@@ -16,27 +16,27 @@
     
    
     
-  <script src="body.js"></script>
+  <!-- <script src="body.js"></script> -->
  
     <title>Micro-Benchmark</title>
 
     <script>
-        $(document).ready(function() {
-          // Load default content on page load
-          loadContent('benchmark_page.html');
+      //   $(document).ready(function() {
+      //     // Load default content on page load
+      //   //  loadPage('benchmark_page.html');
     
-          // Handle menu item clicks
-          $('.menu-bar ul li a').on('click', function(e) {
-            e.preventDefault();
-            var page = $(this).attr('href');
-            loadContent(page);
+      //     // Handle menu item clicks
+      //     $('.menu-bar ul li a').on('click', function(e) {
+      //       e.preventDefault();
+      //       var page = $(this).attr('href');
+      //       loadPage(page);
           
-            // Remove the 'active' class from all menu items
-            $('.menu-bar ul li a').removeClass('active');
-            // Add the 'active' class to the clicked menu item
-            $(this).addClass('active');
-        });
-      });
+      //       // Remove the 'active' class from all menu items
+      //       $('.menu-bar ul li a').removeClass('active');
+      //       // Add the 'active' class to the clicked menu item
+      //       $(this).addClass('active');
+      //   });
+      // });
           
     
         //   function loadContent(page) {
@@ -48,17 +48,27 @@
         
         //------------------menu bar handeling-----------///
 
-        function loadPage(page) {
-        console.log('Loading page:', page);
-
+        function loadPage(element) {
+        console.log('Loading page:', element.href);
+        
+        // Remove 'active' class from all menu items
+        $('.menu-bar ul li a').removeClass('active');
+        
+        // Add the 'active' class to the clicked menu item
+        $(element).addClass('active');
+        
+        // Perform AJAX request to load the page content
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("main_body").innerHTML = this.responseText;
             }
         };
-        xhttp.open("GET", page, true);
+        xhttp.open("GET", element.href, true);
         xhttp.send();
+        
+        // Prevent default navigation behavior
+        return false;
     }
       </script>
    
@@ -69,10 +79,10 @@
         <div class="menu-bar">
             <div class="heading"><h1>Micro-Benchmark</h1></div>
             <nav>
-              <ul id="menu">
+              <ul class="menu" id="menu">
                 
-                <li><a href="benchmark_page.html" target="contentFrame" onclick="loadPage('benchmark_page.html')">Benchmark</a></li>
-                <li><a href="system_info.html" target="contentFrame" onclick="loadPage('system_info.html')">System Info</a></li>
+                <li><a class="active" href="benchmark_page.html" target="contentFrame" onclick="loadPage(this)">Benchmark</a></li>
+                <li><a href="system_info.html" target="contentFrame" onclick="loadPage(this)">System Info</a></li>
                 <li><a href="#">Settings</a></li>
               </ul>
             </nav>

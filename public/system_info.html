@@ -18,10 +18,7 @@
 <script src="./js/js-fluid-meter.js"></script>
 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
- <style>
-        
-    </style>
-</style>
+
 
 </head>
 
@@ -29,7 +26,7 @@
 
   <div id="particleCanvas-Blue1"></div>
   <div id="particleCanvas-White1"></div>
-  <div  style="display: block; overflow: auto; width: 100vw; align-items: center; margin: 0; text-align: center; background-color: rgba(164, 164, 164, 0.575);">
+  <div  style="display: block; overflow: auto; width: 100vw; align-items: center; margin: 0; text-align: center; background-color: #ffffff;">
     
 
  
@@ -71,24 +68,7 @@
    
     
 
-    <div style="display: flex; flex-direction: row; ">
-    <div class="ram-usage-div">
-      <h1>RAM Usage</h1>
-      <div class="col text-center">
-        <div id="fluid-meter-ram" class="mx-auto"></div>
-      </div>
-      <span class="ramtotal" id="ramtotal"></span>
-    </div>
-
-    <div class="swap-usage-div">
-      <h1>SWAP Usage</h1>
-      <div class="col text-center">
-        <div id="fluid-meter-swap" class="mx-auto"></div>
-      </div>
-      <span class="swaptotal" id="swaptotal"></span>
-    </div>
-
-  </div>
+    
 
 
 
@@ -194,11 +174,31 @@
 
 <div class="button_system_info" id="save_button_system_info">Save</div>
 <div class="button_system_info" id="download_button_system_info" onclick="runDownloadCommand()">Download as <span style="color: rgb(61, 61, 61);">.txt</span></div>
-<div class="button_system_info" id="compare_button_system_info" onclick="openComparepopup()">Compare</div>
+<div class="button_system_info" id="compare_button_system_info" onclick="openComparepopup_sysinfo()">Compare</div>
+
 <div id="overlay_fetching_comparison_popup_sysinfo">
       
-  <div class="close-btn" onclick="closeComparisonPopup_1()">X</div>
-  <iframe id="contentFrame_compare" name="contentFrame_compare" src="comparison_popup.html" style="display: none;width: 80%; height: 80%; "></iframe>
+  <div class="close-btn" onclick="closeComparisonPopup_sysinfo()">X</div>
+  <iframe id="contentFrame_compare_sysinfo" name="contentFrame_compare_sysinfo" src="sysinfo_comparison_page.html" style="display: none;width: 80%; height: 80%; "></iframe>
+
+</div>
+
+<div style="display: flex; flex-direction: row; ">
+  <div class="ram-usage-div">
+    <h1>RAM Usage</h1>
+    <div class="col text-center">
+      <div id="fluid-meter-ram" class="mx-auto"></div>
+    </div>
+    <span class="ramtotal" id="ramtotal"></span>
+  </div>
+
+  <div class="swap-usage-div">
+    <h1>SWAP Usage</h1>
+    <div class="col text-center">
+      <div id="fluid-meter-swap" class="mx-auto"></div>
+    </div>
+    <span class="swaptotal" id="swaptotal"></span>
+  </div>
 
 </div>
 <div> end </div>
@@ -485,8 +485,8 @@ fm_ram.init({
         drawBubbles: true,
         size: 300,
         borderWidth: 10,
-        backgroundColor: "#2ecc70",
-        foregroundColor: "#fafafa",
+        backgroundColor: "#2ecc7055",
+        foregroundColor: "#fafafa55",
         foregroundFluidLayer: {
           fillStyle: "#e74d3c",
           angularSpeed: 100,
@@ -515,8 +515,8 @@ fm_ram.init({
         drawBubbles: true,
         size: 300,
         borderWidth: 10,
-        backgroundColor: "#2ecc70",
-        foregroundColor: "#fafafa",
+        backgroundColor: "#2ecc7055",
+        foregroundColor: "#fafafa55",
         foregroundFluidLayer: {
           fillStyle: "#e74d3c",
           angularSpeed: 100,

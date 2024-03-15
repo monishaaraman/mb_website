@@ -2,7 +2,7 @@
 function fetchbenchinfo() {
           // Display loading message
           document.getElementById('overlay_fetching_bench').style.display = 'flex';
-
+          console.log("calling");
           // Simulate fetching data from the server
           checkMicrobenchmarkFolder();
       }
@@ -22,7 +22,7 @@ window.particlesJS("particleCanvas-Blue", {
             }
         },
         color: {
-            value: "#1B5F70"
+            value: "#378CE7"
         },
         shape: {
             type: "circle",
@@ -133,7 +133,7 @@ particlesJS("particleCanvas-White", {
             }
         },
         color: {
-            value: "#fff2"
+            value: "#e74848"
         },
         shape: {
             type: "circle",
@@ -314,17 +314,18 @@ function getRandomColor() {
             fetch("/check_microbenchmark")
             .then(response => {
                 if (response.status === 200) {
+                    console.log("success");
                     // Folder exists, check if "BENCH" executable exists
                     fetch("/check_bench_executable")
                         .then(execResponse => {
                             if (execResponse.status === 200) {
                                 // "BENCH" executable exists, hide the build button
-                                document.getElementById("buildButton").style.display = "none";
+                                document.getElementById("buildButton-bench").style.display = "none";
                                 document.getElementById('overlay_fetching_bench').style.display = 'none';
                                 document.getElementById("build-message").innerText = "You've already built.";
                             } else {
                                 // "BENCH" executable doesn't exist, show the build button
-                                document.getElementById("buildButton").style.display = "block";
+                                document.getElementById("buildButton-bench").style.display = "block";
                                 
                                 document.getElementById("build-message").innerText = "You should build first.";
                             }
@@ -332,8 +333,9 @@ function getRandomColor() {
                         .catch(execError => console.error("Error checking 'BENCH' executable: " + execError));
                 } else {
                     // Folder doesn't exist, show the build button
-                    document.getElementById("buildButton").style.display = "block";
+                    document.getElementById("buildButton-bench").style.display = "block";
                     document.getElementById("build-message").innerText = "You should build first.";
+                    console.log("not");
                 }
             })
             .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
@@ -344,10 +346,12 @@ function getRandomColor() {
 
 
 //----------------Build button clicking function----------------------//
-document.getElementById("buildButton").addEventListener("click", function () {
+ function buildButton_bench() {
       // Check if the "microbenchmark" folder exists
+      console.log("clicked");
       document.getElementById('loadingIcon_b').style.display = 'block';
-      document.getElementById("buildButton").style.display = "none";
+      document.getElementById("buildButton-bench").style.display = "none";
+      document.getElementById("build-message").innerText = "";
       fetch("/check_microbenchmark")
         .then(response => {
             if (response.status === 200) {
@@ -373,13 +377,27 @@ document.getElementById("buildButton").addEventListener("click", function () {
         })
         .catch(error => console.error("Error checking 'microbenchmark' folder: " + error));
         
-      } );
+      } 
+
+
+
+
+ 
 
 
 
 
 
-  //----------------Disk button clicking function----------------------//
+
+
+
+
+     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Memory button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+  
+
+ document.addEventListener('DOMContentLoaded', function() {
+
+ //----------------Disk button clicking function----------------------//
   // Your existing code here
   document.getElementById('disk_button').addEventListener('click', function () {
     // Display loading icon
@@ -401,7 +419,7 @@ document.getElementById("buildButton").addEventListener("click", function () {
             }
 
             // Show success message and parse the data
-          //  document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'block';
             return response.json();
         })
         .then(data => {
@@ -412,7 +430,7 @@ document.getElementById("buildButton").addEventListener("click", function () {
                 // Call the parsing function
                 diskResults = data.results;
                 console.log(diskResults);
-                parseBenchmarkResults1(data.results);
+                parseBenchmarkResults_disk(data.results);
                 console.log('Disk benchmark completed successfully');
             } else {
                 console.error('Invalid or missing "results" property in the response:', data);
@@ -430,11 +448,9 @@ document.getElementById("buildButton").addEventListener("click", function () {
         });
 });
 
-
-
 //----------------Disk result parsing function----------------------//
    // Assuming "data.results" is an array of objects with key-value pairs
-function parseBenchmarkResults1(results) {
+   function parseBenchmarkResults_disk(results) {
     // Check if the "results" property is defined
     console.log('Received results from server:', results);
     // Clear existing table rows
@@ -492,16 +508,6 @@ function parseBenchmarkResults1(results) {
        
     });
 }
-
-
-
-
-
-     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Memory button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-  
-
-     document.addEventListener('DOMContentLoaded', function() {
-
 //----------------Memory button clicking function----------------------//
 // Your existing code here
   document.getElementById('memory_button').addEventListener('click', function() {
@@ -537,7 +543,7 @@ function parseBenchmarkResults1(results) {
                  
                   memoryResults = data.results;
                   console.log(memoryResults);
-                  parseBenchmarkResults1(data.results);
+                  parseBenchmarkResults_memory(data.results);
                   console.log('Memory benchmark completed successfully');
               } else {
                   console.error('Invalid or missing "results" property in the response:', data);
@@ -555,7 +561,7 @@ function parseBenchmarkResults1(results) {
 
 //----------------Memory result parsing function----------------------//
  // Assuming "data.results" is an array of objects with key-value pairs
- function parseBenchmarkResults1(results) {
+ function parseBenchmarkResults_memory(results) {
   // Check if the "results" property is defined
   console.log('Received results from server:', results);
   // Clear existing table rows
@@ -613,367 +619,357 @@ function parseBenchmarkResults1(results) {
      
   });
 }
-});
-
-
-
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Network button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-  
-
-document.addEventListener('DOMContentLoaded', function() {
 
 //----------------Network button clicking function----------------------//
 // Your existing code here
-  document.getElementById('network_button').addEventListener('click', function() {
-// Display loading icon
-
-     document.getElementById("run-btn2").style.display = "none";
-      document.getElementById('loadingIcon2').style.display = 'block';
-      document.getElementById('errorMessage2').style.display = 'none';
-      document.getElementById('successMessage2').style.display = 'none';
-
-      // Assuming your server is running on localhost:3000
-      fetch("/runnetworkbenchmark")
-          .then(response => {
-              // Hide loading icon
-              document.getElementById('loadingIcon2').style.display = 'none';
-              console.log('Step 1: Response received');
-              if (!response.ok) {
-                  // Show error message
-                  document.getElementById('errorMessage2').style.display = 'block';
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-
-              // Show success message and parse the data
-              document.getElementById('successMessage2').style.display = 'block';
-              return response.json();
-          })
-          .then(data => {
-            console.log('Step 2: Data received from server', data);
-
-              // Check if the "data" property is defined
-              if (data && data.results) {
-                  // Call the parsing function
-                 
-                  networkResults = data.results;
-                  console.log(networkResults);
-                  parseBenchmarkResults1(data.results);
-                  console.log('Network benchmark completed successfully');
-              } else {
-                  console.error('Invalid or missing "results" property in the response:', data);
+document.getElementById('network_button').addEventListener('click', function() {
+    // Display loading icon
+    
+         document.getElementById("run-btn2").style.display = "none";
+          document.getElementById('loadingIcon2').style.display = 'block';
+          document.getElementById('errorMessage2').style.display = 'none';
+          document.getElementById('successMessage2').style.display = 'none';
+    
+          // Assuming your server is running on localhost:3000
+          fetch("/runnetworkbenchmark")
+              .then(response => {
+                  // Hide loading icon
+                  document.getElementById('loadingIcon2').style.display = 'none';
+                  console.log('Step 1: Response received');
+                  if (!response.ok) {
+                      // Show error message
+                      document.getElementById('errorMessage2').style.display = 'block';
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+    
+                  // Show success message and parse the data
+                  document.getElementById('successMessage2').style.display = 'block';
+                  return response.json();
+              })
+              .then(data => {
+                console.log('Step 2: Data received from server', data);
+    
+                  // Check if the "data" property is defined
+                  if (data && data.results) {
+                      // Call the parsing function
+                     
+                      networkResults = data.results;
+                      console.log(networkResults);
+                      parseBenchmarkResults_netwotk(data.results);
+                      console.log('Network benchmark completed successfully');
+                  } else {
+                      console.error('Invalid or missing "results" property in the response:', data);
+                      console.log('Error occurred during memory benchmark');
+                  }
+    
+    
+                  //console.log('Disk benchmark completed successfully');
+              })
+              .catch(error => {
+                  console.error('Error:', error);
                   console.log('Error occurred during memory benchmark');
-              }
-
-
-              //console.log('Disk benchmark completed successfully');
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              console.log('Error occurred during memory benchmark');
+              });
+      });
+    
+    
+    //----------------Network result parsing function----------------------//
+     // Assuming "data.results" is an array of objects with key-value pairs
+     function parseBenchmarkResults_netwotk(results) {
+      // Check if the "results" property is defined
+      console.log('Received results from server:', results);
+      // Clear existing table rows
+      var nettableBody = document.getElementById('benchmarknetTableBody');
+      var nettableBody2 = document.getElementById('benchmarknetTableBody2');
+      var nettableBody3 = document.getElementById('benchmarknetTableBody3');
+    
+      nettableBody.innerHTML = '';
+     nettableBody2.innerHTML = '';
+      nettableBody3.innerHTML = '';
+    
+      // Iterate through results and update the table
+      results.forEach(result => {
+          console.log('Processing result:', result);
+          var row;
+          Object.values(result).forEach(value1 => {
+              // console.log('enter in ', value1);
+              if(value1 == "BM_EthrBenchmark"){
+                   row = nettableBody.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
           });
-  });
-
-
-//----------------Network result parsing function----------------------//
- // Assuming "data.results" is an array of objects with key-value pairs
- function parseBenchmarkResults1(results) {
-  // Check if the "results" property is defined
-  console.log('Received results from server:', results);
-  // Clear existing table rows
-  var nettableBody = document.getElementById('benchmarknetTableBody');
-  var nettableBody2 = document.getElementById('benchmarknetTableBody2');
-  var nettableBody3 = document.getElementById('benchmarknetTableBody3');
-
-  nettableBody.innerHTML = '';
- nettableBody2.innerHTML = '';
-  nettableBody3.innerHTML = '';
-
-  // Iterate through results and update the table
-  results.forEach(result => {
-      console.log('Processing result:', result);
-      var row;
-      Object.values(result).forEach(value1 => {
-          // console.log('enter in ', value1);
-          if(value1 == "BM_EthrBenchmark"){
-               row = nettableBody.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
+              }else if(value1 == "BM_SockperfLatencyUnderLoad"){
+                   row = nettableBody2.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
+          });
+              }else if(value1 == "iperf"){
+                   row = nettableBody3.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
+          });
+              }
+          });
+    
+         
+         
       });
-          }else if(value1 == "BM_SockperfLatencyUnderLoad"){
-               row = nettableBody2.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
+    }
 
-               }
-      });
-          }else if(value1 == "iperf"){
-               row = nettableBody3.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
-      });
-          }
-      });
-
-     
-     
-  });
-}
-});
-
-
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------CPU button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-  
-
-document.addEventListener('DOMContentLoaded', function() {
-
-//----------------cpu button clicking function----------------------//
+    //----------------cpu button clicking function----------------------//
 // Your existing code here
   document.getElementById('cpu_button').addEventListener('click', function() {
-// Display loading icon
-
-     document.getElementById("run-btn3").style.display = "none";
-      document.getElementById('loadingIcon3').style.display = 'block';
-      document.getElementById('errorMessage3').style.display = 'none';
-      document.getElementById('successMessage3').style.display = 'none';
-
-      // Assuming your server is running on localhost:3000
-      fetch("/runcpubenchmark")
-          .then(response => {
-              // Hide loading icon
-              document.getElementById('loadingIcon3').style.display = 'none';
-              console.log('Step 1: Response received');
-              if (!response.ok) {
-                  // Show error message
-                  document.getElementById('errorMessage3').style.display = 'block';
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-
-              // Show success message and parse the data
-              document.getElementById('successMessage3').style.display = 'block';
-              return response.json();
-          })
-          .then(data => {
-            console.log('Step 2: Data received from server', data);
-
-              // Check if the "data" property is defined
-              if (data && data.results) {
-                  // Call the parsing function
-                 
-                  cpuResults = data.results;
-                  console.log(cpuResults);
-                  parseBenchmarkResults1(data.results);
-                  console.log('cpu benchmark completed successfully');
-              } else {
-                  console.error('Invalid or missing "results" property in the response:', data);
+    // Display loading icon
+    
+         document.getElementById("run-btn3").style.display = "none";
+          document.getElementById('loadingIcon3').style.display = 'block';
+          document.getElementById('errorMessage3').style.display = 'none';
+          document.getElementById('successMessage3').style.display = 'none';
+    
+          // Assuming your server is running on localhost:3000
+          fetch("/runcpubenchmark")
+              .then(response => {
+                  // Hide loading icon
+                  document.getElementById('loadingIcon3').style.display = 'none';
+                  console.log('Step 1: Response received');
+                  if (!response.ok) {
+                      // Show error message
+                      document.getElementById('errorMessage3').style.display = 'block';
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+    
+                  // Show success message and parse the data
+                  document.getElementById('successMessage3').style.display = 'block';
+                  return response.json();
+              })
+              .then(data => {
+                console.log('Step 2: Data received from server', data);
+    
+                  // Check if the "data" property is defined
+                  if (data && data.results) {
+                      // Call the parsing function
+                     
+                      cpuResults = data.results;
+                      console.log(cpuResults);
+                      parseBenchmarkResults_cpu(data.results);
+                      console.log('cpu benchmark completed successfully');
+                  } else {
+                      console.error('Invalid or missing "results" property in the response:', data);
+                      console.log('Error occurred during cpu benchmark');
+                  }
+    
+    
+                  //console.log('Disk benchmark completed successfully');
+              })
+              .catch(error => {
+                  console.error('Error:', error);
                   console.log('Error occurred during cpu benchmark');
-              }
-
-
-              //console.log('Disk benchmark completed successfully');
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              console.log('Error occurred during cpu benchmark');
+              });
+      });
+    
+    
+    //----------------CPU result parsing function----------------------//
+     // Assuming "data.results" is an array of objects with key-value pairs
+     function parseBenchmarkResults_cpu(results) {
+      // Check if the "results" property is defined
+      console.log('Received results from server:', results);
+      // Clear existing table rows
+      var cputableBody = document.getElementById('benchmarkcpuTableBody');
+      var cputableBody2 = document.getElementById('benchmarkcpuTableBody2');
+      var cputableBody3 = document.getElementById('benchmarkcpuTableBody3');
+    
+      cputableBody.innerHTML = '';
+     cputableBody2.innerHTML = '';
+      cputableBody3.innerHTML = '';
+    
+      // Iterate through results and update the table
+      results.forEach(result => {
+          console.log('Processing result:', result);
+          var row;
+          Object.values(result).forEach(value1 => {
+              // console.log('enter in ', value1);
+              if(value1 == "BM_CRayBenchmark"){
+                   row = cputableBody.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
           });
-  });
-
-
-//----------------CPU result parsing function----------------------//
- // Assuming "data.results" is an array of objects with key-value pairs
- function parseBenchmarkResults1(results) {
-  // Check if the "results" property is defined
-  console.log('Received results from server:', results);
-  // Clear existing table rows
-  var cputableBody = document.getElementById('benchmarkcpuTableBody');
-  var cputableBody2 = document.getElementById('benchmarkcpuTableBody2');
-  var cputableBody3 = document.getElementById('benchmarkcpuTableBody3');
-
-  cputableBody.innerHTML = '';
- cputableBody2.innerHTML = '';
-  cputableBody3.innerHTML = '';
-
-  // Iterate through results and update the table
-  results.forEach(result => {
-      console.log('Processing result:', result);
-      var row;
-      Object.values(result).forEach(value1 => {
-          // console.log('enter in ', value1);
-          if(value1 == "BM_CRayBenchmark"){
-               row = cputableBody.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
+              }else if(value1 == "BM_Blake2_Benchmark"){
+                   row = cputableBody2.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
+          });
+              }else if(value1 == "BM_SysbenchCPUBenchmark"){
+                   row = cputableBody3.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
+          });
+              }
+          });
+    
+         
+         
       });
-          }else if(value1 == "BM_Blake2_Benchmark"){
-               row = cputableBody2.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
-      });
-          }else if(value1 == "BM_SysbenchCPUBenchmark"){
-               row = cputableBody3.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
-      });
-          }
-      });
-
-     
-     
-  });
-}
-});
-
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------GPU button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-  
-
-document.addEventListener('DOMContentLoaded', function() {
-
-//----------------GPU button clicking function----------------------//
+    }
+    
+    //----------------GPU button clicking function----------------------//
 // Your existing code here
   document.getElementById('gpu_button').addEventListener('click', function() {
-// Display loading icon
-
-     document.getElementById("run-btn4").style.display = "none";
-      document.getElementById('loadingIcon4').style.display = 'block';
-      document.getElementById('errorMessage4').style.display = 'none';
-      document.getElementById('successMessage4').style.display = 'none';
-
-      // Assuming your server is running on localhost:3000
-      fetch("/rungpubenchmark")
-          .then(response => {
-              // Hide loading icon
-              document.getElementById('loadingIcon4').style.display = 'none';
-              console.log('Step 1: Response received');
-              if (!response.ok) {
-                  // Show error message
-                  document.getElementById('errorMessage4').style.display = 'block';
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-
-              // Show success message and parse the data
-              document.getElementById('successMessage4').style.display = 'block';
-              return response.json();
-          })
-          .then(data => {
-            console.log('Step 2: Data received from server', data);
-
-              // Check if the "data" property is defined
-              if (data && data.results) {
-                  // Call the parsing function
-                 
-                  gpuResults = data.results;
-                  console.log(gpuResults);
-                  parseBenchmarkResults1(data.results);
-                  console.log('gpu benchmark completed successfully');
-              } else {
-                  console.error('Invalid or missing "results" property in the response:', data);
+    // Display loading icon
+    
+         document.getElementById("run-btn4").style.display = "none";
+          document.getElementById('loadingIcon4').style.display = 'block';
+          document.getElementById('errorMessage4').style.display = 'none';
+          document.getElementById('successMessage4').style.display = 'none';
+    
+          // Assuming your server is running on localhost:3000
+          fetch("/rungpubenchmark")
+              .then(response => {
+                  // Hide loading icon
+                  document.getElementById('loadingIcon4').style.display = 'none';
+                  console.log('Step 1: Response received');
+                  if (!response.ok) {
+                      // Show error message
+                      document.getElementById('errorMessage4').style.display = 'block';
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+    
+                  // Show success message and parse the data
+                  document.getElementById('successMessage4').style.display = 'block';
+                  return response.json();
+              })
+              .then(data => {
+                console.log('Step 2: Data received from server', data);
+    
+                  // Check if the "data" property is defined
+                  if (data && data.results) {
+                      // Call the parsing function
+                     
+                      gpuResults = data.results;
+                      console.log(gpuResults);
+                      parseBenchmarkResults_gpu(data.results);
+                      console.log('gpu benchmark completed successfully');
+                  } else {
+                      console.error('Invalid or missing "results" property in the response:', data);
+                      console.log('Error occurred during gpu benchmark');
+                  }
+    
+    
+                  //console.log('gpu benchmark completed successfully');
+              })
+              .catch(error => {
+                  console.error('Error:', error);
                   console.log('Error occurred during gpu benchmark');
-              }
-
-
-              //console.log('gpu benchmark completed successfully');
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              console.log('Error occurred during gpu benchmark');
+              });
+      });
+    
+    
+    //----------------GPU result parsing function----------------------//
+     // Assuming "data.results" is an array of objects with key-value pairs
+     function parseBenchmarkResults_gpu(results) {
+      // Check if the "results" property is defined
+      console.log('Received results from server:', results);
+      // Clear existing table rows
+      var gputableBody = document.getElementById('benchmarkgpuTableBody');
+      var gputableBody2 = document.getElementById('benchmarkgpuTableBody2');
+      var gputableBody3 = document.getElementById('benchmarkgpuTableBody3');
+    
+      gputableBody.innerHTML = '';
+     gputableBody2.innerHTML = '';
+      gputableBody3.innerHTML = '';
+    
+      // Iterate through results and update the table
+      results.forEach(result => {
+          console.log('Processing result:', result);
+          var row;
+          Object.values(result).forEach(value1 => {
+              // console.log('enter in ', value1);
+              if(value1 == "BM_UnigineHeavenBenchmark"){
+                   row = gputableBody.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
           });
-  });
-
-
-//----------------GPU result parsing function----------------------//
- // Assuming "data.results" is an array of objects with key-value pairs
- function parseBenchmarkResults1(results) {
-  // Check if the "results" property is defined
-  console.log('Received results from server:', results);
-  // Clear existing table rows
-  var gputableBody = document.getElementById('benchmarkgpuTableBody');
-  var gputableBody2 = document.getElementById('benchmarkgpuTableBody2');
-  var gputableBody3 = document.getElementById('benchmarkgpuTableBody3');
-
-  gputableBody.innerHTML = '';
- gputableBody2.innerHTML = '';
-  gputableBody3.innerHTML = '';
-
-  // Iterate through results and update the table
-  results.forEach(result => {
-      console.log('Processing result:', result);
-      var row;
-      Object.values(result).forEach(value1 => {
-          // console.log('enter in ', value1);
-          if(value1 == "BM_UnigineHeavenBenchmark"){
-               row = gputableBody.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
+              }else if(value1 == "BM_FurMarkBenchmark"){
+                   row = gputableBody2.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
+          });
+              }else if(value1 == "BM_TessMarkBenchmark"){
+                   row = gputableBody3.insertRow();
+                   Object.entries(result).forEach(([key, value]) => {
+              if (key !== "Benchmark") { // Skip the "Benchmark" key
+                  var cell = row.insertCell();
+                  console.log('cell:', cell);
+                  cell.textContent = value;
+                  console.log('value:', value);
+    
+                   }
+          });
+              }
+          });
+    
+         
+         
       });
-          }else if(value1 == "BM_FurMarkBenchmark"){
-               row = gputableBody2.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
-      });
-          }else if(value1 == "BM_TessMarkBenchmark"){
-               row = gputableBody3.insertRow();
-               Object.entries(result).forEach(([key, value]) => {
-          if (key !== "Benchmark") { // Skip the "Benchmark" key
-              var cell = row.insertCell();
-              console.log('cell:', cell);
-              cell.textContent = value;
-              console.log('value:', value);
-
-               }
-      });
-          }
-      });
-
-     
-     
-  });
-}
+    }
+  
 });
+
+
+
+
+
+
+
+
+
+
 //----------------Disk result parsing function----------------------//
 // Assuming "data.results" is an array of objects with key-value pairs
 /*function parseBenchmarkResults1(results) {
@@ -1353,5 +1349,4 @@ function generateBarChart_DISK(selectedData) {
 
 //------------------------disk info tool tip-------------------------------//
 
- // Check on page load
- fetchbenchinfo();
+

@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+
 #overlay_fetching_bench, #overlay_fetching_comparison_popup {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(80, 80, 80, 0.66);
+    background: rgba(80, 80, 80, 0.899);
     display: none;
     align-items: center;
     justify-content: center;
@@ -119,3 +121,109 @@
   
   }
   
+  /* -----------Build button--------------- */
+.build-button-bench {
+  display: block;
+  border: none;
+  background-color: #F891B3;
+  color: #ffff;
+  padding: 10px 20px;
+  font-size: 20px;
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 5px 5px 5px #FBC1D4;
+  transition: all 0.3s ease;
+}
+.build-button-bench:hover {
+  box-shadow: 0px 2px 20px #A20A3C;
+  top: 3px;
+}
+.build-button-bench:active {
+  box-shadow: none;
+  top: 5px;
+}
+
+/* center the blockquote in the page */
+.blockquote-wrapper {
+  display: flex;
+
+  padding: 0 20px;
+}
+
+/* Blockquote main style */
+.blockquote {
+   position: relative;
+   font-family: 'Barlow Condensed', sans-serif;
+   max-width: 1020px;
+   margin: 40px auto;
+   align-self: center;
+}
+
+/* Blockquote header */
+.blockquote h1 {
+   font-family: "Kalam", cursive;
+   position: relative; /* for pseudos */
+   color: #e74848;
+   font-size: 2.8rem;
+   font-weight: normal;
+   line-height: 1;
+   margin: 0;
+   border: 2px solid #fff;
+   border: solid 2px;
+   border-radius:20px;
+   padding: 25px;
+}
+
+/* Blockquote right double quotes */
+.blockquote h1:after {
+   content:"";
+   position: absolute;
+   border: 2px solid #e74848;
+   border-radius: 0 50px 0 0;
+   width: 230px;
+   height: 60px;
+   bottom: -60px;
+   left: 50px;
+   border-bottom: none;
+   border-left: none;
+   z-index: 3; 
+}
+
+.blockquote h1:before {
+   content:"";
+   position: absolute;
+   width: 280px;
+   border: 6px solid #ffffff;
+   bottom: -3px;
+   left: 50px;
+   z-index: 2;
+}
+
+/* increase header size after 600px */
+@media all and (min-width: 600px) {
+   .blockquote h1 {
+       font-size: 1.5rem;
+       line-height: 1.2;
+  }
+
+}
+
+/* Blockquote subheader */
+.blockquote h4 {
+   position: relative;
+   color: #ffffff;
+   font-size: 1.3rem;
+   font-weight: 400;
+   line-height: 1.2;
+   margin: 0;
+   padding-top: 15px;
+   z-index: 1;
+   margin-left:150px;
+   padding-left:12px;
+}
+
+
+.blockquote h4:first-letter {
+ margin-left:-12px;
+}

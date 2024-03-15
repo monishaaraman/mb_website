@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text File Comparator</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #6bc4ff;
+        }
+
+        /* -----------Tests result table--------------- */
+table {
+	width: 500px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #2e2e2e;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+table caption {
+  caption-side: top; /* Ensures the caption is at the top of the table */
+  font-weight: bold; /* Optional: makes the caption text bold */
+  text-align: center; /* Optional: centers the caption text */
+  margin-left: 10px;
+  
+
+}
+.selected-row-tbody {
+  background-color: #ffffff85; /* Highlight color for selected rows */
+}
+
+        #content-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .textarea-container {
+            width: 45%;
+        }
+
+        #text1, #text2 {
+            width: 100%;
+            height: 300px;
+        }
+
+        .output {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+          background-color: #fff;
+            /* height: 500px; */
+        }
+
+        .column {
+            width: 48%;
+            overflow: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            
+            
+        }
+
+        .added {
+            background-color: #aaffaa5a;
+            border-radius: 3px;
+        }
+
+        .removed {
+            background-color: #ffaaaa5a;
+            border-radius: 3px;
+        }
+
+        .added-words {
+            background-color: #51fd51a9;
+            border-radius: 3px;
+        }
+
+        .removed-words {
+            background-color: #fc4242a9;
+            border-radius: 3px;
+        }
+
+        .line {
+            margin: auto;
+            height: 22px;
+            flex-grow: 1;
+            align-items: center;
+           
+        }
+
+        .word {
+            margin-bottom: 5px;
+        }
+        
+
+        .subcolumn {
+            display: flex;
+            flex-direction: row;
+            text-wrap: nowrap;
+        }
+
+        .line-number {
+            display: inline-block;
+            width: 30px;
+            text-align: right;
+            margin-right: 10px;
+            color: #999;
+            /* If you want the line numbers to have a fixed position */
+            position: sticky;
+            left: 0;
+            background: #fff;
+        }
+        .summary {
+            font-family: Arial, sans-serif;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            width: 100vw;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row;
+        }
+
+        .summary span {
+            margin-right: 15px;
+            padding: 5px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .additions {
+            background-color: #28a745;
+        }
+
+        .removals {
+            background-color: #dc3545;
+        }
+
+        .total-lines {
+            background-color: #007bff;
+        }
+
+        .subcolumn {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .table_container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .output_container{
+            display: block;
+            flex-direction: column;
+            justify-content: center;
+            height: 600px;
+            width: 100vw;
+        }
+
+        .selectfiles{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            font-size: 22px;
+        }
+        .file_input{
+            margin: 10px;
+        }
+        
+        button{
+            margin-bottom: 20px;
+    display: inline-block;
+    font-size: 1.15em;
+    position: relative;
+    text-align: center;
+    padding: 0.5em 1em;
+    background: linear-gradient(45deg, #eb6d59, #c34440);
+    color: #fff;
+    box-shadow: 0 0.2em 0.2em rgba(0,0,0,0.25);
+    border-radius: 0.2em;
+    transition: box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+        }
+        textarea{
+            font-size: 18px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Text File Comparator</h1>
+<div class="table_container">
+   
+
+   
+</div>
+    
+
+    <div id="content-container">
+        
+        <div class="textarea-container">
+            <h2>File 1</h2>
+            <table id="table1">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>System Name</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <!-- The rows will be dynamically generated using JavaScript -->
+                </tbody>
+            </table>
+            <input type="file" class="file_input" id="file1" accept=".txt" onchange="loadFile('text1', 'file1')">
+            <textarea id="text1" placeholder="Paste or type content of file 1 here..."></textarea>
+        </div>
+        <div class="textarea-container">
+            <h2>File 2</h2>
+            <table id="table2">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>System Name</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- The rows will be dynamically generated using JavaScript -->
+                </tbody>
+            </table>
+            <input type="file" class="file_input" id="file2" accept=".txt" onchange="loadFile('text2', 'file2')">
+            <textarea id="text2" placeholder="Paste or type content of file 2 here..."></textarea>
+        </div>
+    </div>
+    <div>
+        <button onclick="compareFiles()">Compare Files</button>
+      
+
+    </div>
+    <div class="output_container" id="output_container" style="display: none;">
+        <div class="selectfiles">
+            <span id="selected-file1-name" style="color: #007bff;">File-1's name</span>
+            <span style="color: #dc3545;"> Vs </span>
+            <span id="selected-file2-name" style="color: #007bff;">File-2's name</span>
+        </div>
+        <div class="summary" id="summary"></div>
+    
+    <div class="output" id="output"></div>
+    <button style="align-items: center;" onclick="convertToHTML()">Convert to <span style="color: #dc3545;">.html</span></button>
+    </div>
+    
+    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.1.0/diff.min.js"></script>
+    
+    
+    <script>
+ function convertToHTML(){
+    var $content = $(".output_container").clone(); // Clone the content to preserve the original
+    $content.find('link[rel="stylesheet"]').remove(); // Remove any external stylesheets
+
+    // Inline all styles from stylesheets
+    $('style').each(function(index, style) {
+        $content.prepend(style.outerHTML);
+    });
+
+    // Convert any <style> tags to inline styles
+    $content.find('style').each(function() {
+        var $this = $(this);
+        $this.replaceWith('<style>' + $this.html() + '</style>');
+    });
+
+    // Create a blob of the modified HTML content
+    var blob = new Blob([$content.html()], { type: 'text/html' });
+
+    // Create a URL for the blob
+    var url = URL.createObjectURL(blob);
+
+    // Create a link element
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'output.html'; // Set the filename for the downloaded file
+
+    // Append the link to the document body and trigger a click event
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up by removing the link and revoking the URL
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+};
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+      const response = await fetch('/systeminfo-json-data-fetch');
+      const rows = await response.json();
+      const tableBody1 = document.querySelector('#table1 tbody');
+      const tableBody2 = document.querySelector('#table2 tbody');
+      console.log(rows);
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.onclick = () => selectRow1(row.data , row.system_name);
+
+        tr.innerHTML = `
+          <td>${row.id}</td>
+          <td>${row.system_name}</td>
+          <td>${row.time}</td>
+          <td>${row.date.split('T')[0]}</td>
+        `;
+
+        tableBody1.appendChild(tr);
+     
+      });
+
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.onclick = () => selectRow2(row.data, row.system_name);
+
+        tr.innerHTML = `
+          <td>${row.id}</td>
+          <td>${row.system_name}</td>
+          <td>${row.time}</td>
+          <td>${row.date.split('T')[0]}</td>
+          
+        `;
+
+        tableBody2.appendChild(tr);
+      });
+
+    
+    });
+
+    function selectRow1(data, system_name) {
+        const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+        const formattedData = `System Information:\n${formatObject(parsedData['System Information'])}\n\nCPU Details:\n${formatObject(parsedData['CPU Details'])}\n\nDisk Details:\n${formatObject(parsedData['Disk Details'])}\n\nWifi Details:\n${formatObject(parsedData['Wifi Details'])}\n\nGPU Details:\n${formatObject(parsedData['GPU Details'])}\n\nAudio Details:\n${formatObject(parsedData['Audio Details'])}\n\nMouse Details:\n${formatObject(parsedData['Mouse Details'])}\n\nMemory Details:\n${formatObject(parsedData['Memory Details'])}\n\nDisplay Details:\n${formatObject(parsedData['Display Details'])}\n\nEthernet Details:\n${formatObject(parsedData['Ethernet Details'])}\n\nWebcam Details:\n${formatObject(parsedData['Webcam Details'])}\n\nBattery Details:\n${formatObject(parsedData['Battery Details'])}\n\nBluetooth Details:\n${formatObject(parsedData['Bluetooth Details'])}\n`;
+      document.getElementById('text1').value = formattedData;
+      document.getElementById('selected-file1-name').innerText = system_name;
+      
+    }
+
+    function selectRow2(data , system_name) {
+        const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+        const formattedData = `System Information:\n${formatObject(parsedData['System Information'])}\n\nCPU Details:\n${formatObject(parsedData['CPU Details'])}\n\nDisk Details:\n${formatObject(parsedData['Disk Details'])}\n\nWifi Details:\n${formatObject(parsedData['Wifi Details'])}\n\nGPU Details:\n${formatObject(parsedData['GPU Details'])}\n\nAudio Details:\n${formatObject(parsedData['Audio Details'])}\n\nMouse Details:\n${formatObject(parsedData['Mouse Details'])}\n\nMemory Details:\n${formatObject(parsedData['Memory Details'])}\n\nDisplay Details:\n${formatObject(parsedData['Display Details'])}\n\nEthernet Details:\n${formatObject(parsedData['Ethernet Details'])}\n\nWebcam Details:\n${formatObject(parsedData['Webcam Details'])}\n\nBattery Details:\n${formatObject(parsedData['Battery Details'])}\n\nBluetooth Details:\n${formatObject(parsedData['Bluetooth Details'])}\n`;
+      document.getElementById('text2').value = formattedData;
+      document.getElementById('selected-file2-name').innerText = system_name;
+    
+    }
+    function processAndFormatData(data) {
+      // Add your custom data processing logic here
+      // For example, extract specific fields, format, etc.
+      return JSON.stringify(data, null, 2);
+    }
+
+    function formatObject(obj, indent = 0) {
+  const spaces = ' '.repeat(indent * 2);
+  let result = '';
+
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      result += `${spaces}${key}:\n${formatObject(obj[key], indent + 1)},\n`;
+    } else {
+      result += `${spaces}${key}: ${obj[key]},\n`;
+    }
+  }
+
+  // Remove the trailing comma and newline
+  return result.slice(0, -2);
+}
+
+function loadFile(textAreaId, inputFileId) {
+      const input = document.getElementById(inputFileId);
+      const textArea = document.getElementById(textAreaId);
+
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        textArea.value = e.target.result;
+      };
+
+      reader.readAsText(file);
+      if(inputFileId == 'File1'){
+        document.getElementById('selected-file1-name').innerText = file.name;
+      } else if(inputFileId == 'File2'){
+        document.getElementById('selected-file2-name').innerText = file.name;
+      }
+      
+    }
+
+
+      function compareFiles() {
+        document.getElementById('output_container').style.display = "block";
+    var text1 = document.getElementById('text1').value.split('\n');
+    var text2 = document.getElementById('text2').value.split('\n');
+
+    // Initialize counters
+    var additions = 0;
+    var removals = 0;
+
+    var outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = "";
+
+    var column1 = document.createElement('div');
+    var column2 = document.createElement('div');
+    column1.className = 'column';
+    column2.className = 'column';
+
+    var maxLength = Math.max(text1.length, text2.length);
+       let line1_count =0;
+       let line2_count =0;
+       let missAligned = 0;
+       let missAligned_activation = false;
+    for (let i = 0; i < maxLength; i++) {
+        var subcolumn1 = document.createElement('div');
+        var subcolumn2 = document.createElement('div');
+        subcolumn1.className = 'subcolumn';
+        subcolumn2.className = 'subcolumn';
+
+        // Create and append line numbers
+        var lineNumberDiv1 = document.createElement('div');
+        var lineNumberDiv2 = document.createElement('div');
+        lineNumberDiv1.className = 'line-number';
+        lineNumberDiv2.className = 'line-number';
+        lineNumberDiv1.textContent =  (i + 1).toString();
+        lineNumberDiv2.textContent = (i + 1).toString();
+        subcolumn1.appendChild(lineNumberDiv1);
+        subcolumn2.appendChild(lineNumberDiv2);
+
+        // Create and append line content
+        var lineDiv1 = document.createElement('div');
+        var lineDiv2 = document.createElement('div');
+        lineDiv1.className = 'line';
+        lineDiv2.className = 'line';
+        subcolumn1.appendChild(lineDiv1);
+        subcolumn2.appendChild(lineDiv2);
+
+        var line1 = '';
+        var line2 =  '';
+       // console.log("line1_count++ = ",line1_count,"line2_count++ = ",line2_count);
+        var linediff = Diff.diffLines(text1[line1_count] || '', text2[line2_count] || '');
+        var linecondition=0;
+       
+        linediff.forEach(function(part) {
+            var lines = part.value.split('\n');
+
+            // Exclude the final empty element that appears if the part ends with a newline
+            if (part.value.endsWith('\n')) {
+                lines.pop();
+            }
+            linecondition++;
+            if (linecondition === 1) {
+                line1 = lines.join(' '); // Join the array into a string
+               // console.log("line1--", lines);
+            }
+            if (linecondition === 2) {
+                line2 = lines.join(' '); // Join the array into a string
+                console.log("line2--", lines);
+                linecondition = 0;
+            }
+
+        });
+
+        if(linecondition!=0){
+            if(text1[line1_count]==text2[line2_count]){
+                 line1 = line1;
+                 line2 = line1;
+                // console.log("check0");
+            }else if(text1[line1_count]!=text2[line2_count]){
+                if(text1[line1_count]=='' && text2[line2_count]!=''){
+                    line1 = line1;
+                    line2 = line1;
+                   // console.log("check1");
+                    missAligned = 1;
+                    
+                }else if(text2[line2_count]=='' && text1[line1_count]!=''){
+                    line2 = line1;
+                    line1 = line1;
+                    missAligned = 2;
+                    //console.log("check2");
+                }else if(text1.length<text2.length){
+                    line1 = line1;
+                    line2 = line1;
+                   // console.log("check3");
+                }
+                else if(text1.length >text2.length){
+                    line2 = line1;
+                    line1 = line1;
+                   // console.log("check4");
+                }
+                 
+            }
+           // linecondition = 0;
+        }
+
+        
+        var wordsDiff = Diff.diffWords(line1, line2);
+
+        wordsDiff.forEach(function(part) {
+            var span = document.createElement('span');
+            span.className = 'word';
+            span.textContent = part.value;
+            if (part.added) {
+                span.classList.add('added-words');
+                lineDiv2.appendChild(span);
+                if (!lineDiv2.classList.contains('added')) {
+            lineDiv2.classList.add('added');
+        }
+                // Count the number of words added
+                additions += part.value.split(' ').filter(function(n) { return n != '' }).length;
+            } else if (part.removed) {
+                span.classList.add('removed-words');
+                if (!lineDiv1.classList.contains('removed')) {
+            lineDiv1.classList.add('removed');
+        }
+                lineDiv1.appendChild(span);
+                // Count the number of words removed
+                removals += part.value.split(' ').filter(function(n) { return n != '' }).length;
+           
+            } else if(linecondition!=0 && missAligned_activation == false){
+               // console.log("enter here");
+                 if(text1[line1_count]=='' && text2[line2_count]!=''){
+                    span.textContent = '';
+                    lineDiv1.appendChild(span);
+                   // line2 = line1;
+                    span.textContent = line1;
+                    lineDiv2.appendChild(span);
+                  //  console.log("check1");
+                }else if(text2[line2_count]=='' && text1[line1_count]!=''){
+                  //  line2 = line1;
+                   // line1 = line1;
+                    span.textContent = '';
+                    lineDiv2.appendChild(span);
+                   // line2 = line1;
+                    span.textContent = line1;
+                    lineDiv1.appendChild(span);
+                   // console.log("check2");
+                }else if(text1.length<text2.length && text2[line2_count]!=text1[line1_count]){
+                   // line1 = line1;
+                    span.textContent = '';
+                    lineDiv1.appendChild(span);
+                   // line2 = line1;
+                    span.textContent = line1;
+                    lineDiv2.appendChild(span);
+                   // console.log("check3");
+                }
+                else if(text1.length >text2.length){
+                    // line1 = line1;
+                    span.textContent = '';
+                    lineDiv2.appendChild(span);
+                   // line2 = line1;
+                    span.textContent = line1;
+                    lineDiv1.appendChild(span);
+                   // console.log("check4");
+                }else{
+                lineDiv1.appendChild(span.cloneNode(true));
+                lineDiv2.appendChild(span);
+                 }
+                 
+            
+           linecondition = 0;
+           }else if(missAligned == 1 && missAligned_activation){
+
+            
+                //if(text2.length > line2_count)
+               // line2_count++;
+            
+               span.textContent = (text2.length >= line2_count) ? text2[line2_count]: '';
+              //  console.log("missAligned2-2=", (text2.length >= line2_count) ? text2[line2_count]: '');
+                    lineDiv2.appendChild(span);
+                   // line2 = line1;
+                   span.textContent = (text1.length >= line1_count) ? text1[line1_count]: '';
+                //   console.log("missAligned2-1=", text1[line1_count+1]);
+                    lineDiv1.appendChild(span);
+            }else if(missAligned == 2 && missAligned_activation){
+                //if(text1.length > line1_count)
+                //line2_count++;
+                span.textContent = (text2.length >= line2_count) ? text2[line2_count]: '';
+              //  console.log("missAligned2-2=", (text2.length >= line2_count) ? text2[line2_count]: '');
+                    lineDiv1.appendChild(span);
+                   // line2 = line1;
+                   span.textContent =  text1[line1_count] || ' ';
+                //   console.log("missAligned2-1=", text1[line1_count]);
+                    lineDiv2.appendChild(span).cloneNode(true);
+                    missAligned_activation=false;
+                    missAligned=0;
+                    linecondition = 0;
+            }else{
+                lineDiv1.appendChild(span.cloneNode(true));
+                lineDiv2.appendChild(span);
+            }
+        });
+
+        
+       
+        
+        column1.appendChild(subcolumn1);
+        column2.appendChild(subcolumn2);
+
+        if(missAligned == 2 && missAligned_activation === false){
+            missAligned_activation =true;
+            if(text1.length > line1_count)
+           line1_count--;
+        }
+
+        if(text1.length > line1_count)
+        line1_count++;
+        if(text2.length > line2_count)
+        line2_count++;
+   
+       
+  
+
+    }
+    // At the end of the comparison, calculate the total lines
+    var totalLines1 = text1.length;
+    var totalLines2 = text2.length;
+
+    // Update the summary
+    var summaryDiv = document.getElementById('summary');
+    summaryDiv.innerHTML = `
+        <span class="removals">- ${removals} removals</span>
+        <span class="total-lines">${totalLines1} lines</span>
+        <span class="additions">+ ${additions} additions</span>
+        <span class="total-lines">${totalLines2} lines</span>
+    `;
+
+    outputDiv.appendChild(column1);
+    outputDiv.appendChild(column2);
+}
+
+        
+        
+    </script>
+
+
+</body>
+</html>
+
+
+
+
+<!-- for alignment problem -->
+
+<!-- function compareFiles() {
+    var text1 = document.getElementById('file1').value;
+    var text2 = document.getElementById('file2').value;
+
+    var diff = Diff.diffLines(text1, text2);
+
+    var outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = '';
+    var column1 = document.createElement('div');
+    var column2 = document.createElement('div');
+    column1.className = 'column';
+    column2.className = 'column';
+
+    var lineCounter1 = 1;
+    var lineCounter2 = 1;
+    var additions = 0;
+    var removals = 0;
+
+    diff.forEach(function(part) {
+        var color = part.added ? 'added' : part.removed ? 'removed' : '';
+        var lines = part.value.split('\n');
+
+        // Exclude the final empty element that appears if the part ends with a newline
+        if (part.value.endsWith('\n')) {
+            lines.pop();
+        }
+
+        lines.forEach(function(line) {
+            var lineDiv = document.createElement('div');
+            var lineNumberDiv = document.createElement('span');
+            lineNumberDiv.className = 'line-number';
+            lineDiv.className = 'line ' + color;
+
+            if (!part.added) {
+                lineNumberDiv.textContent = lineCounter1++;
+                if (part.removed) {
+                    removals += line.split(' ').filter(function(n) { return n != '' }).length;
+                }
+            }
+
+            if (!part.removed) {
+                lineNumberDiv.textContent = lineCounter2++;
+                if (part.added) {
+                    additions += line.split(' ').filter(function(n) { return n != '' }).length;
+                }
+            }
+
+            lineDiv.appendChild(lineNumberDiv);
+            lineDiv.appendChild(document.createTextNode(line));
+            if (part.removed) {
+                column1.appendChild(lineDiv);
+            } else if (part.added) {
+                column2.appendChild(lineDiv);
+            } else {
+                var contentDiv1 = lineDiv.cloneNode(true);
+                var contentDiv2 = lineDiv.cloneNode(true);
+                column1.appendChild(contentDiv1);
+                column2.appendChild(contentDiv2);
+            }
+        });
+
+        
+
+    });
+
+    outputDiv.appendChild(column1);
+    outputDiv.appendChild(column2);
+
+    // Update the summary
+    var summaryDiv = document.getElementById('summary');
+    summaryDiv.innerHTML = `
+        <span class="removals">- ${removals} removals</span>
+        <span class="total-lines">${lineCounter1 - 1} lines</span>
+        <span class="additions">+ ${additions} additions</span>
+        <span class="total-lines">${lineCounter2 - 1} lines</span>
+    `;
+} -->
+
+
+
+
+<!-- not done -->
+
+<!-- function compareFiles() {
+    var text1 = document.getElementById('file1').value;
+    var text2 = document.getElementById('file2').value;
+    var text1Lines = text1.split('\n');
+var text2Lines = text2.split('\n');
+
+    var diff = Diff.diffLines(text1, text2);
+
+    var outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = '';
+    var column1 = document.createElement('div');
+    var column2 = document.createElement('div');
+    column1.className = 'column';
+    column2.className = 'column';
+
+    var lineCounter1 = 1;
+    var lineCounter2 = 1;
+    var additions = 0;
+    var removals = 0;
+    var linecondition=1;
+    var lines_2='';
+    diff.forEach(function(part) {
+        var color = part.added ? 'added' : part.removed ? 'removed' : '';
+        var lines = part.value.split('\n');
+
+        // Exclude the final empty element that appears if the part ends with a newline
+        if (part.value.endsWith('\n')) {
+            lines.pop();
+        }
+ 
+        console.log("lines--:", lines);
+        if(linecondition == 1){
+        lines.forEach(function(line, index) {
+            console.log("line>>>:", line);
+            var subcolumn1 = document.createElement('div');
+            var subcolumn2 = document.createElement('div');
+            subcolumn1.className = 'subcolumn';
+            subcolumn2.className = 'subcolumn';
+
+            var lineDiv1 = document.createElement('div'); // Separate lineDiv1 for file1
+            var lineDiv2 = document.createElement('div'); // Separate lineDiv2 for file2
+            var lineNumberDiv = document.createElement('span');
+            lineNumberDiv.className = 'line-number';
+            lineDiv1.className = lineDiv2.className = 'line ' + color;
+
+            if (!part.added) {
+                lineNumberDiv.textContent = lineCounter1++;
+                if (part.removed) {
+                    removals += line.split(' ').filter(function(n) { return n != '' }).length;
+                }
+            }
+
+            if (!part.removed) {
+                lineNumberDiv.textContent = lineCounter2++;
+                if (part.added) {
+                    additions += line.split(' ').filter(function(n) { return n != '' }).length;
+                }
+            }
+
+            subcolumn1.appendChild(lineNumberDiv);
+
+            // Access the corresponding line from file2 (assuming you have text2Lines)
+            var line2 = text2Lines[index] || '';
+
+            // Perform word-level difference comparison for the lines from file1 and file2
+            var wordsDiff = Diff.diffWords(line, lines_2);
+            console.log("line1-",line, "line2-",lines_2);
+            console.log(wordsDiff);
+
+            
+            wordsDiff.forEach(function(wordPart) {
+                var wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+                wordSpan.textContent = wordPart.value;
+
+                if (wordPart.added) {
+                    var addedWordSpan = document.createElement('span');
+                    addedWordSpan.className = 'word added-words';
+                    addedWordSpan.textContent = wordPart.value;
+                   // lineDiv2.appendChild(addedWordSpan);
+                } else if (wordPart.removed) {
+                    var removedWordSpan = document.createElement('span');
+                    removedWordSpan.className = 'word removed-words';
+                    removedWordSpan.textContent = wordPart.value;
+                    lineDiv1.appendChild(removedWordSpan);
+
+                    // In this case, you can also add the removed word to lineDiv2
+                    lineDiv2.appendChild(removedWordSpan.cloneNode(true));
+                } else {
+                    var commonWordSpan1 = document.createElement('span');
+                    var commonWordSpan2 = document.createElement('span');
+                    commonWordSpan1.className = commonWordSpan2.className = 'word';
+                    commonWordSpan1.textContent = commonWordSpan2.textContent = wordPart.value;
+                    lineDiv1.appendChild(commonWordSpan1);
+                    lineDiv2.appendChild(commonWordSpan2);
+                }
+
+            });
+
+            if (part.removed) {
+                subcolumn1.appendChild(lineDiv1);
+                column1.appendChild(subcolumn1);
+            } else if (part.added) {
+                subcolumn2.appendChild(lineDiv2);
+                column2.appendChild(subcolumn2);
+            } else {
+                subcolumn1.appendChild(lineDiv1);
+                subcolumn2.appendChild(lineDiv2);
+                var contentDiv1 = subcolumn1.cloneNode(true);
+                var contentDiv2 = subcolumn2.cloneNode(true);
+
+                column1.appendChild(contentDiv1);
+                column2.appendChild(contentDiv2);
+            }
+            
+        });
+
+    }else if(linecondition==2){
+        linecondition=0;
+        lines_2=lines || '';
+    }
+        linecondition++;
+    });
+    
+    outputDiv.appendChild(column1);
+    outputDiv.appendChild(column2);
+
+    // Update the summary
+    var summaryDiv = document.getElementById('summary');
+    summaryDiv.innerHTML = `
+        <span class="removals">- ${removals} removals</span>
+        <span class="total-lines">${lineCounter1 - 1} lines</span>
+        <span class="additions">+ ${additions} additions</span>
+        <span class="total-lines">${lineCounter2 - 1} lines</span>
+    `;
+} -->

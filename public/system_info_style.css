@@ -441,7 +441,7 @@ align-items: center;
 
 .ramtotal, .swaptotal{
   font-family: 'Courier New', Courier, monospace;
-  color: #dddddd;
+  color: #505050;
   margin-top: 3px;
   font-size: 18px;
 }
@@ -502,4 +502,20 @@ align-items: center;
   align-items: center;
   justify-content: center;
   z-index: 999;
+}
+.close-btn {
+  position: absolute;
+  top: 9%;
+  right: 9%;
+  cursor: pointer;
+  font-weight: 800;
+  background-color: #ff7171;
+  color: #fff;
+  font-size: 30px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

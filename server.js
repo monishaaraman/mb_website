@@ -4,6 +4,7 @@ const express = require('express');
 const { exec } = require('child_process');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { diffLines } = require("diff");
 const app = express();
 const port = 8000;
 
@@ -49,13 +50,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 //-------------------  DB -----------------//
 // PostgreSQL database configuration
 
+// const pool = new Pool({
+//    user: 'postgres',
+//    host: 'zlabs-lapos-m1.csez.zohocorpin.com',
+//    database: 'benchmark_db',
+//    password: '1234   ',
+//    port: 5432,
+// });
+
 const pool = new Pool({
-   user: 'postgres',
-   host: 'zlabs-lapos-m1.csez.zohocorpin.com',
-   database: 'benchmark_db',
-   password: '1234   ',
-   port: 5432,
-});
+    user: 'postgres',
+    host: '10.15.220.227',
+    database: 'benchmark_db',
+    password: '1234',
+    port: 5432,
+ });
+
+ 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------------- DB FOR DISK ------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //const query = 'INSERT INTO disk.fio_random (sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs) VALUES ($1, $2, $3, $4, $5, $6, $7)';
@@ -369,7 +380,6 @@ columns = [
 // Assuming you're calling this function with the JSON data
 // insertJsonData(yourJsonData);
 
-app.use(bodyParser.json());
 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DB FOR CPU !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1281,7 +1291,7 @@ app.get('/get_ram_swap_usage', (req, res) => {
 app.get('/convert-to-json', (req, res) => {
         const command = 'sudo hardware_map all';
     try{
-        exec(command, (error, stdout, stderr) => {
+        exec(command, async (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error executing command: ${error}`);
                 return res.status(500).send('Internal Server Error');
@@ -1309,6 +1319,7 @@ const sectionNames = [
 ];
 
 const allDetails = {};
+let system_name = "";
 
 function extractSystemInformationSection(data) {
     const startIndex = data.indexOf('***System Information***');
@@ -1324,10 +1335,15 @@ function extractSystemInformationSection(data) {
             if (keyValuePairs) {
                 keyValuePairs.forEach(pair => {
                     const [key, value] = pair.split(':').map(item => item.trim());
+                   // Check for the desired keys and assign values to system_name
+        if (key === 'System Vendor Name' || key === 'System Model Name') {
+            system_name = system_name ? `${system_name} ${value}` : value;
+        }
+
                     systemInfoObject[key] = value;
                 });
             }
-
+              
             return systemInfoObject;
         }
     }
@@ -1381,15 +1397,38 @@ const jsonData = JSON.stringify(allDetails); // Adjust based on actual output fo
 //               }
 //         });
 
-        const selectQuery = 'SELECT data FROM systemInfo_json WHERE id=1';
-        pool.query(selectQuery)
-        .then(result => {
-            // Access the JSON data from the result
-            const jsonData = result.rows[0].data;
-            console.log('Retrieved JSON data from PostgreSQL:');
-            console.log(JSON.stringify(jsonData, null, 2));
-        })
-        .catch(error => console.error('Error inserting data:', error));
+
+try {
+    await pool.connect();
+
+    // Get the current date and time
+    const currentDate = new Date().toISOString();
+    
+    // Insert data into the database
+    const query = {
+        text: 'INSERT INTO system_info.systeminfo_json (date, time, system_name, data) VALUES ($1, $2, $3, $4)',
+        values: [currentDate, currentDate.split('T')[1], system_name , jsonData],
+    };
+
+    await pool.query(query);
+    console.log('Data inserted successfully into the database.');
+} catch (error) {
+    console.error('Error inserting data into the database:', error);
+} finally {
+    await pool.end();
+}
+
+
+
+        // const selectQuery = 'SELECT data FROM systemInfo_json WHERE id=1';
+        // pool.query(selectQuery)
+        // .then(result => {
+        //     // Access the JSON data from the result
+        //     const jsonData = result.rows[0].data;
+        //     console.log('Retrieved JSON data from PostgreSQL:');
+        //     console.log(JSON.stringify(jsonData, null, 2));
+        // })
+        // .catch(error => console.error('Error inserting data:', error));
 
         res.json({ message: 'Data stored successfully!' });
     } catch (parseError) {
@@ -1472,6 +1511,40 @@ app.get('/download_system_info', (req, res) => {
             fs.unlinkSync(filename);
           });
         });
+      });
+
+      app.post("/compare", (req, res) => {
+        const text1 = req.body.text1;
+        const text2 = req.body.text2;
+    
+        // Perform line-level comparison
+        const diff1 = diffLines(text1, text2);
+        const diff2 = diffLines(text2, text1);
+    
+        // Generate HTML with highlighted differences for both text1 and text2
+        const html1 = diff1.map(part => {
+            const cssClass = part.added ? "added" : part.removed ? "deleted" : "";
+            return `<span class="${cssClass}">${part.value}</span>`;
+        }).join("");
+    
+        const html2 = diff2.map(part => {
+            const cssClass = part.added ? "added" : part.removed ? "deleted" : "";
+            return `<span class="${cssClass}">${part.value}</span>`;
+        }).join("");
+    
+        res.json({ html1, html2 });
+    });
+    
+    // ...
+    
+    app.get('/systeminfo-json-data-fetch', async (req, res) => {
+        try {
+          const result = await pool.query('SELECT id, data, "time", date, system_name FROM system_info.systeminfo_json');
+          res.json(result.rows);
+        } catch (err) {
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+        }
       });
 
 // Start the server
