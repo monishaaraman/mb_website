@@ -165,13 +165,18 @@
         const selectedRows = {};
 
 async function fetchComparisonData(tableType,subType) {
+    console.log("enetering..");
     try {
+        console.log(tableType,subType);
         const response = await fetch(`/getComparisonData-${tableType}-${subType}`);
         const { success, data } = await response.json();
 
         if (success) {
+            console.log("enetering..s");
+            console.log(data);
             populateTable(data, tableType, subType);
         } else {
+            console.log("enetering..f");
             console.error(`Error retrieving ${tableType}-${subType} data:`, data);
         }
     } catch (error) {
@@ -185,6 +190,7 @@ function populateTable(data, tableType, subType) {
  while (tableBody.firstChild) {
         tableBody.removeChild(tableBody.firstChild);
     }
+    console.log(data);
     data.forEach(row => {
         const tr = document.createElement('tr');
         const columns = getColumnValues(row, tableType, subType);
