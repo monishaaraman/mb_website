@@ -22,7 +22,7 @@ window.particlesJS("particleCanvas-Blue", {
             }
         },
         color: {
-            value: "#378CE7"
+            value: "#302E3D"
         },
         shape: {
             type: "circle",
@@ -133,7 +133,7 @@ particlesJS("particleCanvas-White", {
             }
         },
         color: {
-            value: "#e74848"
+            value: "#532C3A"
         },
         shape: {
             type: "circle",
@@ -1350,3 +1350,364 @@ function generateBarChart_DISK(selectedData) {
 //------------------------disk info tool tip-------------------------------//
 
 
+
+
+
+// function callAPIs() {
+        
+
+//         // Array of API endpoints to call
+//         const apiEndpoints = ["/rundiskbenchmark", "/runmemorybenchmark", "/runnetworkbenchmark", "/runcpubenchmark", "/rungpubenchmark"];
+// // Function to call an API endpoint and handle the response
+// async function callAPI(endpoint) {
+//     try {
+//           // Display loading icon
+//             if(endpoint == "/rundiskbenchmark"){
+//                  var collapseElement = document.getElementById("collapseContent2");
+//             if (collapseElement && collapseElement.classList.contains('show')) {
+//                 // Collapse is currently open, so close it
+//                 //collapseElement.classList.remove('show');
+//             } else if (collapseElement) {
+//                 // Collapse is currently closed or not found, so open it
+//                 collapseElement.classList.add('show');
+//             }
+//             document.getElementById("run-btn").style.display = "none";
+//             document.getElementById('loadingIcon').style.display = 'block';
+//             document.getElementById('errorMessage').style.display = 'none';
+//             document.getElementById('successMessage').style.display = 'none';
+//          }else if(endpoint == "/runmemorybenchmark"){
+//             var collapseElement = document.getElementById("collapseContent3");
+//             if (collapseElement && collapseElement.classList.contains('show')) {
+//                 // Collapse is currently open, so close it
+//                 //collapseElement.classList.remove('show');
+//             } else if (collapseElement) {
+//                 // Collapse is currently closed or not found, so open it
+//                 collapseElement.classList.add('show');
+//             }
+//             document.getElementById("run-btn1").style.display = "none";
+//             document.getElementById('loadingIcon1').style.display = 'block';
+//             document.getElementById('errorMessage1').style.display = 'none';
+//             document.getElementById('successMessage1').style.display = 'none';
+//          }else if(endpoint == "/runnetworkbenchmark"){
+//             var collapseElement = document.getElementById("collapseContent4");
+//             if (collapseElement && collapseElement.classList.contains('show')) {
+//                 // Collapse is currently open, so close it
+//                 //collapseElement.classList.remove('show');
+//             } else if (collapseElement) {
+//                 // Collapse is currently closed or not found, so open it
+//                 collapseElement.classList.add('show');
+//             }
+//             document.getElementById("run-btn2").style.display = "none";
+//             document.getElementById('loadingIcon2').style.display = 'block';
+//             document.getElementById('errorMessage2').style.display = 'none';
+//             document.getElementById('successMessage2').style.display = 'none';
+//          }else if(endpoint == "/runcpubenchmark"){
+//             var collapseElement = document.getElementById("collapseContent5");
+//             if (collapseElement && collapseElement.classList.contains('show')) {
+//                 // Collapse is currently open, so close it
+//                 //collapseElement.classList.remove('show');
+//             } else if (collapseElement) {
+//                 // Collapse is currently closed or not found, so open it
+//                 collapseElement.classList.add('show');
+//             }
+//             document.getElementById("run-btn3").style.display = "none";
+//             document.getElementById('loadingIcon3').style.display = 'block';
+//             document.getElementById('errorMessage3').style.display = 'none';
+//             document.getElementById('successMessage3').style.display = 'none';
+//          }else if(endpoint == "/rungpubenchmark"){
+//             var collapseElement = document.getElementById("collapseContent6");
+//             if (collapseElement && collapseElement.classList.contains('show')) {
+//                 // Collapse is currently open, so close it
+//                 //collapseElement.classList.remove('show');
+//             } else if (collapseElement) {
+//                 // Collapse is currently closed or not found, so open it
+//                 collapseElement.classList.add('show');
+//             }
+//             document.getElementById("run-btn4").style.display = "none";
+//             document.getElementById('loadingIcon4').style.display = 'block';
+//             document.getElementById('errorMessage4').style.display = 'none';
+//             document.getElementById('successMessage4').style.display = 'none';
+//          }
+
+//          fetch("/runmemorybenchmark")
+//          .then(response => {
+//              // Hide loading icon
+//              if(endpoint == "/rundiskbenchmark"){
+//                 document.getElementById('loadingIcon').style.display = 'none';
+//                 }else  if(endpoint == "/runmemorybenchmark"){
+//                     document.getElementById('loadingIcon1').style.display = 'none';
+//                     }else  if(endpoint == "/runnetworkbenchmark"){
+//                         document.getElementById('loadingIcon2').style.display = 'none';
+//                         }else  if(endpoint == "/runcpubenchmark"){
+//                             document.getElementById('loadingIcon3').style.display = 'none';
+//                             }else  if(endpoint == "/rungpubenchmark"){
+//                                 document.getElementById('loadingIcon4').style.display = 'none';
+//                                 }
+
+
+//              console.log('Step 1: Response received');
+//              if (!response.ok) {
+//                  // Show error message
+//                  if(endpoint == "/rundiskbenchmark"){
+//                     document.getElementById('errorMessage').style.display = 'block';
+//                     }else  if(endpoint == "/runmemorybenchmark"){
+//                         document.getElementById('errorMessage2').style.display = 'block';
+//                         }else  if(endpoint == "/runnetworkbenchmark"){
+//                             document.getElementById('errorMessage3').style.display = 'block';
+//                             }else  if(endpoint == "/runcpubenchmark"){
+//                                 document.getElementById('errorMessage4').style.display = 'block';
+//                                 }else  if(endpoint == "/rungpubenchmark"){
+//                                     document.getElementById('errorMessage5').style.display = 'block';
+//                                     }
+//                //  document.getElementById('errorMessage1').style.display = 'block';
+//                  throw new Error(`HTTP error! Status: ${response.status}`);
+//              }
+
+//              if(endpoint == "/rundiskbenchmark"){
+//                 document.getElementById('successMessage').style.display = 'block';
+//                 }else  if(endpoint == "/runmemorybenchmark"){
+//                     document.getElementById('successMessage1').style.display = 'block';
+//                     }else  if(endpoint == "/runnetworkbenchmark"){
+//                         document.getElementById('successMessage2').style.display = 'block';
+//                         }else  if(endpoint == "/runcpubenchmark"){
+//                             document.getElementById('successMessage3').style.display = 'block';
+//                             }else  if(endpoint == "/rungpubenchmark"){
+//                                 document.getElementById('successMessage4').style.display = 'block';
+//                                 }
+//              return response.json();
+//          })
+//          .then(data => {
+//            console.log('Step 2: Data received from server', data);
+
+//              // Check if the "data" property is defined
+//              if (data && data.results) {
+//                  // Call the parsing function
+//                  if(endpoint == "/rundiskbenchmark"){
+//                     parseBenchmarkResults_disk(data.results);
+//                     }else  if(endpoint == "/runmemorybenchmark"){
+//                         parseBenchmarkResults_memory(data.results);
+//                         }else  if(endpoint == "/runnetworkbenchmark"){
+//                             parseBenchmarkResults_netwotk(data.results);
+//                             }else  if(endpoint == "/runcpubenchmark"){
+//                                 parseBenchmarkResults_cpu(data.results);
+//                                 }else  if(endpoint == "/rungpubenchmark"){
+//                                     parseBenchmarkResults_gpu(data.results);
+//                                     }
+//                  console.log('Memory benchmark completed successfully');
+//              } else {
+//                  console.error('Invalid or missing "results" property in the response:', data);
+//                  console.log('Error occurred during memory benchmark');
+//              }
+
+
+//              //console.log('Disk benchmark completed successfully');
+//          })
+//          .catch(error => {
+//              console.error('Error:', error);
+//              console.log('Error occurred during memory benchmark');
+//          });
+
+      
+        
+                        
+
+        
+//     } catch (error) {
+//         // Display error message
+//         console.error('Error:', error);
+//         console.log('Error occurred during benchmark');
+//     }
+// }
+
+// // Call each API endpoint one by one
+// (async function () {
+//     for (let i = 0; i < apiEndpoints.length; i++) {
+//         await callAPI(apiEndpoints[i]);
+//     }
+// })();
+        
+//     }
+
+
+function callAPIs() {
+        // Array of API endpoints to call
+        const apiEndpoints = [
+            "/rundiskbenchmark",
+            "/runmemorybenchmark",
+            "/runnetworkbenchmark",
+            "/runcpubenchmark",
+            "/rungpubenchmark"
+        ];
+    
+        // Function to call an API endpoint and return a promise
+        function callAPI(endpoint) {
+            return new Promise((resolve, reject) => {
+                    // Display loading icon
+            if(endpoint == "/rundiskbenchmark"){
+                var collapseElement = document.getElementById("collapseContent2");
+           if (collapseElement && collapseElement.classList.contains('show')) {
+               // Collapse is currently open, so close it
+               //collapseElement.classList.remove('show');
+           } else if (collapseElement) {
+               // Collapse is currently closed or not found, so open it
+               collapseElement.classList.add('show');
+           }
+           document.getElementById("run-btn").style.display = "none";
+           document.getElementById('loadingIcon').style.display = 'block';
+           document.getElementById('errorMessage').style.display = 'none';
+           document.getElementById('successMessage').style.display = 'none';
+        }else if(endpoint == "/runmemorybenchmark"){
+           var collapseElement = document.getElementById("collapseContent3");
+           if (collapseElement && collapseElement.classList.contains('show')) {
+               // Collapse is currently open, so close it
+               //collapseElement.classList.remove('show');
+           } else if (collapseElement) {
+               // Collapse is currently closed or not found, so open it
+               collapseElement.classList.add('show');
+           }
+           document.getElementById("run-btn1").style.display = "none";
+           document.getElementById('loadingIcon1').style.display = 'block';
+           document.getElementById('errorMessage1').style.display = 'none';
+           document.getElementById('successMessage1').style.display = 'none';
+        }else if(endpoint == "/runnetworkbenchmark"){
+           var collapseElement = document.getElementById("collapseContent4");
+           if (collapseElement && collapseElement.classList.contains('show')) {
+               // Collapse is currently open, so close it
+               //collapseElement.classList.remove('show');
+           } else if (collapseElement) {
+               // Collapse is currently closed or not found, so open it
+               collapseElement.classList.add('show');
+           }
+           document.getElementById("run-btn2").style.display = "none";
+           document.getElementById('loadingIcon2').style.display = 'block';
+           document.getElementById('errorMessage2').style.display = 'none';
+           document.getElementById('successMessage2').style.display = 'none';
+        }else if(endpoint == "/runcpubenchmark"){
+           var collapseElement = document.getElementById("collapseContent5");
+           if (collapseElement && collapseElement.classList.contains('show')) {
+               // Collapse is currently open, so close it
+               //collapseElement.classList.remove('show');
+           } else if (collapseElement) {
+               // Collapse is currently closed or not found, so open it
+               collapseElement.classList.add('show');
+           }
+           document.getElementById("run-btn3").style.display = "none";
+           document.getElementById('loadingIcon3').style.display = 'block';
+           document.getElementById('errorMessage3').style.display = 'none';
+           document.getElementById('successMessage3').style.display = 'none';
+        }else if(endpoint == "/rungpubenchmark"){
+           var collapseElement = document.getElementById("collapseContent6");
+           if (collapseElement && collapseElement.classList.contains('show')) {
+               // Collapse is currently open, so close it
+               //collapseElement.classList.remove('show');
+           } else if (collapseElement) {
+               // Collapse is currently closed or not found, so open it
+               collapseElement.classList.add('show');
+           }
+           document.getElementById("run-btn4").style.display = "none";
+           document.getElementById('loadingIcon4').style.display = 'block';
+           document.getElementById('errorMessage4').style.display = 'none';
+           document.getElementById('successMessage4').style.display = 'none';
+        }
+    
+                // Send request to the API endpoint
+                fetch(endpoint)
+                    .then(response => {
+                        if (!response.ok) {
+                              // Show error message
+                 if(endpoint == "/rundiskbenchmark"){
+                    document.getElementById('errorMessage').style.display = 'block';
+                    }else  if(endpoint == "/runmemorybenchmark"){
+                        document.getElementById('errorMessage2').style.display = 'block';
+                        }else  if(endpoint == "/runnetworkbenchmark"){
+                            document.getElementById('errorMessage3').style.display = 'block';
+                            }else  if(endpoint == "/runcpubenchmark"){
+                                document.getElementById('errorMessage4').style.display = 'block';
+                                }else  if(endpoint == "/rungpubenchmark"){
+                                    document.getElementById('errorMessage5').style.display = 'block';
+                                    }
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        if(endpoint == "/rundiskbenchmark"){
+                            document.getElementById('successMessage').style.display = 'block';
+                            }else  if(endpoint == "/runmemorybenchmark"){
+                                document.getElementById('successMessage1').style.display = 'block';
+                                }else  if(endpoint == "/runnetworkbenchmark"){
+                                    document.getElementById('successMessage2').style.display = 'block';
+                                    }else  if(endpoint == "/runcpubenchmark"){
+                                        document.getElementById('successMessage3').style.display = 'block';
+                                        }else  if(endpoint == "/rungpubenchmark"){
+                                            document.getElementById('successMessage4').style.display = 'block';
+                                            }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Hide loading icon
+             if(endpoint == "/rundiskbenchmark"){
+                document.getElementById('loadingIcon').style.display = 'none';
+                }else  if(endpoint == "/runmemorybenchmark"){
+                    document.getElementById('loadingIcon1').style.display = 'none';
+                    }else  if(endpoint == "/runnetworkbenchmark"){
+                        document.getElementById('loadingIcon2').style.display = 'none';
+                        }else  if(endpoint == "/runcpubenchmark"){
+                            document.getElementById('loadingIcon3').style.display = 'none';
+                            }else  if(endpoint == "/rungpubenchmark"){
+                                document.getElementById('loadingIcon4').style.display = 'none';
+                                }
+    
+                        // Show success message and parse the data
+                        console.log('Data received from server:', data);
+                        if (data && data.results) {
+                            // Check if the "data" property is defined
+             
+                // Call the parsing function
+                if(endpoint == "/rundiskbenchmark"){
+                   parseBenchmarkResults_disk(data.results);
+                   }else  if(endpoint == "/runmemorybenchmark"){
+                       parseBenchmarkResults_memory(data.results);
+                       }else  if(endpoint == "/runnetworkbenchmark"){
+                           parseBenchmarkResults_netwotk(data.results);
+                           }else  if(endpoint == "/runcpubenchmark"){
+                               parseBenchmarkResults_cpu(data.results);
+                               }else  if(endpoint == "/rungpubenchmark"){
+                                   parseBenchmarkResults_gpu(data.results);
+                                   }
+                            console.log('Benchmark completed successfully');
+                            resolve(); // Resolve the promise if API call succeeds
+                        } else {
+                            console.error('Invalid or missing "results" property in the response:', data);
+                            console.log('Error occurred during benchmark');
+                            reject(new Error('Invalid or missing data in the response')); // Reject the promise if API call fails
+                        }
+                    })
+                    .catch(error => {
+                        // Hide loading icon
+                        document.getElementById('loadingIcon').style.display = 'none';
+    
+                        // Display error message
+                        console.error('Error:', error);
+                        console.log('Error occurred during benchmark');
+                        reject(error); // Reject the promise if an error occurs during API call
+                    });
+            });
+        }
+    
+        // Function to call APIs sequentially
+        function callAPIsSequentially(endpoints) {
+            return endpoints.reduce((chain, endpoint) => {
+                return chain.then(() => callAPI(endpoint));
+            }, Promise.resolve());
+        }
+    
+        // Call APIs sequentially
+        callAPIsSequentially(apiEndpoints)
+            .then(() => {
+                console.log('All APIs called successfully');
+                // All APIs called successfully, perform any necessary actions here
+            })
+            .catch(error => {
+                console.error('Error calling APIs:', error);
+                // Handle error if any API call fails
+            });
+    }
+    
