@@ -17,14 +17,14 @@
   /* -----------Comparison button--------------- */
 
 .comparison-btn {
-    position: fixed;
-    top: 12px;
-    right: 16px;
-    background-color: #3498db;
-    color: #fff;
+   
+  
+    background-color: #a3a3a3;
+    color: #1a1a1a;
     padding: 10px;
-    border-radius: 50%;
+   
     cursor: pointer;
+    border: 2px solid rgb(255, 255, 255);
   }
   
   select {
@@ -234,4 +234,34 @@
   color: #ffffff;
   font-weight: 700;
   font-size: 18px;
+}
+
+.button_compare_system_info {
+  margin-bottom: 20px;
+  display: inline-block;
+  font-size: 1.15em;
+  position: relative;
+  text-align: center;
+  padding: 0.5em 1em;
+  background: linear-gradient(45deg, #59adeb, #018efa);
+  color: #fff;
+  box-shadow: 0 0.2em 0.2em rgba(0,0,0,0.25);
+  border-radius: 0.2em;
+  transition: box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+.button_compare_system_info:active {
+  background-color: #ccc;
+  box-shadow: 0 0 6px rgba(42, 42, 42, 0.6);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.button_compare_system_info:active:after {
+  font-size: 1em;
+  opacity: 1;
+  transition: none;
+  top: 0.3em;
+}
+.button_compare_system_info:hover {
+  box-shadow: 0 0.1em 0.25em rgba(0,0,0,0.25);
 }

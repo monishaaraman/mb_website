@@ -462,7 +462,7 @@ align-items: center;
   position: relative;
   text-align: center;
   padding: 0.5em 1em;
-  background: linear-gradient(45deg, #59adeb, #40c3af);
+  background: linear-gradient(45deg, #59adeb, #018efa);
   color: #fff;
   box-shadow: 0 0.2em 0.2em rgba(0,0,0,0.25);
   border-radius: 0.2em;
@@ -471,7 +471,7 @@ align-items: center;
 }
 .button_system_info:active {
   background-color: #ccc;
-  box-shadow: 0 0 6px rgba(0,121,238,0.6);
+  box-shadow: 0 0 6px rgba(42, 42, 42, 0.6);
   transition: box-shadow 0.1s ease-in-out;
 }
 

@@ -60,12 +60,12 @@
         .content-section {
             margin-left: 250px;
             display: none;
-            overflow: auto;
+           
         }
         .chart-container{
-            height: 60%;
-            width: 50%;
-            background-color: #ffffffb5;
+            height: 400px;
+            width: 600px;
+            background-color: #ffffff00;
             margin-top: 10px;
             margin-left: 17%;
             
@@ -76,9 +76,12 @@
             overflow: auto;
             margin-left: 10%;
         }
+        .table_style caption{
+            color: #d0d0d0;
+        }
     </style>
 </head>
-<body style="background-color: rgb(0, 156, 203); text-align: center;">
+<body style="background-color: rgba(33, 33, 33, 0.63); text-align: center;">
 
     <div id="sidebar">
       
@@ -104,7 +107,7 @@
     </div>
     
     <div id="content-disk-compileBench" class="content-section">
-        <h1>Comparison table</h1>
+        <h1 style="color: #ddd; text-align: center;margin: 5px;">Comparison Table for Disk - Compile_Bench</h1>
         <div class="table_style">
             <table id="comparison-table-disk-compileBench">
                 <caption>BENCHMARK NAME - Compile-Bench</caption>
@@ -133,7 +136,7 @@
     </div>
 
     <div id="content-disk-fio_random" class="content-section">
-        <h1>Comparison table</h1>
+        <h1 style="color: #ddd; text-align: center;">Comparison Menu</h1>
         <div class="table_style">
         <table id="comparison-table-disk-fio_random">
             <caption>BENCHMARK NAME - Fio-Random</caption>

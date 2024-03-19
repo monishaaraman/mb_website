@@ -85,14 +85,7 @@
     <!-- Build button -->
     
     <!-- Compare button -->
-    <div class="comparison-btn" onclick="showComparisonPopup_1()">Compare</div>
-   
-    <div id="overlay_fetching_comparison_popup">
-      
-        <div class="close-btn" onclick="closeComparisonPopup_1()">X</div>
-        <iframe id="contentFrame_compare" name="contentFrame_compare" src="comparison_popup.html" style="display: none;width: 80%; height: 80%; "></iframe>
-      
-    </div>
+  
     
    <!-- Popup for comparison -->
     <!-- <div class="popup" id="comparisonPopup">
@@ -946,14 +939,23 @@
         </button>
 
     </div>
-</div>
-</div>
-</div>
+    </div>
+    </div>
+    </div>
 
 
+    </div>
+
+<button class="button_compare_system_info" onclick="showComparisonPopup_1()" style="margin-top: 10px;">Compare</button>
 </div>
+
+   
+<div id="overlay_fetching_comparison_popup">
+  
+    <div class="close-btn" onclick="closeComparisonPopup_1()">X</div>
+    <iframe id="contentFrame_compare" name="contentFrame_compare" src="comparison_popup.html" style="display: none;width: 80%; height: 80%; "></iframe>
+  
 </div>
- 
 </body>
 <!------------------------------------------------------------grid panel completion--------------------------------------------------->
    

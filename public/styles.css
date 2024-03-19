@@ -640,7 +640,7 @@ a {
 .menu-bar ul li a.active {
   /* Add styles for the active menu item */
   font-weight: bold;
-  color: #637A9F; /* Change to your desired color */
+  color: #3b3b3b; /* Change to your desired color */
   background-color: #FFFFFF;
 }
 
