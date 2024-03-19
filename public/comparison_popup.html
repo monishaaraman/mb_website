@@ -93,9 +93,9 @@
         <div class="submenu" id="diskSubmenu">
             <a href="javascript:void(0);" class="selected">Compile-Bench</a>
             <a href="javascript:void(0);">Fio-Random</a>
-            <a href="javascript:void(0);">Fio-Squential</a>
+            <a href="javascript:void(0);">Fio-Sequential</a>
         </div>
-        <a href="#" class="has-submenu">
+        <a href="javascript:void(0);" class="has-submenu">
             Memory
             <div class="dropdown-arrow">&#9660;</div>
         </a>
@@ -103,6 +103,33 @@
             <a href="javascript:void(0);" >Cache-Bench</a>
             <a href="javascript:void(0);">RAMSMP-Float</a>
             <a href="javascript:void(0);">RAMSMP-Integer</a>
+        </div>
+        <a href="javascript:void(0);" class="has-submenu">
+            Network
+            <div class="dropdown-arrow">&#9660;</div>
+        </a>
+        <div class="submenu" id="networkSubmenu">
+            <a href="javascript:void(0);" >Ethr</a>
+            <a href="javascript:void(0);">Sockperf</a>
+            <a href="javascript:void(0);">Iperf</a>
+        </div>
+        <a href="javascript:void(0);" class="has-submenu">
+            CPU
+            <div class="dropdown-arrow">&#9660;</div>
+        </a>
+        <div class="submenu" id="cpuSubmenu">
+            <a href="javascript:void(0);" >C-ray</a>
+            <a href="javascript:void(0);">Blake</a>
+            <a href="javascript:void(0);">Sys-Bench</a>
+        </div>
+        <a href="javascript:void(0);" class="has-submenu">
+            GPU
+            <div class="dropdown-arrow">&#9660;</div>
+        </a>
+        <div class="submenu" id="gpuSubmenu">
+            <a href="javascript:void(0);" >Unigine-Heaven</a>
+            <a href="javascript:void(0);">Gputest-Furmark</a>
+            <a href="javascript:void(0);">Gputest-Tessmark</a>
         </div>
     </div>
     
@@ -163,6 +190,387 @@
         </div>
 
     </div>
+
+    <div id="content-disk-fio_sequential" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-disk-fio_sequential">
+                <caption>BENCHMARK NAME - Fio-Sequential</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Read (MB/s)</th>
+                        <th>Average Write (MB/s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-disk-fio_sequential" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-memory-cachebench" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-memory-cachebench">
+                <caption>BENCHMARK NAME - Cache-Bench</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Cache (in MiB/s) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-disk-fio_sequential" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+    
+    <div id="content-memory-ramsmp_float" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-memory-ramsmp_float">
+                <caption>BENCHMARK NAME - RAMSMP-Float</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Float Memory (in MiB/s) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-memory-ramsmp_float" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-memory-ramsmp_integer" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-memory-ramsmp_integer">
+                <caption>BENCHMARK NAME - RAMSMP-Integer</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Integer Memory (in MiB/s) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-memory-ramsmp_integer" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-network-ethr" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-network-ethr">
+                <caption>BENCHMARK NAME - Ethr</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Bandwidth (bits/sec) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-network-ethr" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-network-sockperf" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-network-sockperf">
+                <caption>BENCHMARK NAME - Sockperf</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Latency (in usec) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-network-sockperf" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-network-iperf" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-network-iperf">
+                <caption>BENCHMARK NAME - Iperf</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Receiver Bitrate (Mbits/sec) </th>
+                        <th>Average Sender Bitrate (Mbits/sec) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-network-iperf" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-cpu-c_ray" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-cpu-c_ray">
+                <caption>BENCHMARK NAME - C-ray</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Rendering time (seconds)  </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-cpu-c_ray" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-cpu-blake" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-cpu-blake">
+                <caption>BENCHMARK NAME - Blake</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Per Byte (Cycles Per Byte)   </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-cpu-blake" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-cpu-sysbench" class="content-section">
+        <h1>Comparison table</h1>  
+        <div class="table_style">
+            <table id="comparison-table-cpu-sysbench">
+                <caption>BENCHMARK NAME - Sys-Bench</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Events/s (seconds) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-cpu-sysbench" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-gpu-unigine_heaven" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-gpu-unigine_heaven">
+                <caption>BENCHMARK NAME - Unigine-Heaven</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average FPS (Frames Per Second)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-gpu-unigine_heaven" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-gpu-gputest_furmark" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-gpu-gputest_furmark">
+                <caption>BENCHMARK NAME - Gputest-Furmark</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Furmark Score (Points) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-gpu-gputest_furmark" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    <div id="content-gpu-gputest_tessmark" class="content-section">
+        <h1>Comparison table</h1>
+        <div class="table_style">
+            <table id="comparison-table-gpu-gputest_tessmark">
+                <caption>BENCHMARK NAME - Gputest-Tessmark</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>System Name</th>
+                        <th>Benchmark</th>
+                        <th>Time (ms)</th>
+                        <th>CPU (ms)</th>
+                        <th>Iterations</th>
+                        <th>Average Tessmark Score (Points)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="comparisonChart-gpu-gputest_tessmark" width="600" height="400"></canvas>
+        </div>
+        
+
+    </div>
+
+    
     
     <script>
         const selectedRows = {};
@@ -216,8 +624,38 @@ function getColumnValues(row, tableType, subType) {
             return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_compile_mbs];
             if(subType == 'fio_random')
             return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs];
+            if(subType == 'fio_sequential')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs];
         case 'memory':
+             if(subType == 'cachebench')
             return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_cache_mibs];
+            if(subType == 'ramsmp_float')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_float_memory_mibs];
+            if(subType == 'ramsmp_integer')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_integer_memory_mibs];
+        case 'network':
+             if(subType == 'ethr')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_bandwidth_bits_secs];
+            if(subType == 'sockperf')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_latency_usec];
+            if(subType == 'iperf')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_receiver_bitrate_mbits_sec, row.average_sender_bitrate_mbits_sec];
+        case 'cpu':
+             if(subType == 'c_ray')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_rendering_time_seconds];
+            if(subType == 'blake')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_per_byte];
+            if(subType == 'sysbench')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_events_seconds];
+        case 'gpu':
+             if(subType == 'unigine_heaven')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_fps];
+            if(subType == 'gputest_furmark')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_score_points];
+            if(subType == 'gputest_tessmark')
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_score_points];
+
+
         // Add cases for other tables as needed
         default:
             return [];
@@ -290,8 +728,52 @@ function updateChart( tableType, subType) {
                  dataset = prepareDataset_disk_fio_random(selectedRowsOfType);
             }else if(subType == 'compileBench') {
                 dataset = prepareDataset_disk_compileBench(selectedRowsOfType);
+            }else if(subType == 'fio_sequential') {
+                dataset = prepareDataset_disk_fio_sequential(selectedRowsOfType);
             }
     }
+    else if(tableType == 'memory')
+    {
+            if(subType == 'cachebench'){
+                 dataset = prepareDataset_memory_cachebench(selectedRowsOfType);
+            }else if(subType == 'ramsmp_float') {
+                dataset = prepareDataset_memory_ramsmp_float(selectedRowsOfType);
+            }else if(subType == 'ramsmp_integer') {
+                dataset = prepareDataset_memory_ramsmp_integer(selectedRowsOfType);
+            }
+    }
+    else if(tableType == 'network')
+    {
+            if(subType == 'ethr'){
+                 dataset = prepareDataset_network_ethr(selectedRowsOfType);
+            }else if(subType == 'sockperf') {
+                dataset = prepareDataset_network_sockperf(selectedRowsOfType);
+            }else if(subType == 'iperf') {
+                dataset = prepareDataset_network_iperf(selectedRowsOfType);
+            }
+    }
+    else if(tableType == 'cpu')
+    {
+            if(subType == 'c_ray'){
+                 dataset = prepareDataset_cpu_c_ray(selectedRowsOfType);
+            }else if(subType == 'blake') {
+                dataset = prepareDataset_cpu_blake(selectedRowsOfType);
+            }else if(subType == 'sysbench') {
+                dataset = prepareDataset_cpu_sysbench(selectedRowsOfType);
+            }
+    }
+
+    else if(tableType == 'gpu')
+    {
+            if(subType == 'unigine_heaven'){
+                 dataset = prepareDataset_gpu_unigine_heaven(selectedRowsOfType);
+            }else if(subType == 'gputest_furmark') {
+                dataset = prepareDataset_gpu_gputest_furmark(selectedRowsOfType);
+            }else if(subType == 'gputest_tessmark') {
+                dataset = prepareDataset_gpu_gputest_tessmark(selectedRowsOfType);
+            }
+    }
+
     
 
     // Generate the bar chart using Chart.js
@@ -348,6 +830,241 @@ return {
 };
 };
 
+function prepareDataset_disk_fio_sequential (selectedData) {
+      const labels = ['Average read', 'Average write'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_read_mibs, item.average_write_mibs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+
+function prepareDataset_memory_cachebench (selectedData) {
+      const labels = ['Average Cache'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_cache_mibs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function prepareDataset_memory_ramsmp_float (selectedData) {
+      const labels = ['Average Float Memory'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_float_memory_mibs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function prepareDataset_memory_ramsmp_integer (selectedData) {
+      const labels = ['Average Integer Memory'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_integer_memory_mibs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_network_ethr (selectedData) {
+      const labels = ['Average Bandwidth'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_bandwidth_bits_secs],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_network_sockperf (selectedData) {
+      const labels = ['Average Latency'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_latency_usec],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_network_iperf (selectedData) {
+      const labels = ['Average Receiver', ' Average Sender'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_receiver_bitrate_mbits_sec,  item.average_sender_bitrate_mbits_sec],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_cpu_c_ray (selectedData) {
+      const labels = ['Average Rendering time'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_rendering_time_seconds],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_cpu_blake (selectedData) {
+      const labels = ['Average Per byte'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_per_byte],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_cpu_sysbench (selectedData) {
+      const labels = ['Average Events'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_events_seconds],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_gpu_unigine_heaven (selectedData) {
+      const labels = ['Average FPS'];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_fps],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_gpu_gputest_furmark (selectedData) {
+      const labels = ['Average Score '];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_score_points],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
+function  prepareDataset_gpu_gputest_tessmark (selectedData) {
+      const labels = ['Average Score '];
+      const datasets = selectedData.map((item, index) => {
+    return {
+        axis: index % 2 === 0 ? 'x' : 'y', // Alternate between 'x' and 'y' axes
+        label: `${item.sys_name}`,
+        data: [item.average_score_points],
+        fill: false,
+       
+        borderWidth: 1,
+    };
+});
+return {
+    labels: labels,
+    datasets: datasets,
+};
+};
+
 
 window.onload = () => {
     document.getElementById('content-disk-compileBench').style.display = 'block';
@@ -356,7 +1073,11 @@ window.onload = () => {
             // Add more calls for other tables as needed
         };
 
+        
+    
+
 // -----------------------generate Bar Chart - DISK--------------------//
+// -----------------------prepare dataser fof chart - MEMORY--------------------//
 
 
 
@@ -400,13 +1121,289 @@ window.onload = () => {
                    
                    document.getElementById('content-disk-compileBench').style.display = 'block';
                    document.getElementById('content-disk-fio_random').style.display = 'none';
-                   fetchComparisonData('disk','compileBench');
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                      fetchComparisonData('disk','compileBench');
             } else if(submenuText == 'Fio-Random'){
-                document.getElementById('content-disk-compileBench').style.display = 'none';
                    document.getElementById('content-disk-fio_random').style.display = 'block';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+                   
                    fetchComparisonData('disk','fio_random');
                // alert("Fio-Random");
-            }
+               
+            } else if(submenuText == 'Fio-Sequential'){
+                   document.getElementById('content-disk-fio_sequential').style.display = 'block';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('disk','fio_sequential');
+
+            } else if(submenuText == 'Cache-Bench'){
+                document.getElementById('content-memory-cachebench').style.display = 'block';
+                document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('memory','cachebench');
+
+            } else if(submenuText == 'RAMSMP-Float'){
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('memory','ramsmp_float');
+
+            } else if(submenuText == 'RAMSMP-Integer'){
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('memory','ramsmp_integer');
+
+            } else if(submenuText == 'Ethr'){
+                   document.getElementById('content-network-ethr').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('network','ethr');
+
+
+            } else if(submenuText == 'Sockperf'){
+                   document.getElementById('content-network-sockperf').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('network','sockperf');
+
+            }  else if(submenuText == 'Iperf'){
+                   document.getElementById('content-network-iperf').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('network','iperf');
+
+            }  else if(submenuText == 'C-ray'){
+                   document.getElementById('content-cpu-c_ray').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('cpu','c_ray');
+
+            }  else if(submenuText == 'Blake'){
+                   document.getElementById('content-cpu-blake').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('cpu','blake');
+
+            } else if(submenuText == 'Sys-Bench'){
+                   document.getElementById('content-cpu-sysbench').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('cpu','sysbench');
+
+            }  else if(submenuText == 'Unigine-Heaven'){
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('gpu','unigine_heaven');
+
+            }   else if(submenuText == 'Gputest-Furmark'){
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'none';
+
+                   fetchComparisonData('gpu','gputest_furmark');
+
+            }  else if(submenuText == 'Gputest-Tessmark'){
+                   document.getElementById('content-gpu-gputest_tessmark').style.display = 'block';
+                   document.getElementById('content-disk-fio_sequential').style.display = 'none';
+                   document.getElementById('content-disk-fio_random').style.display = 'none';
+                   document.getElementById('content-disk-compileBench').style.display = 'none';
+                   document.getElementById('content-memory-cachebench').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_float').style.display = 'none';
+                   document.getElementById('content-memory-ramsmp_integer').style.display = 'none';
+                   document.getElementById('content-network-ethr').style.display = 'none';
+                   document.getElementById('content-network-sockperf').style.display = 'none';
+                   document.getElementById('content-network-iperf').style.display = 'none';
+                   document.getElementById('content-cpu-c_ray').style.display = 'none';
+                   document.getElementById('content-cpu-blake').style.display = 'none';
+                   document.getElementById('content-cpu-sysbench').style.display = 'none';
+                   document.getElementById('content-gpu-unigine_heaven').style.display = 'none';
+                   document.getElementById('content-gpu-gputest_furmark').style.display = 'none';
+
+                   fetchComparisonData('gpu','gputest_tessmark');
+            }  
             // const contentArea = document.getElementById('content');
             // contentArea.innerHTML = `<h1>${submenuText}</h1>
             //                          <p>This is the content for ${submenuText}.</p>`;

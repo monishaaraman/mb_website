@@ -60,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const pool = new Pool({
     user: 'postgres',
-    host: '10.15.220.227',
+    host: '10.15.214.6',
     database: 'benchmark_db',
     password: '1234',
     port: 5432,
