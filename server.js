@@ -1252,6 +1252,18 @@ app.get('/getSystemInfo_all', (req, res) => {
 // app.get('/cpu-details', (req, res) => {
 //     res.send(cpuDetails);
 // });
+
+app.get('/system_name', (req, res) => {
+    exec('./systemname', (error, stdout, stderr) => {
+        if (error) {
+            res.status(500).json({ error: `Error running ram_usage: ${error.message}` });
+            return;
+        }
+        res.json({ output: stdout, error: stderr });
+    });
+});
+
+
 app.get('/ram', (req, res) => {
     exec('./ram_usage', (error, stdout, stderr) => {
         if (error) {

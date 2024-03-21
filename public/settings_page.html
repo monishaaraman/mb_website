@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+
+        }
+        #settings_container{
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            background-color: beige;
+            align-items: center;
+
+        }
+        #benchmark_wrap, #sysinfo_wrap{
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            color: #545454;
+        }
+        .path{
+            background-color: rgb(43, 43, 43);
+            color: #ffffff;
+            font-style: italic;
+            padding: 2px 5px 2px 5px;
+            margin: 0px 2px 0px 2px;
+        }
+        #benchmark_source_dlt{
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="settings_container">Delete Source files
+        <div id="benchmark_wrap">
+            For Benchmark:
+             <div class="path">/usr/share/microbenchmark</div>
+             <button id="benchmark_source_dlt">Delete</button>
+        </div>
+        <div id="sysinfo_wrap">
+            For System-info:
+            <div class="path">/usr/share/hardware</div>
+            <button id="sysinfo_source_dlt">Delete</button>
+       </div>
+         
+    </div>
+</body>
+</html>

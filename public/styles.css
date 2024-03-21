@@ -262,6 +262,7 @@ table {
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
   border-radius: 10px;
+  color: #00000073;
 }
 
 th,
@@ -289,6 +290,7 @@ tbody {
 	}
 	td {
 		position: relative;
+    color: #303030;
 		&:hover {
 			&:before {
 				content: "";
@@ -429,7 +431,7 @@ table#benchmarkTable3 caption {
 .modalbg .dialog {
   width: 50%;
   position: relative;
-  top: -1210px;
+  top: -3000px;
   margin: 10% auto;
   padding: 5px 20px 13px 20px;
   -moz-border-radius: 10px;
