@@ -28,9 +28,9 @@
        });
     </script>
 </head>
-<body>
+<body style="overflow: scroll;">
 
-
+<div >
    
     <div id="particleCanvas-Blue"></div>
     <div id="particleCanvas-White"></div>
@@ -99,19 +99,19 @@
      </div> -->
 
          <!-- Container for collapsible panel -->
-<div style="height: 70%; overflow: auto; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+<div style="height: 70%;  display: flex; align-items: center; justify-content: center; flex-direction: column;">
    
-    <button id="glow-on-hover" class="run_all_button" style="background-color: rgba(175, 171, 175, 0.253); " onclick="callAPIs()">RUN ALL</button>
+    <button id="glow-on-hover" class="run_all_button" style="background-color: rgba(175, 171, 175, 0.253); margin-top: 30px;" onclick="callAPIs()">RUN ALL</button>
     
     
-    <div class="container mt-5" style="overflow: auto; height: 80%;">
+    <div class="container mt-5" style="">
             
         <!-------------------------------------------------------------------------Disk panel -------------------------------------------------------------------------------------->
         <div class="card mt-3" id="card_style">
             <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
             
             <h5 class="mb-0" >
-                <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover">
+                <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover" onclick="rundiskbenchmark()">
                     Disk
                 </button>
             </h5>
@@ -955,6 +955,8 @@
     <div class="close-btn" onclick="closeComparisonPopup_1()">X</div>
     <iframe id="contentFrame_compare" name="contentFrame_compare" src="comparison_popup.html" style="display: none;width: 80%; height: 80%; "></iframe>
   
+</div>
+
 </div>
 </body>
 <!------------------------------------------------------------grid panel completion--------------------------------------------------->

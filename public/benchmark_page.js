@@ -394,12 +394,9 @@ function getRandomColor() {
 
      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Memory button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
   
-
- document.addEventListener('DOMContentLoaded', function() {
-
  //----------------Disk button clicking function----------------------//
   // Your existing code here
-  document.getElementById('disk_button').addEventListener('click', function () {
+  function rundiskbenchmark() {
     // Display loading icon
     document.getElementById("run-btn").style.display = "none";
     document.getElementById('loadingIcon').style.display = 'block';
@@ -446,8 +443,7 @@ function getRandomColor() {
         .finally(() => {
             // Additional clean-up tasks if needed
         });
-});
-
+}
 //----------------Disk result parsing function----------------------//
    // Assuming "data.results" is an array of objects with key-value pairs
    function parseBenchmarkResults_disk(results) {
@@ -508,6 +504,12 @@ function getRandomColor() {
        
     });
 }
+
+ document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
 //----------------Memory button clicking function----------------------//
 // Your existing code here
   document.getElementById('memory_button').addEventListener('click', function() {
