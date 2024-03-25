@@ -428,6 +428,7 @@ function pollTaskStatus_disk(taskId) {
             document.getElementById('successMessage').style.display = 'block';
                     console.log('Disk Benchmark completed', data.results);
                     // Handle completed task and results here
+                    diskResults = data.results;
                     parseBenchmarkResults_disk(data.results);
 
                 } else if (data.status === 'error') {
@@ -509,7 +510,7 @@ function pollTaskStatus_disk(taskId) {
     });
 }
 
- document.addEventListener('DOMContentLoaded', function() {
+
 
 
 
@@ -548,6 +549,7 @@ function pollTaskStatus_memory(taskId) {
             document.getElementById('successMessage1').style.display = 'block';
                     console.log('Memory Benchmark completed', data.results);
                     // Handle completed task and results here
+                    memoryResults = data.results;
                     parseBenchmarkResults_memory(data.results);
 
                 } else if (data.status === 'error') {
@@ -662,6 +664,7 @@ function pollTaskStatus_network(taskId) {
             document.getElementById('successMessage2').style.display = 'block';
                     console.log('Network Benchmark completed', data.results);
                     // Handle completed task and results here
+                    networkResults = data.results;
                     parseBenchmarkResults_netwotk(data.results);
 
                 } else if (data.status === 'error') {
@@ -776,6 +779,7 @@ function pollTaskStatus_network(taskId) {
                 document.getElementById('successMessage3').style.display = 'block';
                         console.log('CPU Benchmark completed', data.results);
                         // Handle completed task and results here
+                        cpuResults = data.results;
                         parseBenchmarkResults_cpu(data.results);
     
                     } else if (data.status === 'error') {
@@ -890,6 +894,7 @@ function pollTaskStatus_network(taskId) {
                 document.getElementById('successMessage4').style.display = 'block';
                         console.log('GPU Benchmark completed', data.results);
                         // Handle completed task and results here
+                        gpuResults = data.results;
                         parseBenchmarkResults_gpu(data.results);
     
                     } else if (data.status === 'error') {
@@ -969,7 +974,7 @@ function pollTaskStatus_network(taskId) {
       });
     }
   
-});
+
 
 
 
@@ -1538,6 +1543,44 @@ function generateBarChart_DISK(selectedData) {
         
 //     }
 
+function runAllAPIs(){
+    console.log('triggered disk');
+
+    document.getElementById("collapseContent2").classList.add('show');
+    rundiskbenchmark();
+
+    setTimeout(function() {
+        console.log('triggered memory after 2 seconds');
+      }, 2000);
+
+    document.getElementById("collapseContent3").classList.add('show');
+    runmemorybenchmark();
+
+    setTimeout(function() {
+        console.log('triggered network after 2 seconds');
+      }, 2000);
+
+    document.getElementById("collapseContent4").classList.add('show');
+    runnetworkbenchmark();
+
+    setTimeout(function() {
+        console.log('triggered cpu after 2 seconds');
+      }, 2000);
+
+    document.getElementById("collapseContent5").classList.add('show');
+    runcpubenchmark();
+
+    setTimeout(function() {
+        console.log('triggered gpu after 2 seconds');
+      }, 2000);
+
+    document.getElementById("collapseContent6").classList.add('show');
+    rungpubenchmark();
+
+    setTimeout(function() {
+        console.log('run all ended');
+      }, 2000);
+}
 
 function callAPIs() {
         // Array of API endpoints to call
