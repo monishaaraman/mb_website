@@ -771,35 +771,173 @@ app.get('/clone_and_build_hardwaremap', (req, res) => {
 });
 
 // --------------------------execute disk benchmark------------------------------------//
+const tasks = {};
+
 app.get('/rundiskbenchmark', (req, res) => {
-   
- const runCommands = [
+    const taskId = Date.now().toString(); // Simple task ID generation
+    tasks[taskId] = { status: 'started' };
+
+    const runCommands = [
         'cd /usr/share/microbenchmark',
         'sudo ./BENCH disk'
     ];
-  
+
     exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
         console.error(`running disk...`);
-      if (runError) {
-        console.error(`Error: ${runError.message}`);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-  
-      console.log(`stdout: ${runStdout}`);
-      console.error(`stderr: ${runStderr}`);
+        if (runError) {
+            console.error(`Error: ${runError.message}`);
+            tasks[taskId] = { status: 'error', message: 'Internal Server Error' };
+            return;
+        }
 
-      // Parse the benchmark results and update the table
-     
-// Parse the benchmark results on the server side
-const parsedResults = parseBenchmarkResults(runStdout);
-
-console.log("\n------------parsedResults\n");
-console.log(parsedResults);
-// Send the parsed results to the client
-res.json({ success: true, results: parsedResults });
+        // Parse the benchmark results and update the task
+        
+        console.log("runStderr:",runStderr);
+        console.log("runStdout:",runStdout);
+        const parsedResults = parseBenchmarkResults(runStdout);
+        tasks[taskId] = { status: 'completed', results: parsedResults };
     });
-  });
+
+    res.json({ taskId: taskId, message: "Benchmark started. Check status with taskId." });
+});
+
+
+// --------------------------execute memory benchmark------------------------------------//
+app.get('/runmemorybenchmark', (req, res) => {
+    const taskId = Date.now().toString(); // Simple task ID generation
+    tasks[taskId] = { status: 'started' };
+
+    const runCommands = [
+        'cd /usr/share/microbenchmark',
+        'sudo ./BENCH memory'
+    ];
+
+    exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
+        console.error(`running memory...`);
+        if (runError) {
+            console.error(`Error: ${runError.message}`);
+            tasks[taskId] = { status: 'error', message: 'Internal Server Error' };
+            return;
+        }
+
+        // Parse the benchmark results and update the task
+        
+        console.log("runStderr:",runStderr);
+        console.log("runStdout:",runStdout);
+        const parsedResults = parseBenchmarkResults(runStdout);
+        tasks[taskId] = { status: 'completed', results: parsedResults };
+    });
+
+    res.json({ taskId: taskId, message: "Benchmark started. Check status with taskId." });
+});
+     
+   
+   
+   // --------------------------execute network benchmark------------------------------------//
+app.get('/runnetworkbenchmark', (req, res) => {
+   
+    const taskId = Date.now().toString(); // Simple task ID generation
+    tasks[taskId] = { status: 'started' };
+
+    const runCommands = [
+        'cd /usr/share/microbenchmark',
+        'sudo ./BENCH network'
+    ];
+
+    exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
+        console.error(`running network...`);
+        if (runError) {
+            console.error(`Error: ${runError.message}`);
+            tasks[taskId] = { status: 'error', message: 'Internal Server Error' };
+            return;
+        }
+
+        // Parse the benchmark results and update the task
+        
+        console.log("runStderr:",runStderr);
+        console.log("runStdout:",runStdout);
+        const parsedResults = parseBenchmarkResults(runStdout);
+        tasks[taskId] = { status: 'completed', results: parsedResults };
+    });
+
+    res.json({ taskId: taskId, message: "Benchmark started. Check status with taskId." });
+});
+     
+   
+   
+// --------------------------execute cpu benchmark------------------------------------//
+app.get('/runcpubenchmark', (req, res) => {
+   
+    const taskId = Date.now().toString(); // Simple task ID generation
+    tasks[taskId] = { status: 'started' };
+
+    const runCommands = [
+        'cd /usr/share/microbenchmark',
+        'sudo ./BENCH cpu'
+    ];
+
+    exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
+        console.error(`running cpu...`);
+        if (runError) {
+            console.error(`Error: ${runError.message}`);
+            tasks[taskId] = { status: 'error', message: 'Internal Server Error' };
+            return;
+        }
+
+        // Parse the benchmark results and update the task
+        
+        console.log("runStderr:",runStderr);
+        console.log("runStdout:",runStdout);
+        const parsedResults = parseBenchmarkResults(runStdout);
+        tasks[taskId] = { status: 'completed', results: parsedResults };
+    });
+
+    res.json({ taskId: taskId, message: "Benchmark started. Check status with taskId." });
+});
+
+
+     // --------------------------execute gpu benchmark------------------------------------//
+app.get('/rungpubenchmark', (req, res) => {
+   
+    const taskId = Date.now().toString(); // Simple task ID generation
+    tasks[taskId] = { status: 'started' };
+
+    const runCommands = [
+        'cd /usr/share/microbenchmark',
+        'sudo ./BENCH gpu'
+    ];
+
+    exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
+        console.error(`running gpu...`);
+        if (runError) {
+            console.error(`Error: ${runError.message}`);
+            tasks[taskId] = { status: 'error', message: 'Internal Server Error' };
+            return;
+        }
+
+        // Parse the benchmark results and update the task
+        
+        console.log("runStderr:",runStderr);
+        console.log("runStdout:",runStdout);
+        const parsedResults = parseBenchmarkResults(runStdout);
+        tasks[taskId] = { status: 'completed', results: parsedResults };
+    });
+
+    res.json({ taskId: taskId, message: "Benchmark started. Check status with taskId." });
+});
+
+
+// Endpoint to check the status of a task
+app.get('/checkTaskStatus/:taskId', (req, res) => {
+    const taskId = req.params.taskId;
+    const task = tasks[taskId];
+
+    if (task) {
+        res.json({ status: task.status, results: task.results || null });
+    } else {
+        res.status(404).send('Task not found');
+    }
+});
   
   function parseBenchmarkResults(runStdout) {
     const parsedResults = [];
@@ -846,311 +984,6 @@ res.json({ success: true, results: parsedResults });
     return parsedResults;
 }
 
-// --------------------------execute memory benchmark------------------------------------//
-app.get('/runmemorybenchmark', (req, res) => {
-   
-    const runCommands = [
-           'cd /usr/share/microbenchmark',
-           'sudo ./BENCH memory'
-       ];
-     
-       exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
-           console.log(`running memory...`);
-         if (runError) {
-           console.error(`Error: ${runError.message}`);
-           res.status(500).send('Internal Server Error');
-           return;
-         }
-     
-         console.log(`stdout: ${runStdout}`);
-         console.error(`stderr: ${runStderr}`);
-   
-         // Parse the benchmark results and update the table
-        
-   // Parse the benchmark results on the server side
-   const parsedResults = parseBenchmarkResults(runStdout);
-   
-   console.log("\n------------parsedResults\n");
-   console.log(parsedResults);
-   // Send the parsed results to the client
-   res.json({ success: true, results: parsedResults });
-       });
-     });
-     
-     function parseBenchmarkResults(runStdout) {
-       const parsedResults = [];
-       let currentResult = {};
-   
-       // Split the output into lines
-       const lines = runStdout.split('\n').map(line => line.trim());
-   
-       // Find the indices for the relevant lines
-       const startIndex = lines.findIndex(line => line.includes("######## BENCHMARK RESULTS ########"));
-       const endIndex = lines.findIndex(line => line.includes("######## END ########"));
-   
-       if (startIndex !== -1 && endIndex !== -1) {
-           // Extract lines between "######## BENCHMARK RESULTS ########" and "######## END ########"
-           const relevantLines = lines.slice(startIndex + 1, endIndex);
-   
-           relevantLines.forEach(line => {
-               const match = line.match(/([^:]+):([^]*)/);
-   
-               if (match) {
-                   const key = match[1].trim();
-                   let value = match[2].trim();
-   
-                   // Remove the "ms" suffix from time_ms and cpu_ms values
-                   if (key === 'Time_ms' || key === 'CPU_ms') {
-                       value = value.replace(' ms', '');
-                   }
-   
-                   // Update the current result object
-                   currentResult[key] = value;
-               } else if (Object.keys(currentResult).length > 0) {
-                   // If a non-empty result object exists, push it to the parsedResults array
-                   parsedResults.push(currentResult);
-                   currentResult = {};
-               }
-           });
-   
-           // Add the last result if any
-           if (Object.keys(currentResult).length > 0) {
-               parsedResults.push(currentResult);
-           }
-       }
-   
-       return parsedResults;
-   }
-   
-   
-   // --------------------------execute network benchmark------------------------------------//
-app.get('/runnetworkbenchmark', (req, res) => {
-   
-    const runCommands = [
-           'cd /usr/share/microbenchmark',
-           'sudo ./BENCH network'
-       ];
-     
-       exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
-           console.log(`running network...`);
-         if (runError) {
-           console.error(`Error: ${runError.message}`);
-           res.status(500).send('Internal Server Error');
-           return;
-         }
-     
-         console.log(`stdout: ${runStdout}`);
-         console.error(`stderr: ${runStderr}`);
-   
-         // Parse the benchmark results and update the table
-        
-   // Parse the benchmark results on the server side
-   const parsedResults = parseBenchmarkResults(runStdout);
-   
-   console.log("\n------------parsedResults\n");
-   console.log(parsedResults);
-   // Send the parsed results to the client
-   res.json({ success: true, results: parsedResults });
-       });
-     });
-     
-     function parseBenchmarkResults(runStdout) {
-       const parsedResults = [];
-       let currentResult = {};
-   
-       // Split the output into lines
-       const lines = runStdout.split('\n').map(line => line.trim());
-   
-       // Find the indices for the relevant lines
-       const startIndex = lines.findIndex(line => line.includes("######## BENCHMARK RESULTS ########"));
-       const endIndex = lines.findIndex(line => line.includes("######## END ########"));
-   
-       if (startIndex !== -1 && endIndex !== -1) {
-           // Extract lines between "######## BENCHMARK RESULTS ########" and "######## END ########"
-           const relevantLines = lines.slice(startIndex + 1, endIndex);
-   
-           relevantLines.forEach(line => {
-               const match = line.match(/([^:]+):([^]*)/);
-   
-               if (match) {
-                   const key = match[1].trim();
-                   let value = match[2].trim();
-   
-                   // Remove the "ms" suffix from time_ms and cpu_ms values
-                   if (key === 'Time_ms' || key === 'CPU_ms') {
-                       value = value.replace(' ms', '');
-                   }
-   
-                   // Update the current result object
-                   currentResult[key] = value;
-               } else if (Object.keys(currentResult).length > 0) {
-                   // If a non-empty result object exists, push it to the parsedResults array
-                   parsedResults.push(currentResult);
-                   currentResult = {};
-               }
-           });
-   
-           // Add the last result if any
-           if (Object.keys(currentResult).length > 0) {
-               parsedResults.push(currentResult);
-           }
-       }
-   
-       return parsedResults;
-   }
-   
-   
-// --------------------------execute cpu benchmark------------------------------------//
-app.get('/runcpubenchmark', (req, res) => {
-   
-    const runCommands = [
-           'cd /usr/share/microbenchmark',
-           'sudo ./BENCH cpu'
-       ];
-     
-       exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
-           console.error(`running cpu...`);
-         if (runError) {
-           console.error(`Error: ${runError.message}`);
-           res.status(500).send('Internal Server Error');
-           return;
-         }
-     
-         console.log(`stdout: ${runStdout}`);
-         console.error(`stderr: ${runStderr}`);
-   
-         // Parse the benchmark results and update the table
-        
-   // Parse the benchmark results on the server side
-   const parsedResults = parseBenchmarkResults(runStdout);
-   
-   console.log("\n------------parsedResults\n");
-   console.log(parsedResults);
-   // Send the parsed results to the client
-   res.json({ success: true, results: parsedResults });
-       });
-     });
-     
-     function parseBenchmarkResults(runStdout) {
-       const parsedResults = [];
-       let currentResult = {};
-   
-       // Split the output into lines
-       const lines = runStdout.split('\n').map(line => line.trim());
-   
-       // Find the indices for the relevant lines
-       const startIndex = lines.findIndex(line => line.includes("######## BENCHMARK RESULTS ########"));
-       const endIndex = lines.findIndex(line => line.includes("######## END ########"));
-   
-       if (startIndex !== -1 && endIndex !== -1) {
-           // Extract lines between "######## BENCHMARK RESULTS ########" and "######## END ########"
-           const relevantLines = lines.slice(startIndex + 1, endIndex);
-   
-           relevantLines.forEach(line => {
-               const match = line.match(/([^:]+):([^]*)/);
-   
-               if (match) {
-                   const key = match[1].trim();
-                   let value = match[2].trim();
-   
-                   // Remove the "ms" suffix from time_ms and cpu_ms values
-                   if (key === 'Time_ms' || key === 'CPU_ms') {
-                       value = value.replace(' ms', '');
-                   }
-   
-                   // Update the current result object
-                   currentResult[key] = value;
-               } else if (Object.keys(currentResult).length > 0) {
-                   // If a non-empty result object exists, push it to the parsedResults array
-                   parsedResults.push(currentResult);
-                   currentResult = {};
-               }
-           });
-   
-           // Add the last result if any
-           if (Object.keys(currentResult).length > 0) {
-               parsedResults.push(currentResult);
-           }
-       }
-   
-       return parsedResults;
-   }
-
-     // --------------------------execute gpu benchmark------------------------------------//
-app.get('/rungpubenchmark', (req, res) => {
-   
-    const runCommands = [
-           'cd /usr/share/microbenchmark',
-           'sudo ./BENCH gpu'
-       ];
-     
-       exec(runCommands.join(' && '), (runError, runStdout, runStderr) => {
-           console.log(`running gpu...`);
-         if (runError) {
-           console.error(`Error: ${runError.message}`);
-           res.status(500).send('Internal Server Error');
-           return;
-         }
-     
-         console.log(`stdout: ${runStdout}`);
-         console.error(`stderr: ${runStderr}`);
-   
-         // Parse the benchmark results and update the table
-        
-   // Parse the benchmark results on the server side
-   const parsedResults = parseBenchmarkResults(runStdout);
-   
-   console.log("\n------------parsedResults\n");
-   console.log(parsedResults);
-   // Send the parsed results to the client
-   res.json({ success: true, results: parsedResults });
-       });
-     });
-     
-     function parseBenchmarkResults(runStdout) {
-       const parsedResults = [];
-       let currentResult = {};
-   
-       // Split the output into lines
-       const lines = runStdout.split('\n').map(line => line.trim());
-   
-       // Find the indices for the relevant lines
-       const startIndex = lines.findIndex(line => line.includes("######## BENCHMARK RESULTS ########"));
-       const endIndex = lines.findIndex(line => line.includes("######## END ########"));
-   
-       if (startIndex !== -1 && endIndex !== -1) {
-           // Extract lines between "######## BENCHMARK RESULTS ########" and "######## END ########"
-           const relevantLines = lines.slice(startIndex + 1, endIndex);
-   
-           relevantLines.forEach(line => {
-               const match = line.match(/([^:]+):([^]*)/);
-   
-               if (match) {
-                   const key = match[1].trim();
-                   let value = match[2].trim();
-   
-                   // Remove the "ms" suffix from time_ms and cpu_ms values
-                   if (key === 'Time_ms' || key === 'CPU_ms') {
-                       value = value.replace(' ms', '');
-                   }
-   
-                   // Update the current result object
-                   currentResult[key] = value;
-               } else if (Object.keys(currentResult).length > 0) {
-                   // If a non-empty result object exists, push it to the parsedResults array
-                   parsedResults.push(currentResult);
-                   currentResult = {};
-               }
-           });
-   
-           // Add the last result if any
-           if (Object.keys(currentResult).length > 0) {
-               parsedResults.push(currentResult);
-           }
-       }
-   
-       return parsedResults;
-   }
 
 
   // Add a new endpoint to fetch data for comparison

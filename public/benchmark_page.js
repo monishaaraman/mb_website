@@ -395,55 +395,59 @@ function getRandomColor() {
      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Memory button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
   
  //----------------Disk button clicking function----------------------//
-  // Your existing code here
-  function rundiskbenchmark() {
+ function rundiskbenchmark() {
     // Display loading icon
     document.getElementById("run-btn").style.display = "none";
     document.getElementById('loadingIcon').style.display = 'block';
     document.getElementById('errorMessage').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
 
-    // Assuming your server is running on localhost:3000
     fetch("/rundiskbenchmark")
-        .then(response => {
-            // Hide loading icon
-            document.getElementById('loadingIcon').style.display = 'none';
-            console.log('Step 1: Response received');
-            if (!response.ok) {
-                // Show error message
-             //   document.getElementById('errorMessage').style.display = 'block';
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            // Show success message and parse the data
-            document.getElementById('successMessage').style.display = 'block';
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            console.log('Step 2: Data received from server', data);
-
-            // Check if the "data" property is defined
-            if (data && data.results) {
-                // Call the parsing function
-                diskResults = data.results;
-                console.log(diskResults);
-                parseBenchmarkResults_disk(data.results);
-                console.log('Disk benchmark completed successfully');
-            } else {
-                console.error('Invalid or missing "results" property in the response:', data);
-                console.log('Error occurred during disk benchmark');
-            }
+            console.log('Disk Benchmark initiated', data);
+            const taskId = data.taskId;
+            pollTaskStatus_disk(taskId);
         })
         .catch(error => {
-            // Display error message
-            console.error('Error:', error);
-           // document.getElementById('errorMessage').style.display = 'block';
-            console.log('Error occurred during disk benchmark');
-        })
-        .finally(() => {
-            // Additional clean-up tasks if needed
+            console.error('Error starting disk benchmark:', error);
+            // Handle error
         });
 }
+
+function pollTaskStatus_disk(taskId) {
+    const checkStatus = () => {
+        fetch(`/checkTaskStatus/${taskId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Checking task status', data);
+                if (data.status === 'completed') {
+                     // Hide loading icon
+            document.getElementById('loadingIcon').style.display = 'none';
+            // Show success message and parse the data
+            document.getElementById('successMessage').style.display = 'block';
+                    console.log('Disk Benchmark completed', data.results);
+                    // Handle completed task and results here
+                    parseBenchmarkResults_disk(data.results);
+
+                } else if (data.status === 'error') {
+                    console.error('Disk Benchmark error', data.message);
+                    // Handle error
+                } else {
+                    setTimeout(checkStatus, 5000); // Poll every 5 seconds
+                }
+            })
+            .catch(error => {
+                console.error('Error checking task status:', error);
+                // Handle error
+            });
+    };
+
+    checkStatus();
+}
+
+  
+
 //----------------Disk result parsing function----------------------//
    // Assuming "data.results" is an array of objects with key-value pairs
    function parseBenchmarkResults_disk(results) {
@@ -511,55 +515,56 @@ function getRandomColor() {
 
 
 //----------------Memory button clicking function----------------------//
-// Your existing code here
-  document.getElementById('memory_button').addEventListener('click', function() {
-// Display loading icon
+function runmemorybenchmark() {
+    // Display loading icon
+    document.getElementById("run-btn1").style.display = "none";
+    document.getElementById('loadingIcon1').style.display = 'block';
+    document.getElementById('errorMessage1').style.display = 'none';
+    document.getElementById('successMessage1').style.display = 'none';
 
-     document.getElementById("run-btn1").style.display = "none";
-      document.getElementById('loadingIcon1').style.display = 'block';
-      document.getElementById('errorMessage1').style.display = 'none';
-      document.getElementById('successMessage1').style.display = 'none';
+    fetch("/runmemorybenchmark")
+        .then(response => response.json())
+        .then(data => {
+            console.log('Memory Benchmark initiated', data);
+            const taskId = data.taskId;
+            pollTaskStatus_memory(taskId);
+        })
+        .catch(error => {
+            console.error('Error starting memory benchmark:', error);
+            // Handle error
+        });
+}
 
-      // Assuming your server is running on localhost:3000
-      fetch("/runmemorybenchmark")
-          .then(response => {
-              // Hide loading icon
-              document.getElementById('loadingIcon1').style.display = 'none';
-              console.log('Step 1: Response received');
-              if (!response.ok) {
-                  // Show error message
-                  document.getElementById('errorMessage1').style.display = 'block';
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
+function pollTaskStatus_memory(taskId) {
+    const checkStatus = () => {
+        fetch(`/checkTaskStatus/${taskId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Checking task status', data);
+                if (data.status === 'completed') {
+                     // Hide loading icon
+            document.getElementById('loadingIcon1').style.display = 'none';
+            // Show success message and parse the data
+            document.getElementById('successMessage1').style.display = 'block';
+                    console.log('Memory Benchmark completed', data.results);
+                    // Handle completed task and results here
+                    parseBenchmarkResults_memory(data.results);
 
-              // Show success message and parse the data
-              document.getElementById('successMessage1').style.display = 'block';
-              return response.json();
-          })
-          .then(data => {
-            console.log('Step 2: Data received from server', data);
+                } else if (data.status === 'error') {
+                    console.error('Memory Benchmark error', data.message);
+                    // Handle error
+                } else {
+                    setTimeout(checkStatus, 5000); // Poll every 5 seconds
+                }
+            })
+            .catch(error => {
+                console.error('Error checking task status:', error);
+                // Handle error
+            });
+    };
 
-              // Check if the "data" property is defined
-              if (data && data.results) {
-                  // Call the parsing function
-                 
-                  memoryResults = data.results;
-                  console.log(memoryResults);
-                  parseBenchmarkResults_memory(data.results);
-                  console.log('Memory benchmark completed successfully');
-              } else {
-                  console.error('Invalid or missing "results" property in the response:', data);
-                  console.log('Error occurred during memory benchmark');
-              }
-
-
-              //console.log('Disk benchmark completed successfully');
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              console.log('Error occurred during memory benchmark');
-          });
-  });
+    checkStatus();
+}
 
 //----------------Memory result parsing function----------------------//
  // Assuming "data.results" is an array of objects with key-value pairs
@@ -623,55 +628,57 @@ function getRandomColor() {
 }
 
 //----------------Network button clicking function----------------------//
-// Your existing code here
-document.getElementById('network_button').addEventListener('click', function() {
+
+function runnetworkbenchmark() {
     // Display loading icon
-    
-         document.getElementById("run-btn2").style.display = "none";
-          document.getElementById('loadingIcon2').style.display = 'block';
-          document.getElementById('errorMessage2').style.display = 'none';
-          document.getElementById('successMessage2').style.display = 'none';
-    
-          // Assuming your server is running on localhost:3000
-          fetch("/runnetworkbenchmark")
-              .then(response => {
-                  // Hide loading icon
-                  document.getElementById('loadingIcon2').style.display = 'none';
-                  console.log('Step 1: Response received');
-                  if (!response.ok) {
-                      // Show error message
-                      document.getElementById('errorMessage2').style.display = 'block';
-                      throw new Error(`HTTP error! Status: ${response.status}`);
-                  }
-    
-                  // Show success message and parse the data
-                  document.getElementById('successMessage2').style.display = 'block';
-                  return response.json();
-              })
-              .then(data => {
-                console.log('Step 2: Data received from server', data);
-    
-                  // Check if the "data" property is defined
-                  if (data && data.results) {
-                      // Call the parsing function
-                     
-                      networkResults = data.results;
-                      console.log(networkResults);
-                      parseBenchmarkResults_netwotk(data.results);
-                      console.log('Network benchmark completed successfully');
-                  } else {
-                      console.error('Invalid or missing "results" property in the response:', data);
-                      console.log('Error occurred during memory benchmark');
-                  }
-    
-    
-                  //console.log('Disk benchmark completed successfully');
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  console.log('Error occurred during memory benchmark');
-              });
-      });
+    document.getElementById("run-btn2").style.display = "none";
+    document.getElementById('loadingIcon2').style.display = 'block';
+    document.getElementById('errorMessage2').style.display = 'none';
+    document.getElementById('successMessage2').style.display = 'none';
+
+    fetch("/runnetworkbenchmark")
+        .then(response => response.json())
+        .then(data => {
+            console.log('Network Benchmark initiated', data);
+            const taskId = data.taskId;
+            pollTaskStatus_network(taskId);
+        })
+        .catch(error => {
+            console.error('Error starting network benchmark:', error);
+            // Handle error
+        });
+}
+
+function pollTaskStatus_network(taskId) {
+    const checkStatus = () => {
+        fetch(`/checkTaskStatus/${taskId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Checking task status', data);
+                if (data.status === 'completed') {
+                     // Hide loading icon
+            document.getElementById('loadingIcon2').style.display = 'none';
+            // Show success message and parse the data
+            document.getElementById('successMessage2').style.display = 'block';
+                    console.log('Network Benchmark completed', data.results);
+                    // Handle completed task and results here
+                    parseBenchmarkResults_netwotk(data.results);
+
+                } else if (data.status === 'error') {
+                    console.error('Memory Benchmark error', data.message);
+                    // Handle error
+                } else {
+                    setTimeout(checkStatus, 5000); // Poll every 5 seconds
+                }
+            })
+            .catch(error => {
+                console.error('Error checking task status:', error);
+                // Handle error
+            });
+    };
+
+    checkStatus();
+}
     
     
     //----------------Network result parsing function----------------------//
@@ -736,55 +743,56 @@ document.getElementById('network_button').addEventListener('click', function() {
     }
 
     //----------------cpu button clicking function----------------------//
-// Your existing code here
-  document.getElementById('cpu_button').addEventListener('click', function() {
-    // Display loading icon
+    function runcpubenchmark() {
+        // Display loading icon
+        document.getElementById("run-btn3").style.display = "none";
+        document.getElementById('loadingIcon3').style.display = 'block';
+        document.getElementById('errorMessage3').style.display = 'none';
+        document.getElementById('successMessage3').style.display = 'none';
     
-         document.getElementById("run-btn3").style.display = "none";
-          document.getElementById('loadingIcon3').style.display = 'block';
-          document.getElementById('errorMessage3').style.display = 'none';
-          document.getElementById('successMessage3').style.display = 'none';
+        fetch("/runcpubenchmark")
+            .then(response => response.json())
+            .then(data => {
+                console.log('CPU Benchmark initiated', data);
+                const taskId = data.taskId;
+                pollTaskStatus_cpu(taskId);
+            })
+            .catch(error => {
+                console.error('Error starting cpu benchmark:', error);
+                // Handle error
+            });
+    }
     
-          // Assuming your server is running on localhost:3000
-          fetch("/runcpubenchmark")
-              .then(response => {
-                  // Hide loading icon
-                  document.getElementById('loadingIcon3').style.display = 'none';
-                  console.log('Step 1: Response received');
-                  if (!response.ok) {
-                      // Show error message
-                      document.getElementById('errorMessage3').style.display = 'block';
-                      throw new Error(`HTTP error! Status: ${response.status}`);
-                  }
+    function pollTaskStatus_cpu(taskId) {
+        const checkStatus = () => {
+            fetch(`/checkTaskStatus/${taskId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Checking task status', data);
+                    if (data.status === 'completed') {
+                         // Hide loading icon
+                document.getElementById('loadingIcon3').style.display = 'none';
+                // Show success message and parse the data
+                document.getElementById('successMessage3').style.display = 'block';
+                        console.log('CPU Benchmark completed', data.results);
+                        // Handle completed task and results here
+                        parseBenchmarkResults_cpu(data.results);
     
-                  // Show success message and parse the data
-                  document.getElementById('successMessage3').style.display = 'block';
-                  return response.json();
-              })
-              .then(data => {
-                console.log('Step 2: Data received from server', data);
+                    } else if (data.status === 'error') {
+                        console.error('CPU Benchmark error', data.message);
+                        // Handle error
+                    } else {
+                        setTimeout(checkStatus, 5000); // Poll every 5 seconds
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking task status:', error);
+                    // Handle error
+                });
+        };
     
-                  // Check if the "data" property is defined
-                  if (data && data.results) {
-                      // Call the parsing function
-                     
-                      cpuResults = data.results;
-                      console.log(cpuResults);
-                      parseBenchmarkResults_cpu(data.results);
-                      console.log('cpu benchmark completed successfully');
-                  } else {
-                      console.error('Invalid or missing "results" property in the response:', data);
-                      console.log('Error occurred during cpu benchmark');
-                  }
-    
-    
-                  //console.log('Disk benchmark completed successfully');
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  console.log('Error occurred during cpu benchmark');
-              });
-      });
+        checkStatus();
+    }
     
     
     //----------------CPU result parsing function----------------------//
@@ -849,56 +857,56 @@ document.getElementById('network_button').addEventListener('click', function() {
     }
     
     //----------------GPU button clicking function----------------------//
-// Your existing code here
-  document.getElementById('gpu_button').addEventListener('click', function() {
-    // Display loading icon
+    function rungpubenchmark() {
+        // Display loading icon
+        document.getElementById("run-btn4").style.display = "none";
+        document.getElementById('loadingIcon4').style.display = 'block';
+        document.getElementById('errorMessage4').style.display = 'none';
+        document.getElementById('successMessage4').style.display = 'none';
     
-         document.getElementById("run-btn4").style.display = "none";
-          document.getElementById('loadingIcon4').style.display = 'block';
-          document.getElementById('errorMessage4').style.display = 'none';
-          document.getElementById('successMessage4').style.display = 'none';
+        fetch("/rungpubenchmark")
+            .then(response => response.json())
+            .then(data => {
+                console.log('GPU Benchmark initiated', data);
+                const taskId = data.taskId;
+                pollTaskStatus_gpu(taskId);
+            })
+            .catch(error => {
+                console.error('Error starting gpu benchmark:', error);
+                // Handle error
+            });
+    }
     
-          // Assuming your server is running on localhost:3000
-          fetch("/rungpubenchmark")
-              .then(response => {
-                  // Hide loading icon
-                  document.getElementById('loadingIcon4').style.display = 'none';
-                  console.log('Step 1: Response received');
-                  if (!response.ok) {
-                      // Show error message
-                      document.getElementById('errorMessage4').style.display = 'block';
-                      throw new Error(`HTTP error! Status: ${response.status}`);
-                  }
+    function pollTaskStatus_gpu(taskId) {
+        const checkStatus = () => {
+            fetch(`/checkTaskStatus/${taskId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Checking task status', data);
+                    if (data.status === 'completed') {
+                         // Hide loading icon
+                document.getElementById('loadingIcon4').style.display = 'none';
+                // Show success message and parse the data
+                document.getElementById('successMessage4').style.display = 'block';
+                        console.log('GPU Benchmark completed', data.results);
+                        // Handle completed task and results here
+                        parseBenchmarkResults_gpu(data.results);
     
-                  // Show success message and parse the data
-                  document.getElementById('successMessage4').style.display = 'block';
-                  return response.json();
-              })
-              .then(data => {
-                console.log('Step 2: Data received from server', data);
+                    } else if (data.status === 'error') {
+                        console.error('GPU Benchmark error', data.message);
+                        // Handle error
+                    } else {
+                        setTimeout(checkStatus, 5000); // Poll every 5 seconds
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking task status:', error);
+                    // Handle error
+                });
+        };
     
-                  // Check if the "data" property is defined
-                  if (data && data.results) {
-                      // Call the parsing function
-                     
-                      gpuResults = data.results;
-                      console.log(gpuResults);
-                      parseBenchmarkResults_gpu(data.results);
-                      console.log('gpu benchmark completed successfully');
-                  } else {
-                      console.error('Invalid or missing "results" property in the response:', data);
-                      console.log('Error occurred during gpu benchmark');
-                  }
-    
-    
-                  //console.log('gpu benchmark completed successfully');
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  console.log('Error occurred during gpu benchmark');
-              });
-      });
-    
+        checkStatus();
+    }
     
     //----------------GPU result parsing function----------------------//
      // Assuming "data.results" is an array of objects with key-value pairs

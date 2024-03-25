@@ -104,14 +104,14 @@
     <button id="glow-on-hover" class="run_all_button" style="background-color: rgba(175, 171, 175, 0.253); margin-top: 30px;" onclick="callAPIs()">RUN ALL</button>
     
     
-    <div class="container mt-5" style="">
+    <div class="container mt-5" >
             
         <!-------------------------------------------------------------------------Disk panel -------------------------------------------------------------------------------------->
         <div class="card mt-3" id="card_style">
             <div class="card-header" id="collapseHeading2" style="background-color: rgba(102, 102, 102, 0.527); border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
             
             <h5 class="mb-0" >
-                <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover" onclick="rundiskbenchmark()">
+                <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="glow-on-hover" >
                     Disk
                 </button>
             </h5>
@@ -160,7 +160,7 @@
 
                 <!-- RUN button -->
             <div class='runbtn_container' id="run-btn">
-                    <a href='#'class='playBut' id= "disk_button">
+                    <a href='javascript:void(0);'class='playBut' id= "disk_button" onclick="rundiskbenchmark()">
                         
                         <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
                         <svg version="1.1"
@@ -322,7 +322,7 @@
 
                 <!-- RUN button -->
             <div class='runbtn_container' id="run-btn1">
-                    <a href='#'class='playBut' id= "memory_button">
+                    <a href='javascript:void(0);'class='playBut' id= "memory_button" onclick="runmemorybenchmark()">
                         
                         <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
                         <svg version="1.1"
@@ -496,7 +496,7 @@
 
                 <!-- RUN button -->
             <div class='runbtn_container' id="run-btn2">
-                    <a href='#'class='playBut' id= "network_button">
+                    <a href='javascript:void(0);'class='playBut' id= "network_button" onclick="runnetworkbenchmark()">
                         
                         <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
                         <svg version="1.1"
@@ -666,7 +666,7 @@
 
     <!-- RUN button -->
 <div class='runbtn_container' id="run-btn3">
-        <a href='#'class='playBut' id= "cpu_button">
+        <a href='javascript:void(0);'class='playBut' id= "cpu_button" onclick="runcpubenchmark()">
             
             <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
             <svg version="1.1"
@@ -837,7 +837,7 @@
 
     <!-- RUN button -->
 <div class='runbtn_container' id="run-btn4">
-        <a href='#'class='playBut' id= "gpu_button">
+        <a href='javascript:void(0);'class='playBut' id= "gpu_button" onclick="rungpubenchmark()">
             
             <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
             <svg version="1.1"
