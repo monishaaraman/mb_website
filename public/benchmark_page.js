@@ -395,59 +395,111 @@ function getRandomColor() {
      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------Memory button clicking function----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
   
  //----------------Disk button clicking function----------------------//
- function rundiskbenchmark() {
-    // Display loading icon
+//  function rundiskbenchmark() {
+//     // Display loading icon
+//     document.getElementById("run-btn").style.display = "none";
+//     document.getElementById('loadingIcon').style.display = 'block';
+//     document.getElementById('errorMessage').style.display = 'none';
+//     document.getElementById('successMessage').style.display = 'none';
+
+//     fetch("/rundiskbenchmark")
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('Disk Benchmark initiated', data);
+//             const taskId = data.taskId;
+//             pollTaskStatus_disk(taskId);
+//         })
+//         .catch(error => {
+//             console.error('Error starting disk benchmark:', error);
+//             // Handle error
+//         });
+// }
+
+// function pollTaskStatus_disk(taskId) {
+//     const checkStatus = () => {
+//         fetch(`/checkTaskStatus/${taskId}`)
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log('Checking task status', data);
+//                 if (data.status === 'completed') {
+//                      // Hide loading icon
+//             document.getElementById('loadingIcon').style.display = 'none';
+//             // Show success message and parse the data
+//             document.getElementById('successMessage').style.display = 'block';
+//                     console.log('Disk Benchmark completed', data.results);
+//                     // Handle completed task and results here
+//                     diskResults = data.results;
+//                     parseBenchmarkResults_disk(data.results);
+
+//                 } else if (data.status === 'error') {
+//                     console.error('Disk Benchmark error', data.message);
+//                     // Handle error
+//                 } else {
+//                     setTimeout(checkStatus, 5000); // Poll every 5 seconds
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error checking task status:', error);
+//                 // Handle error
+//             });
+//     };
+
+//     checkStatus();
+// }
+
+function rundiskbenchmark() {
+    // Display loading icon and other UI setup
+  
     document.getElementById("run-btn").style.display = "none";
     document.getElementById('loadingIcon').style.display = 'block';
     document.getElementById('errorMessage').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
 
-    fetch("/rundiskbenchmark")
-        .then(response => response.json())
-        .then(data => {
-            console.log('Disk Benchmark initiated', data);
-            const taskId = data.taskId;
-            pollTaskStatus_disk(taskId);
-        })
-        .catch(error => {
-            console.error('Error starting disk benchmark:', error);
-            // Handle error
-        });
+    // Return a Promise
+    return new Promise((resolve, reject) => {
+        fetch("/rundiskbenchmark")
+            .then(response => response.json())
+            .then(data => {
+                console.log('Disk Benchmark initiated', data);
+                pollTaskStatus_disk(data.taskId, resolve, reject);
+            })
+            .catch(error => {
+                console.error('Error starting disk benchmark:', error);
+                reject(error); // Reject the Promise if there's an error starting the benchmark
+            });
+    });
 }
 
-function pollTaskStatus_disk(taskId) {
+function pollTaskStatus_disk(taskId, resolve, reject) {
     const checkStatus = () => {
         fetch(`/checkTaskStatus/${taskId}`)
             .then(response => response.json())
             .then(data => {
-                console.log('Checking task status', data);
                 if (data.status === 'completed') {
-                     // Hide loading icon
-            document.getElementById('loadingIcon').style.display = 'none';
-            // Show success message and parse the data
-            document.getElementById('successMessage').style.display = 'block';
                     console.log('Disk Benchmark completed', data.results);
-                    // Handle completed task and results here
-                    diskResults = data.results;
-                    parseBenchmarkResults_disk(data.results);
+                    // Hide loading icon, show success message, etc.
+                    
+            document.getElementById('loadingIcon').style.display = 'none';
 
+            document.getElementById('successMessage').style.display = 'block';
+            diskResults = data.results;
+             parseBenchmarkResults_disk(data.results);
+                    resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
                     console.error('Disk Benchmark error', data.message);
-                    // Handle error
+                    reject(data.message); // Reject the Promise
                 } else {
                     setTimeout(checkStatus, 5000); // Poll every 5 seconds
                 }
             })
             .catch(error => {
                 console.error('Error checking task status:', error);
-                // Handle error
+                reject(error); // Reject the Promise if there's an error during polling
             });
     };
-
     checkStatus();
 }
 
-  
 
 //----------------Disk result parsing function----------------------//
    // Assuming "data.results" is an array of objects with key-value pairs
@@ -523,51 +575,50 @@ function runmemorybenchmark() {
     document.getElementById('errorMessage1').style.display = 'none';
     document.getElementById('successMessage1').style.display = 'none';
 
-    fetch("/runmemorybenchmark")
-        .then(response => response.json())
-        .then(data => {
-            console.log('Memory Benchmark initiated', data);
-            const taskId = data.taskId;
-            pollTaskStatus_memory(taskId);
-        })
-        .catch(error => {
-            console.error('Error starting memory benchmark:', error);
-            // Handle error
-        });
+    // Return a Promise
+    return new Promise((resolve, reject) => {
+        fetch("/runmemorybenchmark")
+            .then(response => response.json())
+            .then(data => {
+                console.log('Memory Benchmark initiated', data);
+                pollTaskStatus_memory(data.taskId, resolve, reject);
+            })
+            .catch(error => {
+                console.error('Error starting memory benchmark:', error);
+                reject(error); // Reject the Promise if there's an error starting the benchmark
+            });
+    });
 }
 
-function pollTaskStatus_memory(taskId) {
+function pollTaskStatus_memory(taskId, resolve, reject) {
     const checkStatus = () => {
         fetch(`/checkTaskStatus/${taskId}`)
             .then(response => response.json())
             .then(data => {
-                console.log('Checking task status', data);
                 if (data.status === 'completed') {
-                     // Hide loading icon
-            document.getElementById('loadingIcon1').style.display = 'none';
-            // Show success message and parse the data
-            document.getElementById('successMessage1').style.display = 'block';
                     console.log('Memory Benchmark completed', data.results);
-                    // Handle completed task and results here
-                    memoryResults = data.results;
-                    parseBenchmarkResults_memory(data.results);
+                    // Hide loading icon, show success message, etc.
+                    
+            document.getElementById('loadingIcon1').style.display = 'none';
 
+            document.getElementById('successMessage1').style.display = 'block';
+            diskResults = data.results;
+             parseBenchmarkResults_memory(data.results);
+                    resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
                     console.error('Memory Benchmark error', data.message);
-                    // Handle error
+                    reject(data.message); // Reject the Promise
                 } else {
                     setTimeout(checkStatus, 5000); // Poll every 5 seconds
                 }
             })
             .catch(error => {
                 console.error('Error checking task status:', error);
-                // Handle error
+                reject(error); // Reject the Promise if there's an error during polling
             });
     };
-
     checkStatus();
 }
-
 //----------------Memory result parsing function----------------------//
  // Assuming "data.results" is an array of objects with key-value pairs
  function parseBenchmarkResults_memory(results) {
@@ -638,48 +689,48 @@ function runnetworkbenchmark() {
     document.getElementById('errorMessage2').style.display = 'none';
     document.getElementById('successMessage2').style.display = 'none';
 
+   // Return a Promise
+   return new Promise((resolve, reject) => {
     fetch("/runnetworkbenchmark")
         .then(response => response.json())
         .then(data => {
             console.log('Network Benchmark initiated', data);
-            const taskId = data.taskId;
-            pollTaskStatus_network(taskId);
+            pollTaskStatus_network(data.taskId, resolve, reject);
         })
         .catch(error => {
             console.error('Error starting network benchmark:', error);
-            // Handle error
+            reject(error); // Reject the Promise if there's an error starting the benchmark
         });
+});
 }
 
-function pollTaskStatus_network(taskId) {
+function pollTaskStatus_network(taskId, resolve, reject) {
     const checkStatus = () => {
         fetch(`/checkTaskStatus/${taskId}`)
             .then(response => response.json())
             .then(data => {
-                console.log('Checking task status', data);
                 if (data.status === 'completed') {
-                     // Hide loading icon
-            document.getElementById('loadingIcon2').style.display = 'none';
-            // Show success message and parse the data
-            document.getElementById('successMessage2').style.display = 'block';
                     console.log('Network Benchmark completed', data.results);
-                    // Handle completed task and results here
-                    networkResults = data.results;
-                    parseBenchmarkResults_netwotk(data.results);
+                    // Hide loading icon, show success message, etc.
+                    
+            document.getElementById('loadingIcon2').style.display = 'none';
 
+            document.getElementById('successMessage2').style.display = 'block';
+            diskResults = data.results;
+             parseBenchmarkResults_netwotk(data.results);
+                    resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
-                    console.error('Memory Benchmark error', data.message);
-                    // Handle error
+                    console.error('Network Benchmark error', data.message);
+                    reject(data.message); // Reject the Promise
                 } else {
                     setTimeout(checkStatus, 5000); // Poll every 5 seconds
                 }
             })
             .catch(error => {
                 console.error('Error checking task status:', error);
-                // Handle error
+                reject(error); // Reject the Promise if there's an error during polling
             });
     };
-
     checkStatus();
 }
     
@@ -753,48 +804,48 @@ function pollTaskStatus_network(taskId) {
         document.getElementById('errorMessage3').style.display = 'none';
         document.getElementById('successMessage3').style.display = 'none';
     
+        // Return a Promise
+    return new Promise((resolve, reject) => {
         fetch("/runcpubenchmark")
             .then(response => response.json())
             .then(data => {
                 console.log('CPU Benchmark initiated', data);
-                const taskId = data.taskId;
-                pollTaskStatus_cpu(taskId);
+                pollTaskStatus_cpu(data.taskId, resolve, reject);
             })
             .catch(error => {
                 console.error('Error starting cpu benchmark:', error);
-                // Handle error
+                reject(error); // Reject the Promise if there's an error starting the benchmark
             });
+    });
     }
     
-    function pollTaskStatus_cpu(taskId) {
+    function pollTaskStatus_cpu(taskId, resolve, reject) {
         const checkStatus = () => {
             fetch(`/checkTaskStatus/${taskId}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Checking task status', data);
                     if (data.status === 'completed') {
-                         // Hide loading icon
-                document.getElementById('loadingIcon3').style.display = 'none';
-                // Show success message and parse the data
-                document.getElementById('successMessage3').style.display = 'block';
                         console.log('CPU Benchmark completed', data.results);
-                        // Handle completed task and results here
-                        cpuResults = data.results;
-                        parseBenchmarkResults_cpu(data.results);
+                        // Hide loading icon, show success message, etc.
+                        
+                document.getElementById('loadingIcon3').style.display = 'none';
     
+                document.getElementById('successMessage3').style.display = 'block';
+                diskResults = data.results;
+                 parseBenchmarkResults_cpu(data.results);
+                        resolve(data.results); // Resolve the Promise
                     } else if (data.status === 'error') {
                         console.error('CPU Benchmark error', data.message);
-                        // Handle error
+                        reject(data.message); // Reject the Promise
                     } else {
                         setTimeout(checkStatus, 5000); // Poll every 5 seconds
                     }
                 })
                 .catch(error => {
                     console.error('Error checking task status:', error);
-                    // Handle error
+                    reject(error); // Reject the Promise if there's an error during polling
                 });
         };
-    
         checkStatus();
     }
     
@@ -868,48 +919,48 @@ function pollTaskStatus_network(taskId) {
         document.getElementById('errorMessage4').style.display = 'none';
         document.getElementById('successMessage4').style.display = 'none';
     
+       // Return a Promise
+    return new Promise((resolve, reject) => {
         fetch("/rungpubenchmark")
             .then(response => response.json())
             .then(data => {
                 console.log('GPU Benchmark initiated', data);
-                const taskId = data.taskId;
-                pollTaskStatus_gpu(taskId);
+                pollTaskStatus_gpu(data.taskId, resolve, reject);
             })
             .catch(error => {
                 console.error('Error starting gpu benchmark:', error);
-                // Handle error
+                reject(error); // Reject the Promise if there's an error starting the benchmark
             });
+    });
     }
     
-    function pollTaskStatus_gpu(taskId) {
+    function pollTaskStatus_gpu(taskId, resolve, reject) {
         const checkStatus = () => {
             fetch(`/checkTaskStatus/${taskId}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Checking task status', data);
                     if (data.status === 'completed') {
-                         // Hide loading icon
-                document.getElementById('loadingIcon4').style.display = 'none';
-                // Show success message and parse the data
-                document.getElementById('successMessage4').style.display = 'block';
                         console.log('GPU Benchmark completed', data.results);
-                        // Handle completed task and results here
-                        gpuResults = data.results;
-                        parseBenchmarkResults_gpu(data.results);
+                        // Hide loading icon, show success message, etc.
+                        
+                document.getElementById('loadingIcon4').style.display = 'none';
     
+                document.getElementById('successMessage4').style.display = 'block';
+                diskResults = data.results;
+                 parseBenchmarkResults_gpu(data.results);
+                        resolve(data.results); // Resolve the Promise
                     } else if (data.status === 'error') {
                         console.error('GPU Benchmark error', data.message);
-                        // Handle error
+                        reject(data.message); // Reject the Promise
                     } else {
                         setTimeout(checkStatus, 5000); // Poll every 5 seconds
                     }
                 })
                 .catch(error => {
                     console.error('Error checking task status:', error);
-                    // Handle error
+                    reject(error); // Reject the Promise if there's an error during polling
                 });
         };
-    
         checkStatus();
     }
     
@@ -1543,39 +1594,39 @@ function generateBarChart_DISK(selectedData) {
         
 //     }
 
-function runAllAPIs(){
+async function runAllAPIs(){
     console.log('triggered disk');
 
     document.getElementById("collapseContent2").classList.add('show');
-    rundiskbenchmark();
+    await rundiskbenchmark();
 
     setTimeout(function() {
         console.log('triggered memory after 2 seconds');
       }, 2000);
 
     document.getElementById("collapseContent3").classList.add('show');
-    runmemorybenchmark();
+    await runmemorybenchmark();
 
     setTimeout(function() {
         console.log('triggered network after 2 seconds');
       }, 2000);
 
     document.getElementById("collapseContent4").classList.add('show');
-    runnetworkbenchmark();
+    await runnetworkbenchmark();
 
     setTimeout(function() {
         console.log('triggered cpu after 2 seconds');
       }, 2000);
 
     document.getElementById("collapseContent5").classList.add('show');
-    runcpubenchmark();
+    await runcpubenchmark();
 
     setTimeout(function() {
         console.log('triggered gpu after 2 seconds');
       }, 2000);
 
     document.getElementById("collapseContent6").classList.add('show');
-    rungpubenchmark();
+    await rungpubenchmark();
 
     setTimeout(function() {
         console.log('run all ended');
