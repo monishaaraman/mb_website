@@ -602,7 +602,7 @@ function pollTaskStatus_memory(taskId, resolve, reject) {
             document.getElementById('loadingIcon1').style.display = 'none';
 
             document.getElementById('successMessage1').style.display = 'block';
-            diskResults = data.results;
+            memoryResults = data.results;
              parseBenchmarkResults_memory(data.results);
                     resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
@@ -716,7 +716,7 @@ function pollTaskStatus_network(taskId, resolve, reject) {
             document.getElementById('loadingIcon2').style.display = 'none';
 
             document.getElementById('successMessage2').style.display = 'block';
-            diskResults = data.results;
+            networkResults = data.results;
              parseBenchmarkResults_netwotk(data.results);
                     resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
@@ -831,7 +831,7 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 document.getElementById('loadingIcon3').style.display = 'none';
     
                 document.getElementById('successMessage3').style.display = 'block';
-                diskResults = data.results;
+                cpuResults = data.results;
                  parseBenchmarkResults_cpu(data.results);
                         resolve(data.results); // Resolve the Promise
                     } else if (data.status === 'error') {
@@ -946,7 +946,7 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 document.getElementById('loadingIcon4').style.display = 'none';
     
                 document.getElementById('successMessage4').style.display = 'block';
-                diskResults = data.results;
+                gpuResults = data.results;
                  parseBenchmarkResults_gpu(data.results);
                         resolve(data.results); // Resolve the Promise
                     } else if (data.status === 'error') {
