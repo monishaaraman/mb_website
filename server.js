@@ -257,26 +257,17 @@ columns = [
              } else  if (benchmarkName === 'Benchmark_RAMSMP_FLOATmem') {
                  
              
-<<<<<<< HEAD
                  query = 'INSERT INTO memory.ramsmp_float (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_float_memory_mibs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
-=======
-                 query = 'INSERT INTO memory.ramsmp_float (sys_name, benchmark, time_ms, cpu_ms, iterations, average_float_memory_mibs) VALUES ($1, $2, $3, $4, $5, $6)';
->>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                  columns = [
                      updatedResult['System Model Name'],
                      updatedResult['Benchmark'],
                      parseFloat(updatedResult['Time_ms']), // Adjusted key
                      parseFloat(updatedResult['CPU_ms']), // Adjusted key
                      parseInt(updatedResult['Iterations']),
-<<<<<<< HEAD
                      parseFloat(updatedResult['Average Float Memory (in MiB/s']), // Adjusted key with extra space
                      formattedDate,
                      formattedTime
                     ];
-=======
-                     parseFloat(updatedResult['Average Float Memory (in MiB/s)']), // Adjusted key with extra space
-                 ];
->>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
              
              
  
@@ -598,35 +589,23 @@ columns = [
             } else  if (benchmarkName === 'BM_FurMarkBenchmark') {
                 
             
-<<<<<<< HEAD
                 query = 'INSERT INTO gpu.furmark  (sys_name, benchmark, time_ms, cpu_ms, iterations,   average_score_points, date, time ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
-=======
-                query = 'INSERT INTO gpu.furmark  (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points ) VALUES ($1, $2, $3, $4, $5, $6)';
->>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
                     parseFloat(updatedResult['Time_ms']), // Adjusted key
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
-<<<<<<< HEAD
                     parseFloat(updatedResult['Average Furmark Score (Points))']), // Adjusted key with extra space
                     formattedDate,
                     formattedTime
-=======
-                    parseFloat(updatedResult['Average Furmark Score (Points)']), // Adjusted key with extra space
->>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                 ];
             
             
 
             } else if (benchmarkName === 'BM_TessMarkBenchmark') {
             
-<<<<<<< HEAD
                 query = 'INSERT INTO gpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
-=======
-                query = 'INSERT INTO gpu.tessmark (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points) VALUES ($1, $2, $3, $4, $5, $6)';
->>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
