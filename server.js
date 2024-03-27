@@ -8,6 +8,25 @@ const { diffLines } = require("diff");
 const app = express();
 const port = 8000;
 
+// Create a new Date object
+let formattedDate = 'Nan-Nan-Nan';
+let formattedTime = 'Nan:Nan:Nan';
+function getDateTime(){
+    const currentDate = new Date();
+
+    // Get the current date and time components
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Months are zero-based (0 to 11)
+    const day = currentDate.getDate();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const seconds = currentDate.getSeconds();
+    
+    // Format the date and time components as desired
+     formattedDate = `${year}-${month}-${day}`;
+     formattedTime = `${hours}:${minutes}:${seconds}`;
+}
+
 
 //-------------------  -----------------//
 
@@ -110,8 +129,8 @@ function insertJsonData_disk(jsonData) {
                // console.log(`Average Read momo (Fio-Random): ${averageRead}, Average Write momo (Fio-Random): ${averageWrite}`);
                
                
-
-query = 'INSERT INTO disk.fio_random (sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+               getDateTime();
+query = 'INSERT INTO disk.fio_random (sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
 columns = [
     updatedResult['System Model Name'],
     updatedResult['Benchmark'],
@@ -119,14 +138,17 @@ columns = [
     parseFloat(updatedResult['CPU_ms']), // Adjusted key
     parseInt(updatedResult['Iterations']),
     parseFloat(updatedResult['Average Read  (in MiB/s)']), // Adjusted key with extra space
-    parseFloat(updatedResult['Average Write  (in MiB/s)']) // Adjusted key with extra space
+    parseFloat(updatedResult['Average Write  (in MiB/s)']), // Adjusted key with extra space
+    formattedDate,
+    formattedTime
+   
 ];
 
                
             } else  if (benchmarkName === 'Fio-sequential') {
                 
             
-                query = 'INSERT INTO disk.fio_sequential (sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+                query = 'INSERT INTO disk.fio_sequential (sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -134,21 +156,25 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Read  (in MiB/s)']), // Adjusted key with extra space
-                    parseFloat(updatedResult['Average Write  (in MiB/s)']) // Adjusted key with extra space
+                    parseFloat(updatedResult['Average Write  (in MiB/s)']), // Adjusted key with extra space
+                    formattedDate,
+                    formattedTime
                 ];
             
             
 
             } else if (benchmarkName === 'BM_Compilebench') {
             
-                query = 'INSERT INTO disk.compilebench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_compile_mbs) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO disk.compilebench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_compile_mbs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
                     parseFloat(updatedResult['Time_ms']), // Adjusted key
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
-                    parseFloat(updatedResult['Average Compile (in MB/s)']) // Key seems to match, adjust if necessary
+                    parseFloat(updatedResult['Average Compile (in MB/s)']), // Key seems to match, adjust if necessary
+                    formattedDate,
+                    formattedTime
                 ];
             
             
@@ -215,7 +241,7 @@ columns = [
                 
                 
  
- query = 'INSERT INTO memory.ramsmp_integer (sys_name, benchmark, time_ms, cpu_ms, iterations, average_integer_memory_mibs) VALUES ($1, $2, $3, $4, $5, $6)';
+ query = 'INSERT INTO memory.ramsmp_integer (sys_name, benchmark, time_ms, cpu_ms, iterations, average_integer_memory_mibs,date,time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
  columns = [
      updatedResult['System Model Name'],
      updatedResult['Benchmark'],
@@ -223,13 +249,15 @@ columns = [
      parseFloat(updatedResult['CPU_ms']), // Adjusted key
      parseInt(updatedResult['Iterations']),
      parseFloat(updatedResult['Average Integer Memory (in MiB/s)']), // Adjusted key with extra space
- ];
+     formattedDate,
+     formattedTime
+    ];
  
                 
              } else  if (benchmarkName === 'Benchmark_RAMSMP_FLOATmem') {
                  
              
-                 query = 'INSERT INTO memory.ramsmp_float (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_float_memory_mibs) VALUES ($1, $2, $3, $4, $5, $6)';
+                 query = 'INSERT INTO memory.ramsmp_float (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_float_memory_mibs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                  columns = [
                      updatedResult['System Model Name'],
                      updatedResult['Benchmark'],
@@ -237,21 +265,25 @@ columns = [
                      parseFloat(updatedResult['CPU_ms']), // Adjusted key
                      parseInt(updatedResult['Iterations']),
                      parseFloat(updatedResult['Average Float Memory (in MiB/s']), // Adjusted key with extra space
-                 ];
+                     formattedDate,
+                     formattedTime
+                    ];
              
              
  
              } else if (benchmarkName === 'BM_CacheBench') {
              
-                 query = 'INSERT INTO memory.cachebench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_cache_mibs) VALUES ($1, $2, $3, $4, $5, $6)';
+                 query = 'INSERT INTO memory.cachebench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_cache_mibs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                  columns = [
                      updatedResult['System Model Name'],
                      updatedResult['Benchmark'],
                      parseFloat(updatedResult['Time_ms']), // Adjusted key
                      parseFloat(updatedResult['CPU_ms']), // Adjusted key
                      parseInt(updatedResult['Iterations']),
-                     parseFloat(updatedResult['Average Cache (in MiB/s)']) // Key seems to match, adjust if necessary
-                 ];
+                     parseFloat(updatedResult['Average Cache (in MiB/s)']), // Key seems to match, adjust if necessary
+                     formattedDate,
+                     formattedTime
+                    ];
              
              
              } else {
@@ -317,7 +349,7 @@ columns = [
                
                
 
-query = 'INSERT INTO network.ethr (sys_name, benchmark, time_ms, cpu_ms, iterations, average_bandwidth_bits_secs) VALUES ($1, $2, $3, $4, $5, $6)';
+query = 'INSERT INTO network.ethr (sys_name, benchmark, time_ms, cpu_ms, iterations, average_bandwidth_bits_secs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
 columns = [
     updatedResult['System Model Name'],
     updatedResult['Benchmark'],
@@ -325,13 +357,15 @@ columns = [
     parseFloat(updatedResult['CPU_ms']), // Adjusted key
     parseInt(updatedResult['Iterations']),
     parseFloat(updatedResult['Average Bandwidth (bits/sec)']), // Adjusted key with extra space
+    formattedDate,
+    formattedTime
 ];
 
                
             } else  if (benchmarkName === 'BM_SockperfLatencyUnderLoad') {
                 
             
-                query = 'INSERT INTO network.sockperf  (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_latency_usec) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO network.sockperf  (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_latency_usec, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -339,13 +373,15 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Latency (in usec)']), // Adjusted key with extra space
+                    formattedDate,
+                    formattedTime
                 ];
             
             
 
             } else if (benchmarkName === 'iperf') {
             
-                query = 'INSERT INTO network.iperf (sys_name, benchmark, time_ms, cpu_ms, iterations, average_receiver_bitrate_mbits_sec, average_sender_bitrate_mbits_sec) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+                query = 'INSERT INTO network.iperf (sys_name, benchmark, time_ms, cpu_ms, iterations, average_receiver_bitrate_mbits_sec, average_sender_bitrate_mbits_sec, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -353,7 +389,9 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Receiver Bitrate (Mbits/sec)']), // Key seems to match, adjust if necessary
-                    parseFloat(updatedResult['Average Sender Bitrate (Mbits/sec)']) // Key seems to match, adjust if necessary
+                    parseFloat(updatedResult['Average Sender Bitrate (Mbits/sec)']), // Key seems to match, adjust if necessary
+                    formattedDate,
+                    formattedTime
                 ];
             
             
@@ -426,7 +464,7 @@ columns = [
                
                
 
-query = 'INSERT INTO cpu.c_ray (sys_name, benchmark, time_ms, cpu_ms, iterations, average_rendering_time_seconds) VALUES ($1, $2, $3, $4, $5, $6)';
+query = 'INSERT INTO cpu.c_ray (sys_name, benchmark, time_ms, cpu_ms, iterations, average_rendering_time_seconds, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
 columns = [
     updatedResult['System Model Name'],
     updatedResult['Benchmark'],
@@ -434,13 +472,15 @@ columns = [
     parseFloat(updatedResult['CPU_ms']), // Adjusted key
     parseInt(updatedResult['Iterations']),
     parseFloat(updatedResult['Average Rendering time (seconds)']), // Adjusted key with extra space
+    formattedDate,
+    formattedTime
 ];
 
                
             } else  if (benchmarkName === 'BM_Blake2_Benchmark') {
                 
             
-                query = 'INSERT INTO cpu.blake_2  (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_per_byte ) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO cpu.blake_2  (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_per_byte, date, time ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -448,13 +488,15 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Per Byte (Cycles Per Byte)']), // Adjusted key with extra space
+                    formattedDate,
+                    formattedTime
                 ];
             
             
 
             } else if (benchmarkName === 'BM_SysbenchCPUBenchmark') {
             
-                query = 'INSERT INTO cpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_events_seconds) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO cpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_events_seconds, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -462,6 +504,8 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Events/s (seconds)']), // Key seems to match, adjust if necessary
+                    formattedDate,
+                    formattedTime
                 ];
             
             
@@ -529,7 +573,7 @@ columns = [
                
                
 
-query = 'INSERT INTO gpu.unigine_heaven (sys_name, benchmark, time_ms, cpu_ms, iterations, average_fps) VALUES ($1, $2, $3, $4, $5, $6)';
+query = 'INSERT INTO gpu.unigine_heaven (sys_name, benchmark, time_ms, cpu_ms, iterations, average_fps, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
 columns = [
     updatedResult['System Model Name'],
     updatedResult['Benchmark'],
@@ -537,13 +581,15 @@ columns = [
     parseFloat(updatedResult['CPU_ms']), // Adjusted key
     parseInt(updatedResult['Iterations']),
     parseFloat(updatedResult['Average FPS (Frames Per Second)']), // Adjusted key with extra space
+    formattedDate,
+    formattedTime
 ];
 
                
             } else  if (benchmarkName === 'BM_FurMarkBenchmark') {
                 
             
-                query = 'INSERT INTO gpu.furmark  (sys_name, benchmark, time_ms, cpu_ms, iterations,   average_score_points ) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO gpu.furmark  (sys_name, benchmark, time_ms, cpu_ms, iterations,   average_score_points, date, time ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -551,13 +597,15 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Furmark Score (Points))']), // Adjusted key with extra space
+                    formattedDate,
+                    formattedTime
                 ];
             
             
 
             } else if (benchmarkName === 'BM_TessMarkBenchmark') {
             
-                query = 'INSERT INTO gpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points) VALUES ($1, $2, $3, $4, $5, $6)';
+                query = 'INSERT INTO gpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -565,6 +613,8 @@ columns = [
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
                     parseFloat(updatedResult['Average Tessmark Score (Points)']), // Key seems to match, adjust if necessary
+                    formattedDate,
+                    formattedTime
                 ];
             
             
@@ -988,7 +1038,7 @@ app.get('/checkTaskStatus/:taskId', (req, res) => {
 
   // Add a new endpoint to fetch data for comparison
   app.get('/getComparisonData-disk-compileBench', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_compile_mbs FROM disk.compilebench';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_compile_mbs, date, time FROM disk.compilebench';
 
     pool.query(query, (err, result) => {
         if (err) {
