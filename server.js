@@ -1087,7 +1087,7 @@ app.get('/getComparisonData-disk-fio_sequential', (req, res) => {
 // Add a new endpoint to fetch MEMORY data for comparison
 
 app.get('/getComparisonData-memory-cachebench', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_cache_mibs FROM memory.cachebench';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_cache_mibs, date, time FROM memory.cachebench';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1102,7 +1102,7 @@ app.get('/getComparisonData-memory-cachebench', (req, res) => {
 });
 
 app.get('/getComparisonData-memory-ramsmp_float', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_float_memory_mibs FROM memory.ramsmp_float';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_float_memory_mibs, date, time FROM memory.ramsmp_float';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1117,7 +1117,7 @@ app.get('/getComparisonData-memory-ramsmp_float', (req, res) => {
 });
 
 app.get('/getComparisonData-memory-ramsmp_integer', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_integer_memory_mibs FROM memory.ramsmp_integer';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_integer_memory_mibs, date, time  FROM memory.ramsmp_integer';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1135,7 +1135,7 @@ app.get('/getComparisonData-memory-ramsmp_integer', (req, res) => {
 // Add a new endpoint to fetch NETWORK data for comparison
 
 app.get('/getComparisonData-network-ethr', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_bandwidth_bits_secs FROM network.ethr';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_bandwidth_bits_secs, date, time  FROM network.ethr';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1150,7 +1150,7 @@ app.get('/getComparisonData-network-ethr', (req, res) => {
 });
 
 app.get('/getComparisonData-network-sockperf', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_latency_usec FROM network.sockperf';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_latency_usec, date, time  FROM network.sockperf';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1165,7 +1165,7 @@ app.get('/getComparisonData-network-sockperf', (req, res) => {
 });
 
 app.get('/getComparisonData-network-iperf', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_receiver_bitrate_mbits_sec, average_sender_bitrate_mbits_sec FROM network.iperf';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_receiver_bitrate_mbits_sec, average_sender_bitrate_mbits_sec, date, time  FROM network.iperf';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1182,7 +1182,7 @@ app.get('/getComparisonData-network-iperf', (req, res) => {
 // Add a new endpoint to fetch CPU data for comparison
 
 app.get('/getComparisonData-cpu-c_ray', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_rendering_time_seconds FROM cpu.c_ray';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_rendering_time_seconds, date, time  FROM cpu.c_ray';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1197,7 +1197,7 @@ app.get('/getComparisonData-cpu-c_ray', (req, res) => {
 });
 
 app.get('/getComparisonData-cpu-blake', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_per_byte FROM cpu.blake';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_per_byte, date, time  FROM cpu.blake';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1212,7 +1212,7 @@ app.get('/getComparisonData-cpu-blake', (req, res) => {
 });
 
 app.get('/getComparisonData-cpu-sysbench', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_events_seconds FROM cpu.sysbench';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_events_seconds, date, time  FROM cpu.sysbench';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1229,7 +1229,7 @@ app.get('/getComparisonData-cpu-sysbench', (req, res) => {
 // Add a new endpoint to fetch GPU data for comparison
 
 app.get('/getComparisonData-gpu-unigine_heaven', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_fps FROM gpu.unigine_heaven';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_fps, date, time  FROM gpu.unigine_heaven';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1245,7 +1245,7 @@ app.get('/getComparisonData-gpu-unigine_heaven', (req, res) => {
 
 
 app.get('/getComparisonData-gpu-gputest_furmark', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points FROM gpu.gputest_furmark';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points, date, time  FROM gpu.gputest_furmark';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1260,7 +1260,7 @@ app.get('/getComparisonData-gpu-gputest_furmark', (req, res) => {
 });
 
 app.get('/getComparisonData-gpu-gputest_tessmark', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points FROM gpu.gputest_tessmark';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points, date, time  FROM gpu.gputest_tessmark';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1280,7 +1280,7 @@ app.get('/getComparisonData-gpu-gputest_tessmark', (req, res) => {
 app.post('/getChartData', (req, res) => {
     const selectedSerialNo = req.body.selectedSerialNo; // Assuming you send the selected serial number in the request body
     console.log("selectedSerialNo= "+selectedSerialNo);
-    const query = 'SELECT averageread_mib_s, averagewrite_mib_s FROM disk.disk_table WHERE id= $1';
+    const query = 'SELECT averageread_mib_s, averagewrite_mib_s, date, time  FROM disk.disk_table WHERE id= $1';
 
     pool.query(query, [selectedSerialNo], (err, result) => {
         if (err) {
