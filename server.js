@@ -257,17 +257,26 @@ columns = [
              } else  if (benchmarkName === 'Benchmark_RAMSMP_FLOATmem') {
                  
              
+<<<<<<< HEAD
                  query = 'INSERT INTO memory.ramsmp_float (sys_name, benchmark, time_ms, cpu_ms, iterations,  average_float_memory_mibs, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+=======
+                 query = 'INSERT INTO memory.ramsmp_float (sys_name, benchmark, time_ms, cpu_ms, iterations, average_float_memory_mibs) VALUES ($1, $2, $3, $4, $5, $6)';
+>>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                  columns = [
                      updatedResult['System Model Name'],
                      updatedResult['Benchmark'],
                      parseFloat(updatedResult['Time_ms']), // Adjusted key
                      parseFloat(updatedResult['CPU_ms']), // Adjusted key
                      parseInt(updatedResult['Iterations']),
+<<<<<<< HEAD
                      parseFloat(updatedResult['Average Float Memory (in MiB/s']), // Adjusted key with extra space
                      formattedDate,
                      formattedTime
                     ];
+=======
+                     parseFloat(updatedResult['Average Float Memory (in MiB/s)']), // Adjusted key with extra space
+                 ];
+>>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
              
              
  
@@ -589,23 +598,35 @@ columns = [
             } else  if (benchmarkName === 'BM_FurMarkBenchmark') {
                 
             
+<<<<<<< HEAD
                 query = 'INSERT INTO gpu.furmark  (sys_name, benchmark, time_ms, cpu_ms, iterations,   average_score_points, date, time ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+=======
+                query = 'INSERT INTO gpu.furmark  (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points ) VALUES ($1, $2, $3, $4, $5, $6)';
+>>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
                     parseFloat(updatedResult['Time_ms']), // Adjusted key
                     parseFloat(updatedResult['CPU_ms']), // Adjusted key
                     parseInt(updatedResult['Iterations']),
+<<<<<<< HEAD
                     parseFloat(updatedResult['Average Furmark Score (Points))']), // Adjusted key with extra space
                     formattedDate,
                     formattedTime
+=======
+                    parseFloat(updatedResult['Average Furmark Score (Points)']), // Adjusted key with extra space
+>>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                 ];
             
             
 
             } else if (benchmarkName === 'BM_TessMarkBenchmark') {
             
+<<<<<<< HEAD
                 query = 'INSERT INTO gpu.sysbench (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points, date, time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+=======
+                query = 'INSERT INTO gpu.tessmark (sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points) VALUES ($1, $2, $3, $4, $5, $6)';
+>>>>>>> 8d74ec3b32253c68d0c5b59d6932dac3ca48007a
                 columns = [
                     updatedResult['System Model Name'],
                     updatedResult['Benchmark'],
@@ -1054,7 +1075,7 @@ app.get('/checkTaskStatus/:taskId', (req, res) => {
 
  // Add a new endpoint to fetch data for comparison
  app.get('/getComparisonData-disk-fio_random', (req, res) => {
-    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_read_mibs, average_write_mibs FROM disk.fio_random';
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_write_mibs FROM disk.fio_random';
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -1068,11 +1089,212 @@ app.get('/checkTaskStatus/:taskId', (req, res) => {
     });
 });
 
+// Add a new endpoint to fetch disk data for comparison
+app.get('/getComparisonData-disk-fio_sequential', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_write_mibs FROM disk.fio_sequential';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+// Add a new endpoint to fetch MEMORY data for comparison
+
+app.get('/getComparisonData-memory-cachebench', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_cache_mibs FROM memory.cachebench';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-memory-ramsmp_float', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_float_memory_mibs FROM memory.ramsmp_float';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-memory-ramsmp_integer', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_integer_memory_mibs FROM memory.ramsmp_integer';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+
+// Add a new endpoint to fetch NETWORK data for comparison
+
+app.get('/getComparisonData-network-ethr', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_bandwidth_bits_secs FROM network.ethr';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-network-sockperf', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_latency_usec FROM network.sockperf';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-network-iperf', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_receiver_bitrate_mbits_sec, average_sender_bitrate_mbits_sec FROM network.iperf';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+// Add a new endpoint to fetch CPU data for comparison
+
+app.get('/getComparisonData-cpu-c_ray', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_rendering_time_seconds FROM cpu.c_ray';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-cpu-blake', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_per_byte FROM cpu.blake';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-cpu-sysbench', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_events_seconds FROM cpu.sysbench';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+// Add a new endpoint to fetch GPU data for comparison
+
+app.get('/getComparisonData-gpu-unigine_heaven', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_fps FROM gpu.unigine_heaven';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+
+app.get('/getComparisonData-gpu-gputest_furmark', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points FROM gpu.gputest_furmark';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
+
+app.get('/getComparisonData-gpu-gputest_tessmark', (req, res) => {
+    const query = 'SELECT id, sys_name, benchmark, time_ms, cpu_ms, iterations, average_score_points FROM gpu.gputest_tessmark';
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const data = result.rows;
+        res.json({ success: true, data: data });
+    });
+});
 // script.js
-
-
-
-
 
 
 // Add a new endpoint to fetch data for chart generation
