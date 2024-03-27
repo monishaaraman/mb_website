@@ -629,39 +629,39 @@ function getColumnValues(row, tableType, subType) {
     switch (tableType) {
         case 'disk':
             if(subType == 'compileBench')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_compile_mbs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_compile_mbs, row.date, row.time];
             if(subType == 'fio_random')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs, row.date, row.time];
             if(subType == 'fio_sequential')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_read_mibs, row.average_write_mibs, row.date, row.time];
         case 'memory':
              if(subType == 'cachebench')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_cache_mibs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_cache_mibs, row.date, row.time];
             if(subType == 'ramsmp_float')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_float_memory_mibs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_float_memory_mibs, row.date, row.time];
             if(subType == 'ramsmp_integer')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_integer_memory_mibs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_integer_memory_mibs, row.date, row.time];
         case 'network':
              if(subType == 'ethr')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_bandwidth_bits_secs];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_bandwidth_bits_secs, row.date, row.time];
             if(subType == 'sockperf')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_latency_usec];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_latency_usec, row.date, row.time];
             if(subType == 'iperf')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_receiver_bitrate_mbits_sec, row.average_sender_bitrate_mbits_sec];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_receiver_bitrate_mbits_sec, row.average_sender_bitrate_mbits_sec, row.date, row.time];
         case 'cpu':
              if(subType == 'c_ray')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_rendering_time_seconds];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_rendering_time_seconds, row.date, row.time];
             if(subType == 'blake')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_per_byte];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_per_byte, row.date, row.time];
             if(subType == 'sysbench')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_events_seconds];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_events_seconds, row.date, row.time];
         case 'gpu':
              if(subType == 'unigine_heaven')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_fps];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_fps, row.date, row.time];
             if(subType == 'gputest_furmark')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_score_points];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_score_points, row.date, row.time];
             if(subType == 'gputest_tessmark')
-            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_score_points];
+            return [row.id, row.sys_name, row.benchmark, row.time_ms, row.cpu_ms, row.iterations, row.average_score_points, row.date, row.time];
 
 
         // Add cases for other tables as needed
