@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="benchmark_page.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -42,7 +42,7 @@
         <div class="blockquote">
           <h1>
             <span style="color: rgb(33, 42, 45);">
-              Welcome to Micro-benchmark, your one-stop solution for precise system benchmarking. Dive into a seamless evaluation of your system's performance across disk, memory, CPU, and more with just a click. Utilizing top-tier open-source benchmarks like Blake2, iperf, RAMspeed, and Google Benchmark, our platform offers detailed insights that run quietly in the background. Perfect for tech enthusiasts, professionals, and the curious, Micro-benchmark simplifies system diagnostics, empowering you with the knowledge to optimize and understand your device's full potential. Start your comprehensive performance analysis today.
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to Micro-benchmark, your one-stop solution for precise system benchmarking. Dive into a seamless evaluation of your system's performance across disk, memory, CPU, and more with just a click. Utilizing top-tier open-source benchmarks like Blake2, iperf, RAMspeed, and Google Benchmark, our platform offers detailed insights that run quietly in the background. Perfect for tech enthusiasts, professionals, and the curious, Micro-benchmark simplifies system diagnostics, empowering you with the knowledge to optimize and understand your device's full potential. Start your comprehensive performance analysis today.
             </span>
             </h1>
           
@@ -82,7 +82,91 @@
       </div>
       
      </div>
-    <!-- Build button -->
+
+
+     <div id="overlay_run_all">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; color: aliceblue;">
+        
+        
+
+    <!-- LOADING animation -->
+    
+    <div id="loadingIcon_runall" style="display: none;">
+        <h5 style="text-align: center;">"<span style="color: rgb(50, 50, 50); background-color: rgb(128, 128, 128);">RUN ALL</span>" function</h5>
+        <h5 style="text-align: center;">is</h5>
+        <section>
+            <div class="loading loading04">
+            <span data-text="R">R</span>
+            <span data-text="U">U</span>
+            <span data-text="N">N</span>
+            <span data-text="N">N</span>
+            <span data-text="I">I</span>
+            <span data-text="N">N</span>
+            <span data-text="G">G</span>
+            </div>
+            </section>
+  <p style="text-align: center;">Please wait utill run all the benchmarks</p>
+
+  <section class="component">
+    
+<blockquote class="callout quote EN">
+   Grab your tea utill all the benchmarks complete
+<cite> ...</cite>
+  </blockquote>
+
+  </section>
+    </div>
+    
+
+<ul class="timeline" id="timeline">
+    <li class="li " id="disk_timeline">
+      <div class="timestamp">
+        
+      </div>
+      <div class="status">
+        <h4 style="margin-top: 10px; "> Disk </h4>
+      </div>
+    </li>
+    <li class="li " id="memory_timeline">
+      <div class="timestamp">
+        
+      </div>
+      <div class="status">
+        <h4 style="margin-top: 10px;"> Memory </h4>
+      </div>
+    </li>
+    <li class="li " id="network_timeline">
+      <div class="timestamp">
+       
+      </div>
+      <div class="status">
+        <h4 style="margin-top: 10px;"> Network </h4>
+      </div>
+    </li>
+    <li class="li" id="cpu_timeline">
+      <div class="timestamp">
+       
+      </div>
+      <div class="status">
+        <h4 style="margin-top: 10px;"> CPU </h4>
+      </div>
+    </li>
+
+    <li class="li" id="gpu_timeline">
+        <div class="timestamp">
+         
+        </div>
+        <div class="status">
+          <h4 style="margin-top: 10px;"> GPU </h4>
+        </div>
+      </li>
+   </ul>      
+   <p class="p1" id="run-all-message"></p>
+   <button class="runall-close" id="runall-close" onclick="runall_close()">Close</button>
+      </div>
+      
+     </div>
+    
     
     <!-- Compare button -->
   

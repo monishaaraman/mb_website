@@ -12,7 +12,7 @@
    
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   
-  
+    <script src="benchmark_page.js"></script>
     
    
     
@@ -47,8 +47,15 @@
 
         
         //------------------menu bar handeling-----------///
+      
 
-        function loadPage(element) {
+   function loadPage(element) {
+    if (getBenchmarkRunningStatus()) {
+        // Benchmark is running, display alert and return false to prevent navigation
+        alert("You can't change the page while running the benchmark.");
+        return false;
+    } else {
+        // Benchmark is not running, proceed with page navigation
         console.log('Loading page:', element.href);
         
         // Remove 'active' class from all menu items
@@ -68,8 +75,9 @@
         xhttp.send();
         
         // Prevent default navigation behavior
-        return false;
+        return true;
     }
+}
       </script>
    
 </head>
@@ -81,9 +89,9 @@
             <nav>
               <ul class="menu" id="menu">
                 
-                <li><a class="active" href="benchmark_page.html" target="contentFrame" onclick="loadPage(this)">Benchmark</a></li>
-                <li><a href="system_info.html" target="contentFrame" onclick="loadPage(this)">System Info</a></li>
-                <li><a href="settings_page.html" target="contentFrame" onclick="loadPage(this)">Settings</a></li>
+                <li><a class="active" href="benchmark_page.html" target="contentFrame" onclick="return loadPage(this)">Benchmark</a></li>
+                <li><a href="system_info.html" target="contentFrame" onclick="return loadPage(this)">System Info</a></li>
+                <li><a href="settings_page.html" target="contentFrame" onclick="return loadPage(this)">Settings</a></li>
               </ul>
             </nav>
           </div>

@@ -7,6 +7,20 @@ function fetchbenchinfo() {
           checkMicrobenchmarkFolder();
       }
 
+      let is_disk_err =false;
+      let is_memory_err =false;
+      let is_network_err =false;
+      let is_cpu_err =false;
+      let is_gpu_err =false;
+
+      localStorage.setItem('is_disk_running', false);
+      localStorage.setItem('is_memory_running', false);
+      localStorage.setItem('is_network_running', false);
+      localStorage.setItem('is_cpu_running', false);
+      localStorage.setItem('is_gpu_running', false);
+   
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -449,7 +463,9 @@ function getRandomColor() {
 
 function rundiskbenchmark() {
     // Display loading icon and other UI setup
-  
+  is_disk_err = false;
+  // Save the boolean value to localStorage
+localStorage.setItem('is_disk_running', true);
     document.getElementById("run-btn").style.display = "none";
     document.getElementById('loadingIcon').style.display = 'block';
     document.getElementById('errorMessage').style.display = 'none';
@@ -461,10 +477,12 @@ function rundiskbenchmark() {
             .then(response => response.json())
             .then(data => {
                 console.log('Disk Benchmark initiated', data);
+               
                 pollTaskStatus_disk(data.taskId, resolve, reject);
             })
             .catch(error => {
                 console.error('Error starting disk benchmark:', error);
+                
                 reject(error); // Reject the Promise if there's an error starting the benchmark
             });
     });
@@ -484,6 +502,7 @@ function pollTaskStatus_disk(taskId, resolve, reject) {
             document.getElementById('successMessage').style.display = 'block';
             diskResults = data.results;
              parseBenchmarkResults_disk(data.results);
+             localStorage.setItem('is_disk_running', false);
                     resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
                     console.error('Disk Benchmark error', data.message);
@@ -493,6 +512,8 @@ function pollTaskStatus_disk(taskId, resolve, reject) {
                 }
             })
             .catch(error => {
+                is_disk_err = true;
+               
                 console.error('Error checking task status:', error);
                 reject(error); // Reject the Promise if there's an error during polling
             });
@@ -570,6 +591,9 @@ function pollTaskStatus_disk(taskId, resolve, reject) {
 //----------------Memory button clicking function----------------------//
 function runmemorybenchmark() {
     // Display loading icon
+    is_memory_err = false;
+ 
+  localStorage.setItem('is_memory_running', true);
     document.getElementById("run-btn1").style.display = "none";
     document.getElementById('loadingIcon1').style.display = 'block';
     document.getElementById('errorMessage1').style.display = 'none';
@@ -584,6 +608,8 @@ function runmemorybenchmark() {
                 pollTaskStatus_memory(data.taskId, resolve, reject);
             })
             .catch(error => {
+                is_memory_err = true;
+                is_memory_running =false;
                 console.error('Error starting memory benchmark:', error);
                 reject(error); // Reject the Promise if there's an error starting the benchmark
             });
@@ -604,6 +630,7 @@ function pollTaskStatus_memory(taskId, resolve, reject) {
             document.getElementById('successMessage1').style.display = 'block';
             memoryResults = data.results;
              parseBenchmarkResults_memory(data.results);
+             localStorage.setItem('is_memory_running', true);
                     resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
                     console.error('Memory Benchmark error', data.message);
@@ -613,6 +640,8 @@ function pollTaskStatus_memory(taskId, resolve, reject) {
                 }
             })
             .catch(error => {
+                is_memory_err = true;
+                
                 console.error('Error checking task status:', error);
                 reject(error); // Reject the Promise if there's an error during polling
             });
@@ -683,6 +712,9 @@ function pollTaskStatus_memory(taskId, resolve, reject) {
 //----------------Network button clicking function----------------------//
 
 function runnetworkbenchmark() {
+    is_network_err = false;
+
+  localStorage.setItem('is_network_running', true);
     // Display loading icon
     document.getElementById("run-btn2").style.display = "none";
     document.getElementById('loadingIcon2').style.display = 'block';
@@ -698,6 +730,8 @@ function runnetworkbenchmark() {
             pollTaskStatus_network(data.taskId, resolve, reject);
         })
         .catch(error => {
+            is_network_err = true;
+            is_network_running =false;
             console.error('Error starting network benchmark:', error);
             reject(error); // Reject the Promise if there's an error starting the benchmark
         });
@@ -718,6 +752,7 @@ function pollTaskStatus_network(taskId, resolve, reject) {
             document.getElementById('successMessage2').style.display = 'block';
             networkResults = data.results;
              parseBenchmarkResults_netwotk(data.results);
+             localStorage.setItem('is_network_running', true);
                     resolve(data.results); // Resolve the Promise
                 } else if (data.status === 'error') {
                     console.error('Network Benchmark error', data.message);
@@ -727,6 +762,8 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 }
             })
             .catch(error => {
+                is_network_err = true;
+                is_network_running =false;
                 console.error('Error checking task status:', error);
                 reject(error); // Reject the Promise if there's an error during polling
             });
@@ -798,6 +835,9 @@ function pollTaskStatus_network(taskId, resolve, reject) {
 
     //----------------cpu button clicking function----------------------//
     function runcpubenchmark() {
+        is_cpu_err = false;
+  
+  localStorage.setItem('is_cpu_running', true);
         // Display loading icon
         document.getElementById("run-btn3").style.display = "none";
         document.getElementById('loadingIcon3').style.display = 'block';
@@ -813,6 +853,8 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 pollTaskStatus_cpu(data.taskId, resolve, reject);
             })
             .catch(error => {
+                is_cpu_err = true;
+                is_cpu_running =false;
                 console.error('Error starting cpu benchmark:', error);
                 reject(error); // Reject the Promise if there's an error starting the benchmark
             });
@@ -833,6 +875,7 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 document.getElementById('successMessage3').style.display = 'block';
                 cpuResults = data.results;
                  parseBenchmarkResults_cpu(data.results);
+                 localStorage.setItem('is_cpu_running', true);
                         resolve(data.results); // Resolve the Promise
                     } else if (data.status === 'error') {
                         console.error('CPU Benchmark error', data.message);
@@ -843,6 +886,8 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 })
                 .catch(error => {
                     console.error('Error checking task status:', error);
+                    is_cpu_err = true;
+                    is_cpu_running =false;
                     reject(error); // Reject the Promise if there's an error during polling
                 });
         };
@@ -913,6 +958,9 @@ function pollTaskStatus_network(taskId, resolve, reject) {
     
     //----------------GPU button clicking function----------------------//
     function rungpubenchmark() {
+        is_gpu_err = false;
+   
+  localStorage.setItem('is_gpu_running', true);
         // Display loading icon
         document.getElementById("run-btn4").style.display = "none";
         document.getElementById('loadingIcon4').style.display = 'block';
@@ -929,6 +977,8 @@ function pollTaskStatus_network(taskId, resolve, reject) {
             })
             .catch(error => {
                 console.error('Error starting gpu benchmark:', error);
+                is_gpu_err = true;
+                is_gpu_running =false;
                 reject(error); // Reject the Promise if there's an error starting the benchmark
             });
     });
@@ -948,6 +998,7 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 document.getElementById('successMessage4').style.display = 'block';
                 gpuResults = data.results;
                  parseBenchmarkResults_gpu(data.results);
+                 localStorage.setItem('is_gpu_running', true);
                         resolve(data.results); // Resolve the Promise
                     } else if (data.status === 'error') {
                         console.error('GPU Benchmark error', data.message);
@@ -958,6 +1009,8 @@ function pollTaskStatus_network(taskId, resolve, reject) {
                 })
                 .catch(error => {
                     console.error('Error checking task status:', error);
+                    is_gpu_err = true;
+                is_gpu_running =false;
                     reject(error); // Reject the Promise if there's an error during polling
                 });
         };
@@ -1595,223 +1648,102 @@ function generateBarChart_DISK(selectedData) {
 //     }
 
 async function runAllAPIs(){
+    document.getElementById('overlay_run_all').style.display = 'flex';
+    document.getElementById('loadingIcon_runall').style.display = 'block';
     console.log('triggered disk');
+
 
     document.getElementById("collapseContent2").classList.add('show');
     await rundiskbenchmark();
-
+    if(is_disk_err){
+        document.getElementById('disk_timeline').classList.add('err');
+    }else {
+        document.getElementById('disk_timeline').classList.add('complete');
+    }
+    
     setTimeout(function() {
         console.log('triggered memory after 2 seconds');
       }, 2000);
 
+
     document.getElementById("collapseContent3").classList.add('show');
     await runmemorybenchmark();
-
+    if(is_memory_err){
+        document.getElementById('memory_timeline').classList.add('err');
+    }else {
+        document.getElementById('memory_timeline').classList.add('complete');
+    }
+   
     setTimeout(function() {
         console.log('triggered network after 2 seconds');
       }, 2000);
 
+
     document.getElementById("collapseContent4").classList.add('show');
     await runnetworkbenchmark();
-
+    if(is_network_err){
+        document.getElementById('network_timeline').classList.add('err');
+    }else {
+        document.getElementById('network_timeline').classList.add('complete');
+    }
+   
     setTimeout(function() {
         console.log('triggered cpu after 2 seconds');
       }, 2000);
 
+
     document.getElementById("collapseContent5").classList.add('show');
     await runcpubenchmark();
-
+    if(is_cpu_err){
+        document.getElementById('cpu_timeline').classList.add('err');
+    }else {
+        document.getElementById('cpu_timeline').classList.add('complete');
+    }
+    
     setTimeout(function() {
         console.log('triggered gpu after 2 seconds');
       }, 2000);
 
+
     document.getElementById("collapseContent6").classList.add('show');
     await rungpubenchmark();
-
+    if(is_gpu_err){
+        document.getElementById('gpu_timeline').classList.add('err');
+    }else {
+        document.getElementById('gpu_timeline').classList.add('complete');
+    }
+   
     setTimeout(function() {
         console.log('run all ended');
       }, 2000);
+
+      
+      document.getElementById('loadingIcon_runall').style.display = 'none';
+      document.getElementById('run-all-message').innerText = 'Completed!';
+      document.getElementById('runall-close').style.display = 'block';
 }
 
-function callAPIs() {
-        // Array of API endpoints to call
-        const apiEndpoints = [
-            "/rundiskbenchmark",
-            "/runmemorybenchmark",
-            "/runnetworkbenchmark",
-            "/runcpubenchmark",
-            "/rungpubenchmark"
-        ];
-    
-        // Function to call an API endpoint and return a promise
-        function callAPI(endpoint) {
-            return new Promise((resolve, reject) => {
-                    // Display loading icon
-            if(endpoint == "/rundiskbenchmark"){
-                var collapseElement = document.getElementById("collapseContent2");
-           if (collapseElement && collapseElement.classList.contains('show')) {
-               // Collapse is currently open, so close it
-               //collapseElement.classList.remove('show');
-           } else if (collapseElement) {
-               // Collapse is currently closed or not found, so open it
-               collapseElement.classList.add('show');
-           }
-           document.getElementById("run-btn").style.display = "none";
-           document.getElementById('loadingIcon').style.display = 'block';
-           document.getElementById('errorMessage').style.display = 'none';
-           document.getElementById('successMessage').style.display = 'none';
-        }else if(endpoint == "/runmemorybenchmark"){
-           var collapseElement = document.getElementById("collapseContent3");
-           if (collapseElement && collapseElement.classList.contains('show')) {
-               // Collapse is currently open, so close it
-               //collapseElement.classList.remove('show');
-           } else if (collapseElement) {
-               // Collapse is currently closed or not found, so open it
-               collapseElement.classList.add('show');
-           }
-           document.getElementById("run-btn1").style.display = "none";
-           document.getElementById('loadingIcon1').style.display = 'block';
-           document.getElementById('errorMessage1').style.display = 'none';
-           document.getElementById('successMessage1').style.display = 'none';
-        }else if(endpoint == "/runnetworkbenchmark"){
-           var collapseElement = document.getElementById("collapseContent4");
-           if (collapseElement && collapseElement.classList.contains('show')) {
-               // Collapse is currently open, so close it
-               //collapseElement.classList.remove('show');
-           } else if (collapseElement) {
-               // Collapse is currently closed or not found, so open it
-               collapseElement.classList.add('show');
-           }
-           document.getElementById("run-btn2").style.display = "none";
-           document.getElementById('loadingIcon2').style.display = 'block';
-           document.getElementById('errorMessage2').style.display = 'none';
-           document.getElementById('successMessage2').style.display = 'none';
-        }else if(endpoint == "/runcpubenchmark"){
-           var collapseElement = document.getElementById("collapseContent5");
-           if (collapseElement && collapseElement.classList.contains('show')) {
-               // Collapse is currently open, so close it
-               //collapseElement.classList.remove('show');
-           } else if (collapseElement) {
-               // Collapse is currently closed or not found, so open it
-               collapseElement.classList.add('show');
-           }
-           document.getElementById("run-btn3").style.display = "none";
-           document.getElementById('loadingIcon3').style.display = 'block';
-           document.getElementById('errorMessage3').style.display = 'none';
-           document.getElementById('successMessage3').style.display = 'none';
-        }else if(endpoint == "/rungpubenchmark"){
-           var collapseElement = document.getElementById("collapseContent6");
-           if (collapseElement && collapseElement.classList.contains('show')) {
-               // Collapse is currently open, so close it
-               //collapseElement.classList.remove('show');
-           } else if (collapseElement) {
-               // Collapse is currently closed or not found, so open it
-               collapseElement.classList.add('show');
-           }
-           document.getElementById("run-btn4").style.display = "none";
-           document.getElementById('loadingIcon4').style.display = 'block';
-           document.getElementById('errorMessage4').style.display = 'none';
-           document.getElementById('successMessage4').style.display = 'none';
-        }
-    
-                // Send request to the API endpoint
-                fetch(endpoint)
-                    .then(response => {
-                        if (!response.ok) {
-                              // Show error message
-                 if(endpoint == "/rundiskbenchmark"){
-                    document.getElementById('errorMessage').style.display = 'block';
-                    }else  if(endpoint == "/runmemorybenchmark"){
-                        document.getElementById('errorMessage2').style.display = 'block';
-                        }else  if(endpoint == "/runnetworkbenchmark"){
-                            document.getElementById('errorMessage3').style.display = 'block';
-                            }else  if(endpoint == "/runcpubenchmark"){
-                                document.getElementById('errorMessage4').style.display = 'block';
-                                }else  if(endpoint == "/rungpubenchmark"){
-                                    document.getElementById('errorMessage5').style.display = 'block';
-                                    }
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
-                        if(endpoint == "/rundiskbenchmark"){
-                            document.getElementById('successMessage').style.display = 'block';
-                            }else  if(endpoint == "/runmemorybenchmark"){
-                                document.getElementById('successMessage1').style.display = 'block';
-                                }else  if(endpoint == "/runnetworkbenchmark"){
-                                    document.getElementById('successMessage2').style.display = 'block';
-                                    }else  if(endpoint == "/runcpubenchmark"){
-                                        document.getElementById('successMessage3').style.display = 'block';
-                                        }else  if(endpoint == "/rungpubenchmark"){
-                                            document.getElementById('successMessage4').style.display = 'block';
-                                            }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Hide loading icon
-             if(endpoint == "/rundiskbenchmark"){
-                document.getElementById('loadingIcon').style.display = 'none';
-                }else  if(endpoint == "/runmemorybenchmark"){
-                    document.getElementById('loadingIcon1').style.display = 'none';
-                    }else  if(endpoint == "/runnetworkbenchmark"){
-                        document.getElementById('loadingIcon2').style.display = 'none';
-                        }else  if(endpoint == "/runcpubenchmark"){
-                            document.getElementById('loadingIcon3').style.display = 'none';
-                            }else  if(endpoint == "/rungpubenchmark"){
-                                document.getElementById('loadingIcon4').style.display = 'none';
-                                }
-    
-                        // Show success message and parse the data
-                        console.log('Data received from server:', data);
-                        if (data && data.results) {
-                            // Check if the "data" property is defined
-             
-                // Call the parsing function
-                if(endpoint == "/rundiskbenchmark"){
-                   parseBenchmarkResults_disk(data.results);
-                   }else  if(endpoint == "/runmemorybenchmark"){
-                       parseBenchmarkResults_memory(data.results);
-                       }else  if(endpoint == "/runnetworkbenchmark"){
-                           parseBenchmarkResults_netwotk(data.results);
-                           }else  if(endpoint == "/runcpubenchmark"){
-                               parseBenchmarkResults_cpu(data.results);
-                               }else  if(endpoint == "/rungpubenchmark"){
-                                   parseBenchmarkResults_gpu(data.results);
-                                   }
-                            console.log('Benchmark completed successfully');
-                            resolve(); // Resolve the promise if API call succeeds
-                        } else {
-                            console.error('Invalid or missing "results" property in the response:', data);
-                            console.log('Error occurred during benchmark');
-                            reject(new Error('Invalid or missing data in the response')); // Reject the promise if API call fails
-                        }
-                    })
-                    .catch(error => {
-                        // Hide loading icon
-                        document.getElementById('loadingIcon').style.display = 'none';
-    
-                        // Display error message
-                        console.error('Error:', error);
-                        console.log('Error occurred during benchmark');
-                        reject(error); // Reject the promise if an error occurs during API call
-                    });
-            });
-        }
-    
-        // Function to call APIs sequentially
-        function callAPIsSequentially(endpoints) {
-            return endpoints.reduce((chain, endpoint) => {
-                return chain.then(() => callAPI(endpoint));
-            }, Promise.resolve());
-        }
-    
-        // Call APIs sequentially
-        callAPIsSequentially(apiEndpoints)
-            .then(() => {
-                console.log('All APIs called successfully');
-                // All APIs called successfully, perform any necessary actions here
-            })
-            .catch(error => {
-                console.error('Error calling APIs:', error);
-                // Handle error if any API call fails
-            });
+
+    function runall_close(){
+        document.getElementById('overlay_run_all').style.display = 'none';
     }
     
+    
+    
+    function getBenchmarkRunningStatus(){
+        const isDiskRunning = localStorage.getItem('is_disk_running') === 'true';
+        const isMemoryRunning = localStorage.getItem('is_memory_running') === 'true';
+        const isNetworkRunning = localStorage.getItem('is_network_running') === 'true';
+        const isCPURunning = localStorage.getItem('is_cpu_running') === 'true';
+        const isGPURunning = localStorage.getItem('is_gpu_running') === 'true';
+        console.log("is_disk_running-",isDiskRunning);
+        console.log("is_memory_running-",isMemoryRunning);
+        console.log("is_network_running-",isNetworkRunning);
+        console.log("is_cpu_running-",isCPURunning);
+        console.log("is_gpu_running-",isGPURunning);
+    if(isDiskRunning || isMemoryRunning || isNetworkRunning || isCPURunning || isGPURunning){
+        return true;
+    }else{
+        return false;
+    }
+   }
